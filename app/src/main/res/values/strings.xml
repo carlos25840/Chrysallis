@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Chrysallis</string>
-    <string name="user">Usuario</string>
-    <string name="password">Contraseña</string>
-    <string name="telefono">Teléfono</string>
-    <string name="language">Idioma</string>
-    <string name="Catalan">Catalan</string>
-    <string name="Spanish">Castellano</string>
-    <string name="English">Inglés</string>
-    <string name="Galician">Gallego</string>
+    <string name="user">User</string>
+    <string name="password">Password</string>
+    <string name="telefono">Phone</string>
+    <string name="language">Language</string>
+    <string name="Spanish">Spanish</string>
+    <string name="English">English</string>
+    <string name="Galician">Galician</string>
     <string name="Euskera">Euskera</string>
-    <string name="Login">Ingresar</string>
+    <string name="Login">Login</string>
+    <string name="Catalan">Catalan</string>
 </resources>

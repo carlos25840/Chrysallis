@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Chrysallis</string>
+    <string name="English">Anglès</string>
+    <string name="Euskera">Basc</string>
+    <string name="Galician">Gallec</string>
+    <string name="Login">Iniciar sessió</string>
+    <string name="Spanish">Castellà</string>
+    <string name="language">Idioma</string>
+    <string name="password">Contrasenya</string>
+    <string name="telefono">Telèfon</string>
+    <string name="user">Usuari</string>
+    <string name="Catalan">Català</string>
+</resources>
