@@ -10,4 +10,5 @@
     <string name="Euskera">Euskera</string>
     <string name="Login">Login</string>
     <string name="Catalan">Catalan</string>
+    <string name="messageForgotPassword">I forgot the password</string>
 </resources>

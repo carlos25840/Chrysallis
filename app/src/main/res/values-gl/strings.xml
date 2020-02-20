@@ -11,4 +11,5 @@
     <string name="telefono">Teléfono</string>
     <string name="user">Usuario</string>
     <string name="Catalan">Catalán</string>
+    <string name="messageForgotPassword">Esquecín o contrasinal</string>
 </resources>
