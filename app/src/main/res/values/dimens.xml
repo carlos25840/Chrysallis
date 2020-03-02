@@ -4,4 +4,8 @@
     <dimen name="borde">2dp</dimen>
     <dimen name="radio">90dp</dimen>
     <dimen name="marginButton">20dp</dimen>
+    <dimen name="small">18sp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 </resources>

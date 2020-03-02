@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/azulTrans"
+    android:background="@color/azulBandera"
     android:orientation="vertical"
     android:gravity="center"
     android:weightSum="5">
@@ -66,13 +66,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/messageForgotPassword"/>
+            android:text="@string/messageForgotPassword"
+            android:textSize="@dimen/small"/>
         <Button
+            android:id="@+id/buttonLogin"
             android:layout_margin="@dimen/marginButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Login"
-            android:background="@drawable/rounded_button_pink"/>
+            android:background="@drawable/rounded_button_blue"
+            android:textColor="@color/blanco"/>
     </LinearLayout>
 
 

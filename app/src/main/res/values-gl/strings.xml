@@ -11,5 +11,10 @@
     <string name="telefono">Teléfono</string>
     <string name="user">Usuario</string>
     <string name="Catalan">Catalán</string>
-    <string name="messageForgotPassword">Esquecín o contrasinal</string>
+    <string name="messageForgotPassword"><u>Esquecín o contrasinal</u></string>
+    <string name="home">Home</string>
+    <string name="title_perfil">Perfil</string>
+    <string name="title_explorar">Explorar</string>
+    <string name="destacados">Destacado</string>
+    <string name="title_chat">Chat</string>
 </resources>

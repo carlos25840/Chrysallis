@@ -6,12 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColor">@color/blanco</item>
-        <item name="actionOverflowMenuStyle">@style/CMOptionsMenu</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
-
-    <style name="CMOptionsMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
-        <item name="android:popupBackground">@color/colorPrimary</item>
-    </style>
-
 </resources>

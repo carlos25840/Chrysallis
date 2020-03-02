@@ -11,5 +11,10 @@
     <string name="telefono">Telefono</string>
     <string name="user">Erabiltzaile</string>
     <string name="Catalan">Katalanez</string>
-    <string name="messageForgotPassword">Pasahitza ahaztu zait.</string>
+    <string name="messageForgotPassword"><u>Pasahitza ahaztu zait.</u></string>
+    <string name="home">Home</string>
+    <string name="title_perfil">Profile</string>
+    <string name="title_explorar">Arakatu</string>
+    <string name="destacados">Nabarmenduak</string>
+    <string name="title_chat">Chat</string>
 </resources>
