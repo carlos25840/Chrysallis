@@ -67,7 +67,7 @@ public class DestacadosActivity extends AppCompatActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), 0);
         homeFragment=new FragmentHome();
         profileFragment=new FragmentProfile();
         exploreFragment=new FragmentExplore();
