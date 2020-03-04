@@ -31,13 +31,13 @@
             android:gravity="center">
 
             <EditText
+                android:id="@+id/editTextPhone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:maxLines="1"
-
                 android:textAlignment="center"
-                android:inputType="number"
+                android:inputType="phone"
                 android:background="@drawable/rounded_white"
                 android:hint="@string/telefono"/>
         </LinearLayout>
@@ -53,6 +53,7 @@
             android:gravity="center">
 
             <EditText
+                android:id="@+id/editTextPassword"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -60,7 +61,7 @@
                 android:textAlignment="center"
                 android:inputType="textPassword"
                 android:hint="@string/password"
-                android:background="@drawable/rounded_white"/>
+                android:background="@drawable/rounded_white" />
 
         </LinearLayout>
         <TextView

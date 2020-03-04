@@ -17,4 +17,5 @@
     <string name="title_explorar">Explorar</string>
     <string name="destacados">Destacats</string>
     <string name="title_chat">Xat</string>
+    <string name="loginIncorrect">Usuari i/o contrasenya incorrectes</string>
 </resources>

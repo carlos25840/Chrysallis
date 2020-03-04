@@ -17,4 +17,5 @@
     <string name="title_explorar">Explorar</string>
     <string name="destacados">Destacados</string>
     <string name="title_chat">Chat</string>
+    <string name="loginIncorrect">Usuario y/o contraseña incorrectos</string>
 </resources>
