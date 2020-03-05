@@ -1,7 +1,6 @@
 package com.example.chrysallis.classes;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 public class Socio {
     private int id;
@@ -16,9 +15,6 @@ public class Socio {
     private String idiomaDefecto;
     private boolean estatal;
     private int id_comunidad;
-    private ArrayList<Comunidad> comunidades;
-
-
-
+    private HashSet<Comunidad> comunidades1;
 
 }

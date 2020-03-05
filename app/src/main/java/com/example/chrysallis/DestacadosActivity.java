@@ -1,8 +1,11 @@
 package com.example.chrysallis;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.chrysallis.adapters.EventoAdapter;
 import com.example.chrysallis.adapters.ViewPagerAdapter;
+import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.fragments.FragmentChat;
 import com.example.chrysallis.fragments.FragmentExplore;
 import com.example.chrysallis.fragments.FragmentHome;
@@ -11,11 +14,19 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class DestacadosActivity extends AppCompatActivity {
     private MenuItem prevMenuItem;
@@ -35,6 +46,10 @@ public class DestacadosActivity extends AppCompatActivity {
 
         final BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+
+
+
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -64,6 +79,8 @@ public class DestacadosActivity extends AppCompatActivity {
         });
 
         setupViewPager(viewPager);
+
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
