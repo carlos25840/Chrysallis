@@ -22,6 +22,7 @@
             android:adjustViewBounds="true"
             android:id="@+id/ImgEvento"/>
 
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"

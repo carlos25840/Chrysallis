@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="medio">30sp</dimen>
-    <dimen name="borde">2dp</dimen>
-    <dimen name="radio">90dp</dimen>
-    <dimen name="marginButton">20dp</dimen>
-    <dimen name="messageForgotPassword">16sp</dimen>
-    <dimen name="marginForgotPassword">10dp</dimen>
+    <dimen name="medio">50sp</dimen>
+    <dimen name="borde">4dp</dimen>
+    <dimen name="radio">180dp</dimen>
+    <dimen name="marginButton">40dp</dimen>
+    <dimen name="small">36sp</dimen>
+    <dimen name="imagen">180dp</dimen>
 </resources>

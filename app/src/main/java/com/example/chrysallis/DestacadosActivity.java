@@ -36,6 +36,7 @@ public class DestacadosActivity extends AppCompatActivity {
     private FragmentExplore exploreFragment;
     private FragmentChat chatFragment;
     private ViewPager viewPager;
+    private int pageAnterior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,15 +106,20 @@ public class DestacadosActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    pageAnterior = viewPager.getCurrentItem();
                     viewPager.setCurrentItem(0);
                     return true;
                 case R.id.navigation_profile:
+                    pageAnterior = viewPager.getCurrentItem();
                     viewPager.setCurrentItem(1);
                     return true;
                 case R.id.navigation_explore:
+                    pageAnterior = viewPager.getCurrentItem();
                     viewPager.setCurrentItem(2);
+
                     return true;
                 case R.id.navigation_chat:
+                    pageAnterior = viewPager.getCurrentItem();
                     viewPager.setCurrentItem(3);
                     return true;
             }
@@ -123,4 +129,8 @@ public class DestacadosActivity extends AppCompatActivity {
 
     };
 
+    @Override
+    public void onBackPressed() {
+        viewPager.setCurrentItem(pageAnterior);
+    }
 }
