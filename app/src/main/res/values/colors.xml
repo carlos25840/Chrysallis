@@ -6,4 +6,5 @@
     <color name="azulBandera">#6ec6ff</color>
     <color name="blanco">#ffffff</color>
     <color name="rosaOscuro">#E14C85</color>
+    <color name="gris">#545454</color>
 </resources>
