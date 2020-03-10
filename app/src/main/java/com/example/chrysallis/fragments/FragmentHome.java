@@ -1,5 +1,6 @@
 package com.example.chrysallis.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.chrysallis.EventoActivity;
+import com.example.chrysallis.MainActivity;
 import com.example.chrysallis.R;
 import com.example.chrysallis.adapters.EventoAdapter;
 import com.example.chrysallis.classes.Evento;
@@ -46,14 +50,14 @@ public class FragmentHome extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         //Listener para abrir el seleccionado
-        /*adaptador.setOnClickListener(new View.OnClickListener() {
+        adaptador.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LineaActivity.class);
-                intent.putExtra("Linea", lineas.get(recyclerView.getChildAdapterPosition(v)));
-                startActivityForResult(intent, PLACE_ACTIVITY_RESULT);
+                Intent intent = new Intent(getActivity(), EventoActivity.class);
+                intent.putExtra("evento", eventos.get(recyclerView.getChildAdapterPosition(v)));
+                startActivity(intent);
             }
-        });*/
+        });
 
 
         //------------------------***************************************-----------------------//

@@ -1,10 +1,11 @@
 package com.example.chrysallis.classes;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 import java.util.HashSet;
 
-public class Evento {
+public class Evento implements Serializable {
     private String nombre;
     private String descripcion;
     private int imagen;
