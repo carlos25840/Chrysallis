@@ -1,15 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.FragmentProfile">
+    tools:context=".fragments.FragmentHome"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_margin="@dimen/medio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textSize="@dimen/medio"
-        android:text="@string/title_perfil"
-        android:gravity="center"/>
+        android:textColor="@color/colorPrimary"
+        android:id="@+id/nombrePerfil"/>
 
-</FrameLayout>
+    <com.example.chrysallis.ImageRounded
+        android:layout_width="@dimen/imagenPerfil"
+        android:layout_height="@dimen/imagenPerfil"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:id="@+id/ImgPerfil"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/medio"
+            android:text="Comunidad"
+            android:textColor="@color/colorAccent"
+            android:id="@+id/ubicacionPerfil"/>
+        <ImageButton
+            android:id="@+id/buttonEditComunidad"
+            android:layout_width="@dimen/icono"
+            android:layout_height="@dimen/icono"
+            android:src="@drawable/edit"
+            android:layout_gravity="center"
+            android:background="@drawable/edit"
+            android:scaleType="centerCrop"/>
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/medio"
+        android:text="@string/eventos"
+        android:textColor="@color/colorAccent"
+        android:id="@+id/eventosPerfil"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/medio"
+            android:text="@string/changePassword"
+            android:textColor="@color/colorAccent"
+            android:id="@+id/passwordPerfil"/>
+        <ImageButton
+            android:id="@+id/buttonEditPassword"
+            android:layout_width="@dimen/icono"
+            android:layout_height="@dimen/icono"
+            android:src="@drawable/edit"
+            android:layout_gravity="center"
+            android:background="@drawable/edit"
+            android:scaleType="centerCrop"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/medio"
+            android:text="Idioma"
+            android:textColor="@color/colorAccent"
+            android:id="@+id/languagePerfil"/>
+
+        <ImageButton
+            android:id="@+id/buttonEditLanguage"
+            android:layout_width="@dimen/icono"
+            android:layout_height="@dimen/icono"
+            android:src="@drawable/edit"
+            android:layout_gravity="center"
+            android:background="@drawable/edit"
+            android:scaleType="centerCrop"/>
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/medio"
+        android:text="@string/contact"
+        android:textColor="@color/colorAccent"
+        android:id="@+id/contactarPerfil"/>
+
+</LinearLayout>

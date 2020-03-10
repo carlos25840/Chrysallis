@@ -18,4 +18,8 @@
     <string name="destacados">Destacados</string>
     <string name="title_chat">Chat</string>
     <string name="loginIncorrect">Usuario y/o contraseña incorrectos</string>
+    <string name="eventos">Eventos</string>
+    <string name="changePassword">Cambiar contraseña</string>
+    <string name="contact">Contactar</string>
+    <string name="community">Comunidad</string>
 </resources>

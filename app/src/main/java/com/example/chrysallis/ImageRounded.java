@@ -18,6 +18,11 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatImageView;
 
 public class ImageRounded extends AppCompatImageView {
+    private int radio = 20;
+
+    public void setRadio(int radio) {
+        this.radio = radio;
+    }
 
     public ImageRounded(Context ctx, AttributeSet attrs) {
         super(ctx, attrs);
@@ -40,7 +45,7 @@ public class ImageRounded extends AppCompatImageView {
         canvas.drawBitmap(roundBitmap, 0, 0, null);
     }
 
-    public static Bitmap getRoundedCroppedBitmap(Bitmap bitmap, int radius) {
+    public Bitmap getRoundedCroppedBitmap(Bitmap bitmap, int radius) {
         Bitmap finalBitmap;
         if (bitmap.getWidth() != radius || bitmap.getHeight() != radius)
             finalBitmap = Bitmap.createScaledBitmap(bitmap, radius, radius,
@@ -64,12 +69,12 @@ public class ImageRounded extends AppCompatImageView {
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(Color.parseColor("#BAB399"));
         //Set Required Radius Here
-        int yourRadius = 20;
-        canvas.drawRoundRect(rectf, yourRadius, yourRadius, paint);
+        //int yourRadius = 20;
+        canvas.drawRoundRect(rectf, this.radio, this.radio, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(finalBitmap, rect, rect, paint);
 
         return output;
     }
 
-    }
+}

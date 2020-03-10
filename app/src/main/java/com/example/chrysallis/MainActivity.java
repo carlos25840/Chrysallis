@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                                 Socio socio = response.body();
                                 if(socio != null){
                                     Intent intent = new Intent(MainActivity.this, DestacadosActivity.class);
+                                    intent.putExtra("socio", socio);
                                     startActivity(intent);
                                 }else{
                                     Toast.makeText(getApplicationContext(),R.string.loginIncorrect, Toast.LENGTH_LONG).show();

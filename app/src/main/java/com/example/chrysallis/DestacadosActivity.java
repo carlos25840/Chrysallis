@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.example.chrysallis.adapters.EventoAdapter;
 import com.example.chrysallis.adapters.ViewPagerAdapter;
 import com.example.chrysallis.classes.Evento;
+import com.example.chrysallis.classes.Socio;
 import com.example.chrysallis.fragments.FragmentChat;
 import com.example.chrysallis.fragments.FragmentExplore;
 import com.example.chrysallis.fragments.FragmentHome;
@@ -47,9 +48,6 @@ public class DestacadosActivity extends AppCompatActivity {
 
         final BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-
-
 
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -104,12 +102,16 @@ public class DestacadosActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Intent intent = getIntent();
+            Socio socio = (Socio)intent.getSerializableExtra("socio");
+
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     pageAnterior = viewPager.getCurrentItem();
                     viewPager.setCurrentItem(0);
                     return true;
                 case R.id.navigation_profile:
+                    profileFragment.mostrarPerfil(socio);
                     pageAnterior = viewPager.getCurrentItem();
                     viewPager.setCurrentItem(1);
                     return true;
