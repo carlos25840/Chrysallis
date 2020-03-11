@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/azulBandera"
     android:orientation="vertical"
     android:gravity="center"
@@ -19,27 +20,35 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/user"
-            android:textSize="@dimen/medio"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="2"
             android:gravity="center">
 
-            <EditText
-                android:id="@+id/editTextPhone"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
-                android:textAlignment="center"
-                android:inputType="phone"
-                android:background="@drawable/rounded_white"
-                android:hint="@string/telefono"/>
+                android:layout_height="wrap_content"
+                android:hint="@string/telefono"
+
+                app:boxStrokeColor="@color/blanco"
+                app:hintTextColor="@color/negro"
+                android:textColorHint="@color/negro"
+                app:boxStrokeWidth="2dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:endIconMode="clear_text"
+                android:padding="10dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:maxLines="1"
+                    android:textSize="@dimen/medio"
+                    android:textAlignment="center"
+                    android:id="@+id/editTextPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
         </LinearLayout>
         <TextView
             android:layout_width="wrap_content"

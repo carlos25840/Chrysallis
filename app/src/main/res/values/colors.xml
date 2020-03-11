@@ -7,4 +7,5 @@
     <color name="blanco">#ffffff</color>
     <color name="rosaOscuro">#E14C85</color>
     <color name="gris">#545454</color>
+    <color name="negro">#000000</color>
 </resources>
