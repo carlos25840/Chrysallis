@@ -1,22 +1,18 @@
 package com.example.chrysallis.adapters;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.chrysallis.ImageRounded;
+import com.example.chrysallis.components.ImageButtonRounded;
 import com.example.chrysallis.R;
 import com.example.chrysallis.classes.Evento;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 
 public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventosViewHolder> implements View.OnClickListener{
@@ -65,7 +61,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventosVie
     public static class EventosViewHolder extends RecyclerView.ViewHolder {
 
         private TextView nom;
-        private ImageRounded imagen;
+        private ImageButtonRounded imagen;
         private TextView ubicacion;
         private TextView descripcion;
         private TextView fecha;

@@ -15,12 +15,13 @@
         android:gravity="center_vertical"
         android:padding="5dp">
 
-        <com.example.chrysallis.ImageRounded
+        <com.example.chrysallis.components.ImageButtonRounded
             android:layout_width="@dimen/imagen"
             android:layout_height="@dimen/imagen"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
-            android:id="@+id/ImgEvento"/>
+            android:id="@+id/ImgEvento"
+            android:background="@null"/>
 
 
         <LinearLayout

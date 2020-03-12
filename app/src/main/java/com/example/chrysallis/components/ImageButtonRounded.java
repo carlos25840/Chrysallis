@@ -1,4 +1,4 @@
-package com.example.chrysallis;
+package com.example.chrysallis.components;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,29 +8,35 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Xfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.appcompat.widget.AppCompatImageView;
 
-public class ImageRounded extends AppCompatImageView {
-    private int radio = 20;
+public class ImageButtonRounded extends AppCompatImageButton {
 
-    public void setRadio(int radio) {
-        this.radio = radio;
+
+    private int borderColor;
+    private float borderWidth;
+
+    public ImageButtonRounded(Context context) {
+        super(context);
     }
 
-    public ImageRounded(Context ctx, AttributeSet attrs) {
-        super(ctx, attrs);
+    public ImageButtonRounded(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public ImageButtonRounded(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
+
         Drawable drawable = getDrawable();
+
         if (drawable == null) {
             return;
         }
@@ -39,13 +45,25 @@ public class ImageRounded extends AppCompatImageView {
             return;
         }
         Bitmap b = ((BitmapDrawable) drawable).getBitmap();
+        if(b == null || b.isRecycled())
+            return;
         Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
+
         int w = getWidth(), h = getHeight();
-        Bitmap roundBitmap = getRoundedCroppedBitmap(bitmap, w);
-        canvas.drawBitmap(roundBitmap, 0, 0, null);
+        int imgRadius = w - 2 * (int)this.borderWidth;
+
+        final Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(this.borderColor);
+        canvas.drawCircle(this.getWidth() / 2,
+                this.getHeight() / 2,
+                this.getWidth() / 2, paint);
+        Bitmap roundBitmap = getRoundedCroppedBitmap(bitmap, imgRadius);
+        canvas.drawBitmap(roundBitmap, this.borderWidth, this.borderWidth, null);
+
     }
 
-    public Bitmap getRoundedCroppedBitmap(Bitmap bitmap, int radius) {
+    public static Bitmap getRoundedCroppedBitmap(Bitmap bitmap, int radius) {
         Bitmap finalBitmap;
         if (bitmap.getWidth() != radius || bitmap.getHeight() != radius)
             finalBitmap = Bitmap.createScaledBitmap(bitmap, radius, radius,
@@ -60,21 +78,20 @@ public class ImageRounded extends AppCompatImageView {
         final Rect rect = new Rect(0, 0, finalBitmap.getWidth(),
                 finalBitmap.getHeight());
 
-        final RectF rectf = new RectF(0, 0, finalBitmap.getWidth(),
-                finalBitmap.getHeight());
-
         paint.setAntiAlias(true);
         paint.setFilterBitmap(true);
         paint.setDither(true);
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(Color.parseColor("#BAB399"));
-        //Set Required Radius Here
-        //int yourRadius = 20;
-        canvas.drawRoundRect(rectf, this.radio, this.radio, paint);
+        canvas.drawCircle(
+                finalBitmap.getWidth() / 2,
+                finalBitmap.getHeight() / 2,
+                finalBitmap.getWidth() / 2,
+                paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(finalBitmap, rect, rect, paint);
-
         return output;
     }
+
 
 }
