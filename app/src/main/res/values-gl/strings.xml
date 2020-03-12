@@ -22,4 +22,6 @@
     <string name="changePassword">Cambiar contrasinal</string>
     <string name="contact">Contacto</string>
     <string name="community">Comunidade</string>
+    <string name="searchLabel">Busca</string>
+    <string name="address">Dirección</string>
 </resources>

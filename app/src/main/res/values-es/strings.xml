@@ -22,4 +22,6 @@
     <string name="changePassword">Cambiar contraseña</string>
     <string name="contact">Contactar</string>
     <string name="community">Comunidad</string>
+    <string name="searchLabel">Buscar</string>
+    <string name="address">Dirección</string>
 </resources>

@@ -21,4 +21,6 @@
     <string name="changePassword">Change password</string>
     <string name="contact">Contact</string>
     <string name="community">Community</string>
+    <string name="searchLabel">Search</string>
+    <string name="address">Address</string>
 </resources>
