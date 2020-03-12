@@ -24,24 +24,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2"
+            android:weightSum="3"
             android:gravity="center">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:hint="@string/telefono"
-
                 app:boxStrokeColor="@color/blanco"
-                app:hintTextColor="@color/negro"
-                android:textColorHint="@color/negro"
+                app:hintTextColor="@color/blanco"
+                android:textColorHint="@color/blanco"
                 app:boxStrokeWidth="2dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:endIconMode="clear_text"
-                android:padding="10dp">
+                android:padding="2dp">
                 <com.google.android.material.textfield.TextInputEditText
                     android:maxLines="1"
+                    android:inputType="phone"
                     android:textSize="@dimen/medio"
                     android:textAlignment="center"
                     android:id="@+id/editTextPhone"
@@ -50,41 +50,50 @@
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/password"
-            android:textSize="@dimen/medio"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2"
+            android:weightSum="3"
             android:gravity="center">
 
-            <EditText
-                android:id="@+id/editTextPassword"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
+                android:layout_weight="2"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:maxLines="1"
-                android:textAlignment="center"
-                android:inputType="textPassword"
                 android:hint="@string/password"
-                android:background="@drawable/rounded_white" />
+                app:boxStrokeColor="@color/blanco"
+                app:hintTextColor="@color/blanco"
+                android:textColorHint="@color/blanco"
+                app:boxStrokeWidth="2dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:endIconMode="clear_text"
+                android:padding="2dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:maxLines="1"
+                    android:inputType="textPassword"
+                    android:textSize="@dimen/medio"
+                    android:textAlignment="center"
+                    android:id="@+id/editTextPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/messageForgotPassword"
-            android:textSize="@dimen/small"/>
+            android:textSize="@dimen/medio"/>
         <Button
             android:id="@+id/buttonLogin"
             android:layout_margin="@dimen/marginButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Login"
-            android:textColor="@color/blanco"/>
+            android:textColor="@color/blanco"
+            android:textSize="@dimen/medio"/>
 
     </LinearLayout>
 
