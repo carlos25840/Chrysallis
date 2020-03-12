@@ -8,7 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="@dimen/borde_fragments">
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/eventoTextField"
             android:layout_width="match_parent"
@@ -16,15 +17,16 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             app:boxStrokeColor="@color/colorPrimaryDark"
             android:hint="@string/searchLabel"
+            app:startIconContentDescription="@string/searchLabel"
+            app:startIconDrawable="@drawable/search_icon"
             app:helperTextEnabled="true"
             app:boxStrokeWidth="2dp"
-
-            app:counterEnabled="true"
-            app:counterMaxLength="20">
+            app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:maxLines="1"/>
 
         </com.google.android.material.textfield.TextInputLayout>
         <LinearLayout
@@ -35,28 +37,62 @@
                 android:id="@+id/spnComunity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2">
+                android:layout_weight="2"
+                android:layout_gravity="center_vertical">
             </Spinner>
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3">
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/filledTextField"
+                    android:id="@+id/addressTextField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     app:boxStrokeColor="@color/colorPrimaryDark"
                     android:hint="@string/address"
+                    app:startIconContentDescription="@string/address"
+                    app:startIconDrawable="@drawable/location"
                     app:helperTextEnabled="true"
-                    app:boxStrokeWidth="2dp">
+                    app:boxStrokeWidth="2dp"
+                    app:endIconMode="clear_text">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </FrameLayout>
         </LinearLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/dateTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            app:boxStrokeColor="@color/colorPrimaryDark"
+            android:hint="@string/date"
+            app:helperTextEnabled="true"
+            app:startIconContentDescription="@string/date"
+            app:startIconDrawable="@drawable/date"
+            app:boxStrokeWidth="2dp"
+            app:endIconMode="clear_text">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextFecha"
+                android:editable="false" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/buttonLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/searchLabel"
+            android:textColor="@color/blanco"
+            android:textSize="@dimen/medio" />
     </LinearLayout>
+
 </FrameLayout>

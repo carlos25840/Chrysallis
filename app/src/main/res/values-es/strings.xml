@@ -24,4 +24,5 @@
     <string name="community">Comunidad</string>
     <string name="searchLabel">Buscar</string>
     <string name="address">Dirección</string>
+    <string name="date">Fecha</string>
 </resources>
