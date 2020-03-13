@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.FragmentHome"
+    tools:context=".fragments.FragmentProfile"
     android:orientation="vertical"
     android:gravity="center_horizontal">
 
@@ -15,7 +15,7 @@
         android:textColor="@color/colorPrimary"
         android:id="@+id/nombrePerfil"/>
 
-    <com.example.chrysallis.components.ImageButtonRounded
+    <ImageView
         android:layout_width="@dimen/imagenPerfil"
         android:layout_height="@dimen/imagenPerfil"
         android:scaleType="centerCrop"

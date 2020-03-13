@@ -31,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
         EditText editTextPhone = findViewById(R.id.editTextPhone);
         EditText editTextPassword = findViewById(R.id.editTextPassword);
 
-
-
-
         buttonLogin.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

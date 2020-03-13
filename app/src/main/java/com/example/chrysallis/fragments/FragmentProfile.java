@@ -2,9 +2,13 @@ package com.example.chrysallis.fragments;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -18,37 +22,51 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.chrysallis.components.ImageButtonRounded;
 import com.example.chrysallis.R;
 import com.example.chrysallis.classes.Socio;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 
 
 public class FragmentProfile extends Fragment {
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1 ;
+    private Socio socio;
+    private ImageView imagenPerfil;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
-
-        return view;
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
-    public void mostrarPerfil(Socio socio){
+    @Override
+    //Cuando se crea la activity
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        imagenPerfil = getView().findViewById(R.id.ImgPerfil);
+        mostrarPerfil();
+    }
+
+    public FragmentProfile(Socio socio) {
+        this.socio = socio;
+    }
+
+    public void mostrarPerfil(){
         TextView nombrePerfil = getView().findViewById(R.id.nombrePerfil);
-        ImageButtonRounded imagenPerfil = getView().findViewById(R.id.ImgPerfil);
         TextView ubicacionPerfil = getView().findViewById(R.id.ubicacionPerfil);
         TextView idiomaPerfil = getView().findViewById(R.id.languagePerfil);
         nombrePerfil.setText(socio.getNombre());
         ubicacionPerfil.setText(getResources().getString(R.string.community));
 
-        if(socio.getImagen() != 0){
-            imagenPerfil.setImageResource(socio.getImagen());
-        }else{
-            imagenPerfil.setImageResource(R.drawable.imagen_profile);
-        }
+        refrescarImagen();
 
 
         String idioma = "english";
@@ -85,8 +103,20 @@ public class FragmentProfile extends Fragment {
         });
     }
 
+
+    public void refrescarImagen(){
+
+        if(socio.getImagen() != null){
+            Bitmap bmp = BitmapFactory.decodeByteArray(socio.getImagen(), 0, socio.getImagen().length);
+            imagenPerfil.setImageBitmap(Bitmap.createScaledBitmap(bmp, imagenPerfil.getWidth(),
+                    imagenPerfil.getHeight(), false));
+        }else{
+            imagenPerfil.setImageResource(R.drawable.imagen_profile);
+        }
+
+    }
+
     public void cambiarImagen(){
-        ImageButtonRounded foto = getView().findViewById(R.id.ImgPerfil);
 
         final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
 
@@ -101,7 +131,7 @@ public class FragmentProfile extends Fragment {
                 if (options[item].equals("Take Photo")) {
                     if(hasCamera()){
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(intent, 1);
+                        startActivityForResult(intent, 0);
 
                     }else{
                         Toast.makeText(getContext(), "El dispositivo no tiene cámara", Toast.LENGTH_LONG);
@@ -166,4 +196,51 @@ public class FragmentProfile extends Fragment {
             }
         }
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        //ImageView foto = getView().findViewById(R.id.ImgPerfil);
+        if(resultCode != RESULT_CANCELED) {
+            switch (requestCode) {
+                case 0:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Bitmap bmp = (Bitmap) data.getExtras().get("data");
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        byte[] imagen = stream.toByteArray();
+                        bmp.recycle();
+                        socio.setImagen(imagen);
+                        refrescarImagen();
+
+                    }
+
+                    break;
+                case 1:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Uri uri = data.getData();
+                        byte[] imagen = convertImageToByte(uri);
+                        socio.setImagen(imagen);
+                        refrescarImagen();
+                    }
+                    break;
+            }
+        }
+    }
+
+    public byte[] convertImageToByte(Uri uri){
+        byte[] data = null;
+        try {
+            ContentResolver cr = getContext().getContentResolver();
+            InputStream inputStream = cr.openInputStream(uri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            data = baos.toByteArray();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
 }

@@ -46,6 +46,9 @@ public class DestacadosActivity extends AppCompatActivity {
         //Initializing viewPager
         viewPager = findViewById(R.id.viewpager);
 
+        //cambia el maximo de paginas en que se eliminan las vistas
+        viewPager.setOffscreenPageLimit(5); //!importante
+
         final BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -69,6 +72,7 @@ public class DestacadosActivity extends AppCompatActivity {
                 navView.getMenu().getItem(position).setChecked(true);
                 prevMenuItem = navView.getMenu().getItem(position);
 
+
             }
 
             @Override
@@ -76,22 +80,22 @@ public class DestacadosActivity extends AppCompatActivity {
 
             }
         });
-
         setupViewPager(viewPager);
-
-
     }
 
     private void setupViewPager(ViewPager viewPager) {
+        Intent intent = getIntent();
+        Socio socio = (Socio)intent.getSerializableExtra("socio");
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         homeFragment=new FragmentHome();
-        profileFragment=new FragmentProfile();
+        profileFragment=new FragmentProfile(socio);
         exploreFragment=new FragmentExplore();
         chatFragment=new FragmentChat();
         adapter.addFragment(homeFragment);
         adapter.addFragment(profileFragment);
         adapter.addFragment(exploreFragment);
         adapter.addFragment(chatFragment);
+
         viewPager.setAdapter(adapter);
     }
 
@@ -102,8 +106,6 @@ public class DestacadosActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Intent intent = getIntent();
-            Socio socio = (Socio)intent.getSerializableExtra("socio");
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
@@ -111,20 +113,19 @@ public class DestacadosActivity extends AppCompatActivity {
                     viewPager.setCurrentItem(0);
                     return true;
                 case R.id.navigation_profile:
-                    profileFragment.mostrarPerfil(socio);
                     pageAnterior = viewPager.getCurrentItem();
                     viewPager.setCurrentItem(1);
                     return true;
                 case R.id.navigation_explore:
                     pageAnterior = viewPager.getCurrentItem();
                     viewPager.setCurrentItem(2);
-
                     return true;
                 case R.id.navigation_chat:
                     pageAnterior = viewPager.getCurrentItem();
                     viewPager.setCurrentItem(3);
                     return true;
             }
+
             return false;
         }
 
