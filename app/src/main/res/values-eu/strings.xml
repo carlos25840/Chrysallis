@@ -25,4 +25,10 @@
     <string name="searchLabel">Bilatu</string>
     <string name="address">Helbidea</string>
     <string name="date">Data</string>
+    <string name="newPassword">Pasahitz berria</string>
+    <string name="newPasswordConfirmation">Pasahitzaren berrespena</string>
+    <string name="passwordChanged">Pasahitza aldatu da</string>
+    <string name="accept">Onartu</string>
+    <string name="cancel">Utzi</string>
+    <string name="passwordsNotMatch">Pasahitzak ez datoz bat</string>
 </resources>

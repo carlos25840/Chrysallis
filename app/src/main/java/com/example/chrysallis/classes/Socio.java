@@ -78,4 +78,8 @@ public class Socio implements Serializable {
     public void setImagenUsuario(byte[] imagenUsuario) {
         this.imagenUsuario = imagenUsuario;
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

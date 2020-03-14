@@ -22,15 +22,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.chrysallis.Api.Api;
+import com.example.chrysallis.Api.ApiService.SociosService;
+import com.example.chrysallis.MainActivity;
 import com.example.chrysallis.R;
 import com.example.chrysallis.classes.Socio;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -51,8 +62,15 @@ public class FragmentProfile extends Fragment {
     //Cuando se crea la activity
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        ImageButton editPassword = getView().findViewById(R.id.buttonEditPassword);
         imagenPerfil = getView().findViewById(R.id.ImgPerfil);
         mostrarPerfil();
+        editPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarDialogPassword();
+            }
+        });
     }
 
     public FragmentProfile(Socio socio) {
@@ -101,6 +119,7 @@ public class FragmentProfile extends Fragment {
                 }
             }
         });
+
     }
 
 
@@ -212,7 +231,6 @@ public class FragmentProfile extends Fragment {
                         bmp.recycle();
                         socio.setImagenUsuario(imagen);
                         refrescarImagen();
-
                     }
 
                     break;
@@ -241,6 +259,51 @@ public class FragmentProfile extends Fragment {
             e.printStackTrace();
         }
         return data;
+    }
+
+    private void mostrarDialogPassword() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity(), R.style.ThemeOverlay_MaterialComponents_Dialog_Alert);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View v = inflater.inflate(R.layout.dialog_password, null);
+
+
+        builder.setTitle(R.string.changePassword);
+        builder.setView(v);
+
+        final EditText editTextPassword = v.findViewById(R.id.editTextPassword);
+        final EditText editTextConfirmation = v.findViewById(R.id.editTextConfirmation);
+
+        builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(editTextPassword.getText().toString().equals(editTextConfirmation.getText().toString())){
+                    String password = MainActivity.encryptThisString(editTextPassword.getText().toString());
+                    socio.setPassword(password);
+                    SociosService sociosService = Api.getApi().create(SociosService.class);
+                    Call<Socio> socioCall = sociosService.putSocio(socio.getId(),socio);
+                    socioCall.enqueue(new Callback<Socio>() {
+                        @Override
+                        public void onResponse(Call<Socio> call, Response<Socio> response) {
+                            if(response.isSuccessful()){
+                                Toast.makeText(getActivity(),R.string.passwordChanged,Toast.LENGTH_LONG).show();
+                            }else{
+                                Toast.makeText(getActivity(), "No se ha podido cambiar la contraseña",Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Socio> call, Throwable t) {
+                            Toast.makeText(getActivity(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }else{
+                    Toast.makeText(getActivity(),R.string.passwordsNotMatch, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, null);
+        builder.show();
+
     }
 
 }

@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String password = editTextPassword.getText().toString();
                 String passwordEncrypted = encryptThisString(password);
-                passwordEncrypted = passwordEncrypted.toUpperCase();
                 SociosService sociosService = Api.getApi().create(SociosService.class);
                 Call<Socio> callSocioLogin = sociosService.SocioLogin(editTextPhone.getText().toString(),passwordEncrypted);
                 callSocioLogin.enqueue(new Callback<Socio>() {
@@ -93,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             // return the HashText
+            hashtext = hashtext.toUpperCase();
             return hashtext;
         }
 

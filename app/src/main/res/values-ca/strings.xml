@@ -25,4 +25,10 @@
     <string name="searchLabel">Buscar</string>
     <string name="address">Adreça</string>
     <string name="date">Data</string>
+    <string name="newPassword">Nova contrasenya</string>
+    <string name="newPasswordConfirmation">Confirmació de contrasenya</string>
+    <string name="passwordChanged">Contrasenya canviada</string>
+    <string name="accept">Acceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="passwordsNotMatch">Les contrasenyes no coincideixen</string>
 </resources>

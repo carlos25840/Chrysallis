@@ -24,4 +24,10 @@
     <string name="searchLabel">Search</string>
     <string name="address">Address</string>
     <string name="date">Date</string>
+    <string name="newPassword">New Password</string>
+    <string name="newPasswordConfirmation">Password confirmation</string>
+    <string name="passwordChanged">Password changed</string>
+    <string name="accept">Accept</string>
+    <string name="cancel">Cancel</string>
+    <string name="passwordsNotMatch">Passwords do not match</string>
 </resources>
