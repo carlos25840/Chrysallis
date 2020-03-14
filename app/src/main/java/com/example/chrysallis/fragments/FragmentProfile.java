@@ -106,8 +106,8 @@ public class FragmentProfile extends Fragment {
 
     public void refrescarImagen(){
 
-        if(socio.getImagen() != null){
-            Bitmap bmp = BitmapFactory.decodeByteArray(socio.getImagen(), 0, socio.getImagen().length);
+        if(socio.getImagenUsuario() != null){
+            Bitmap bmp = BitmapFactory.decodeByteArray(socio.getImagenUsuario(), 0, socio.getImagenUsuario().length);
             imagenPerfil.setImageBitmap(Bitmap.createScaledBitmap(bmp, imagenPerfil.getWidth(),
                     imagenPerfil.getHeight(), false));
         }else{
@@ -210,7 +210,7 @@ public class FragmentProfile extends Fragment {
                         bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
                         byte[] imagen = stream.toByteArray();
                         bmp.recycle();
-                        socio.setImagen(imagen);
+                        socio.setImagenUsuario(imagen);
                         refrescarImagen();
 
                     }
@@ -220,7 +220,7 @@ public class FragmentProfile extends Fragment {
                     if (resultCode == RESULT_OK && data != null) {
                         Uri uri = data.getData();
                         byte[] imagen = convertImageToByte(uri);
-                        socio.setImagen(imagen);
+                        socio.setImagenUsuario(imagen);
                         refrescarImagen();
                     }
                     break;

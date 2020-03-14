@@ -5,7 +5,7 @@
     <dimen name="radio">180dp</dimen>
     <dimen name="marginButton">40dp</dimen>
     <dimen name="small">36sp</dimen>
-    <dimen name="imagen">180dp</dimen>
+    <dimen name="imagenUsuario">180dp</dimen>
     <dimen name="imagenPerfil">150dp</dimen>
     <dimen name="icono">20dp</dimen>
     <dimen name="borde_fragments">8dp</dimen>

@@ -8,7 +8,7 @@ public class Socio implements Serializable {
     private String dni;
     private String telefono;
     private String nombre;
-    private byte[] imagen;
+    private byte[] imagenUsuario;
     private String apellidos;
     private boolean activo;
     private String mail;
@@ -71,11 +71,11 @@ public class Socio implements Serializable {
         return comunidades1;
     }
 
-    public byte[] getImagen() {
-        return imagen;
+    public byte[] getImagenUsuario() {
+        return imagenUsuario;
     }
 
-    public void setImagen(byte[] imagen) {
-        this.imagen = imagen;
+    public void setImagenUsuario(byte[] imagenUsuario) {
+        this.imagenUsuario = imagenUsuario;
     }
 }

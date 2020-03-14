@@ -16,8 +16,8 @@
         android:padding="5dp">
 
         <com.example.chrysallis.components.ImageButtonRounded
-            android:layout_width="@dimen/imagen"
-            android:layout_height="@dimen/imagen"
+            android:layout_width="@dimen/imagenUsuario"
+            android:layout_height="@dimen/imagenUsuario"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
             android:id="@+id/ImgEvento"
