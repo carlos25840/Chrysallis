@@ -58,6 +58,7 @@ public class FragmentProfile extends Fragment {
     private Socio socio;
     private ImageView imagenPerfil;
     private String idioma;
+    private String lang;
 
     @Nullable
     @Override
@@ -327,14 +328,17 @@ public class FragmentProfile extends Fragment {
                             case 0:
                                 socio.setIdiomaDefecto("English");
                                 idioma = getResources().getString(R.string.English);
+                                lang = "en";
                                 break;
                             case 1:
                                 socio.setIdiomaDefecto("Spanish");
                                 idioma = getResources().getString(R.string.Spanish);
+                                lang = "es";
                                 break;
                             case 2:
                                 socio.setIdiomaDefecto("Catalan");
                                 idioma = getResources().getString(R.string.Catalan);
+                                lang = "ca";
                                 break;
                             case 3:
                                 socio.setIdiomaDefecto("Euskera");
@@ -384,16 +388,5 @@ public class FragmentProfile extends Fragment {
     public void refrescarIdioma(){
         TextView idiomaPerfil = getView().findViewById(R.id.languagePerfil);
         idiomaPerfil.setText(idioma);
-    }
-
-    /*Método que nos cambia el idioma del juego en función del seleccionado*/
-    public void setLocale(String lang) {
-        Locale myLocale = new Locale(lang);
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
-        conf.locale = myLocale;
-        res.updateConfiguration(conf, dm);
-        //Falta recreate o alguna forma
     }
 }

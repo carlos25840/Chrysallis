@@ -1,6 +1,8 @@
 package com.example.chrysallis;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import com.example.chrysallis.adapters.EventoAdapter;
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +31,7 @@ import android.widget.TextView;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Locale;
 
 public class DestacadosActivity extends AppCompatActivity {
     private MenuItem prevMenuItem;
@@ -137,3 +141,5 @@ public class DestacadosActivity extends AppCompatActivity {
         viewPager.setCurrentItem(pageAnterior);
     }
 }
+
+
