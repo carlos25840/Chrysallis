@@ -31,4 +31,13 @@
     <string name="accept">Onartu</string>
     <string name="cancel">Utzi</string>
     <string name="passwordsNotMatch">Pasahitzak ez datoz bat</string>
+    <string name="changeLanguage">Change Languaje</string>
+    <string name="languageChanced">Language changed</string>
+    <string-array name="languages">
+        <item>Inglés</item>
+        <item>Castellano</item>
+        <item>Catalán</item>
+        <item>Euskera</item>
+        <item>Gallego</item>
+    </string-array>
 </resources>

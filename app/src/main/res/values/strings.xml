@@ -30,4 +30,13 @@
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
     <string name="passwordsNotMatch">Passwords do not match</string>
+    <string name="changeLanguage">Change Language</string>
+    <string name="languageChanced">Language changed</string>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Spanish</item>
+        <item>Catalan</item>
+        <item>Euskera</item>
+        <item>Galician</item>
+    </string-array>
 </resources>

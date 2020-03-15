@@ -82,4 +82,8 @@ public class Socio implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void setIdiomaDefecto(String idiomaDefecto) {
+        this.idiomaDefecto = idiomaDefecto;
+    }
 }

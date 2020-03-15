@@ -6,6 +6,8 @@ import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -18,6 +20,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.text.Html;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +34,7 @@ import android.widget.Toast;
 
 import com.example.chrysallis.Api.Api;
 import com.example.chrysallis.Api.ApiService.SociosService;
+import com.example.chrysallis.DestacadosActivity;
 import com.example.chrysallis.MainActivity;
 import com.example.chrysallis.R;
 import com.example.chrysallis.classes.Socio;
@@ -38,6 +43,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,6 +57,7 @@ public class FragmentProfile extends Fragment {
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1 ;
     private Socio socio;
     private ImageView imagenPerfil;
+    private String idioma;
 
     @Nullable
     @Override
@@ -62,15 +69,9 @@ public class FragmentProfile extends Fragment {
     //Cuando se crea la activity
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ImageButton editPassword = getView().findViewById(R.id.buttonEditPassword);
+
         imagenPerfil = getView().findViewById(R.id.ImgPerfil);
         mostrarPerfil();
-        editPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mostrarDialogPassword();
-            }
-        });
     }
 
     public FragmentProfile(Socio socio) {
@@ -81,13 +82,15 @@ public class FragmentProfile extends Fragment {
         TextView nombrePerfil = getView().findViewById(R.id.nombrePerfil);
         TextView ubicacionPerfil = getView().findViewById(R.id.ubicacionPerfil);
         TextView idiomaPerfil = getView().findViewById(R.id.languagePerfil);
+        ImageButton editPassword = getView().findViewById(R.id.buttonEditPassword);
+        ImageButton editLanguage =  getView().findViewById(R.id.buttonEditLanguage);
         nombrePerfil.setText(socio.getNombre());
         ubicacionPerfil.setText(getResources().getString(R.string.community));
 
         refrescarImagen();
 
 
-        String idioma = "english";
+        idioma = "english";
         if(socio.getIdiomaDefecto() != null){
             idioma = socio.getIdiomaDefecto().toLowerCase();
         }
@@ -120,6 +123,19 @@ public class FragmentProfile extends Fragment {
             }
         });
 
+        editPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogPassword();
+            }
+        });
+
+        editLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogLanguage();
+            }
+        });
     }
 
 
@@ -261,13 +277,13 @@ public class FragmentProfile extends Fragment {
         return data;
     }
 
-    private void mostrarDialogPassword() {
+    private void showDialogPassword() {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity(), R.style.ThemeOverlay_MaterialComponents_Dialog_Alert);
         LayoutInflater inflater = this.getLayoutInflater();
         View v = inflater.inflate(R.layout.dialog_password, null);
 
 
-        builder.setTitle(R.string.changePassword);
+        builder.setTitle(Html.fromHtml("<b>"+getString(R.string.changePassword)+"</b>"));
         builder.setView(v);
 
         final EditText editTextPassword = v.findViewById(R.id.editTextPassword);
@@ -279,23 +295,7 @@ public class FragmentProfile extends Fragment {
                 if(editTextPassword.getText().toString().equals(editTextConfirmation.getText().toString())){
                     String password = MainActivity.encryptThisString(editTextPassword.getText().toString());
                     socio.setPassword(password);
-                    SociosService sociosService = Api.getApi().create(SociosService.class);
-                    Call<Socio> socioCall = sociosService.putSocio(socio.getId(),socio);
-                    socioCall.enqueue(new Callback<Socio>() {
-                        @Override
-                        public void onResponse(Call<Socio> call, Response<Socio> response) {
-                            if(response.isSuccessful()){
-                                Toast.makeText(getActivity(),R.string.passwordChanged,Toast.LENGTH_LONG).show();
-                            }else{
-                                Toast.makeText(getActivity(), "No se ha podido cambiar la contraseña",Toast.LENGTH_LONG).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Socio> call, Throwable t) {
-                            Toast.makeText(getActivity(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    });
+                    saveUser(getString(R.string.passwordChanged),"No se ha podido cambiar la contraseña" );
                 }else{
                     Toast.makeText(getActivity(),R.string.passwordsNotMatch, Toast.LENGTH_LONG).show();
                 }
@@ -303,7 +303,97 @@ public class FragmentProfile extends Fragment {
         });
         builder.setNegativeButton(R.string.cancel, null);
         builder.show();
-
     }
 
+    public void showDialogLanguage() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity(), R.style.ThemeOverlay_MaterialComponents_Dialog_Alert);
+        builder.setTitle(R.string.changeLanguage);
+
+        //list of items
+        final String[] items = getResources().getStringArray(R.array.languages);
+        int pos = 0;
+
+        do{
+            if( !items[pos].equals(idioma)){
+                pos++;
+            }
+        }while(pos < items.length && !items[pos].equals(idioma));
+        // set single choice items
+        builder.setSingleChoiceItems(items, pos,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch(which){
+                            case 0:
+                                socio.setIdiomaDefecto("English");
+                                idioma = getResources().getString(R.string.English);
+                                break;
+                            case 1:
+                                socio.setIdiomaDefecto("Spanish");
+                                idioma = getResources().getString(R.string.Spanish);
+                                break;
+                            case 2:
+                                socio.setIdiomaDefecto("Catalan");
+                                idioma = getResources().getString(R.string.Catalan);
+                                break;
+                            case 3:
+                                socio.setIdiomaDefecto("Euskera");
+                                idioma = getResources().getString(R.string.Euskera);
+                                break;
+                            case 4:
+                                socio.setIdiomaDefecto("Galician");
+                                idioma = getResources().getString(R.string.Galician);
+                                break;
+                        }
+                    }
+                });
+
+        builder.setPositiveButton(R.string.accept,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        saveUser(getString(R.string.languageChanced), "No se ha podido cambiar el lenguaje");
+                        refrescarIdioma();
+                    }
+                });
+
+        builder.setNegativeButton(R.string.cancel,null);
+        builder.show();
+    }
+
+    public void saveUser(String success, String fail){
+        SociosService sociosService = Api.getApi().create(SociosService.class);
+        Call<Socio> socioCall = sociosService.putSocio(socio.getId(),socio);
+        socioCall.enqueue(new Callback<Socio>() {
+            @Override
+            public void onResponse(Call<Socio> call, Response<Socio> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(getActivity(),success,Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(getActivity(), fail,Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Socio> call, Throwable t) {
+                Toast.makeText(getActivity(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void refrescarIdioma(){
+        TextView idiomaPerfil = getView().findViewById(R.id.languagePerfil);
+        idiomaPerfil.setText(idioma);
+    }
+
+    /*Método que nos cambia el idioma del juego en función del seleccionado*/
+    public void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        //Falta recreate o alguna forma
+    }
 }

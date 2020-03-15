@@ -31,4 +31,13 @@
     <string name="accept">Acepta</string>
     <string name="cancel">Cancelar</string>
     <string name="passwordsNotMatch">Os contrasinais non coinciden</string>
+    <string name="changeLanguage">Change Languaje</string>
+    <string name="languageChanced">Language changed</string>
+    <string-array name="languages">
+        <item>Inglés</item>
+        <item>Castellano</item>
+        <item>Catalán</item>
+        <item>Euskera</item>
+        <item>Gallego</item>
+    </string-array>
 </resources>
