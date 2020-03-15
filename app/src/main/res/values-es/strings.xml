@@ -33,6 +33,7 @@
     <string name="passwordsNotMatch">Las contraseñas no coinciden</string>
     <string name="changeLanguage">Cambio de idioma</string>
     <string name="languageChanced">Idioma cambiado</string>
+    <string name="restartApp">Restart App</string>
     <string-array name="languages">
         <item>Inglés</item>
         <item>Español</item>

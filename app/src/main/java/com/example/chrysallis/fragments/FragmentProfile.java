@@ -358,6 +358,7 @@ public class FragmentProfile extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         saveUser(getString(R.string.languageChanced), "No se ha podido cambiar el lenguaje");
                         refrescarIdioma();
+                        setLocale(lang);
                     }
                 });
 
@@ -388,5 +389,27 @@ public class FragmentProfile extends Fragment {
     public void refrescarIdioma(){
         TextView idiomaPerfil = getView().findViewById(R.id.languagePerfil);
         idiomaPerfil.setText(idioma);
+    }
+
+    /*Método que nos cambia el idioma del juego en función del seleccionado*/
+    public void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        new MaterialAlertDialogBuilder(getActivity())
+                .setTitle(R.string.restartApp)
+                .setMessage("Message")
+                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getActivity(),MainActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .show();
+
     }
 }
