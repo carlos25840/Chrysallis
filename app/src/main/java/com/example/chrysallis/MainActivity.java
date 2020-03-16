@@ -3,7 +3,10 @@ package com.example.chrysallis;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +19,8 @@ import com.example.chrysallis.classes.Socio;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                             case 200:
                                 Socio socio = response.body();
                                 if(socio != null){
+                                    idiomaSocio(socio);
                                     Intent intent = new Intent(MainActivity.this, DestacadosActivity.class);
                                     intent.putExtra("socio", socio);
                                     startActivity(intent);
@@ -100,5 +106,40 @@ public class MainActivity extends AppCompatActivity {
         catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void idiomaSocio(Socio socio){
+        if(socio.getIdiomaDefecto() != null){
+            String idioma = socio.getIdiomaDefecto().toLowerCase();
+            switch (idioma){
+                case "spanish":
+                    setLocale("es");
+                    break;
+                case "euskera":
+
+                    break;
+                case "galician":
+
+                    break;
+                case "catalan":
+                    setLocale("ca");
+                    break;
+                case "english":
+                default:
+                    setLocale("en");
+                    break;
+            }
+        }
+
+    }
+
+    /*Método que nos cambia el idioma del juego en función del seleccionado*/
+    public void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
     }
 }
