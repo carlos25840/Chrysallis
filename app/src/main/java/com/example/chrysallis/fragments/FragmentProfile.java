@@ -399,7 +399,11 @@ public class FragmentProfile extends Fragment {
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
-        new MaterialAlertDialogBuilder(getActivity())
+
+        DestacadosActivity.refrescar(getFragmentManager());
+
+
+        /*new MaterialAlertDialogBuilder(getActivity())
                 .setTitle(R.string.restartApp)
                 .setMessage("Message")
                 .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
@@ -409,7 +413,7 @@ public class FragmentProfile extends Fragment {
                         startActivity(intent);
                     }
                 })
-                .show();
+                .show();*/
 
     }
 }

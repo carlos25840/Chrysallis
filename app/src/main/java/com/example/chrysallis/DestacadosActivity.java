@@ -1,5 +1,6 @@
 package com.example.chrysallis;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -17,6 +18,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,7 +34,9 @@ import android.widget.TextView;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Locale;
 
 public class DestacadosActivity extends AppCompatActivity {
@@ -42,6 +48,11 @@ public class DestacadosActivity extends AppCompatActivity {
     private FragmentChat chatFragment;
     private ViewPager viewPager;
     private int pageAnterior;
+    private static ArrayList<Fragment> fragments = new ArrayList<>();
+    private static BottomNavigationView navView;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +60,11 @@ public class DestacadosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_destacados);
         //Initializing viewPager
         viewPager = findViewById(R.id.viewpager);
+        navView = findViewById(R.id.nav_view);
 
         //cambia el maximo de paginas en que se eliminan las vistas
         viewPager.setOffscreenPageLimit(5); //!importante
 
-        final BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
@@ -95,10 +106,16 @@ public class DestacadosActivity extends AppCompatActivity {
         profileFragment=new FragmentProfile(socio);
         exploreFragment=new FragmentExplore();
         chatFragment=new FragmentChat();
-        adapter.addFragment(homeFragment);
-        adapter.addFragment(profileFragment);
-        adapter.addFragment(exploreFragment);
-        adapter.addFragment(chatFragment);
+
+        fragments.add(homeFragment);
+        fragments.add(profileFragment);
+        fragments.add(exploreFragment);
+        fragments.add(chatFragment);
+
+        adapter.addFragments(fragments);
+
+
+
 
         viewPager.setAdapter(adapter);
     }
@@ -139,6 +156,19 @@ public class DestacadosActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         viewPager.setCurrentItem(pageAnterior);
+    }
+
+
+    public static void refrescar(FragmentManager fm){
+        for(Fragment f : fragments){
+            fm.beginTransaction().detach(f).attach(f).addToBackStack(null).commit();
+        }
+
+        navView.getMenu().findItem(R.id.navigation_profile).setTitle(R.string.title_perfil);
+        navView.getMenu().findItem(R.id.navigation_home).setTitle(R.string.home);
+        navView.getMenu().findItem(R.id.navigation_explore).setTitle(R.string.title_explorar);
+        navView.getMenu().findItem(R.id.navigation_chat).setTitle(R.string.title_chat);
+
     }
 }
 
