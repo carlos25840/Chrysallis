@@ -10,9 +10,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.chrysallis.Api.Api;
 import com.example.chrysallis.Api.ApiService.ComunidadesService;
@@ -21,7 +22,6 @@ import com.example.chrysallis.adapters.ComunidadesSpinnerAdapter;
 import com.example.chrysallis.classes.Comunidad;
 import com.example.chrysallis.components.DatePickerFragment;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
@@ -35,7 +35,11 @@ public class FragmentExplore extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View item = inflater.inflate(R.layout.fragment_explore, container, false);
-        TextInputEditText txtDate = item.findViewById(R.id.editTextFecha);
+        EditText txtDate = item.findViewById(R.id.editTextFecha);
+        EditText txtNombreEvento = item.findViewById(R.id.editTextNombre);
+        EditText txtUbicacion = item.findViewById(R.id.editTextUbicacion);
+        Button btnSearch = item.findViewById(R.id.buttonSearch);
+        Spinner spnComunidades = item.findViewById(R.id.spnComunity);;
         ComunidadesService comunidadesService = Api.getApi().create(ComunidadesService.class);
         Call<ArrayList<Comunidad>> comunidadesCall = comunidadesService.getComunidades();
         comunidadesCall.enqueue(new Callback<ArrayList<Comunidad>>() {
@@ -45,7 +49,6 @@ public class FragmentExplore extends Fragment {
                     case 200:
                         ArrayList<Comunidad> comunidades = response.body();
                         ComunidadesSpinnerAdapter spinnerAdapter = new ComunidadesSpinnerAdapter(getActivity(),comunidades);
-                        Spinner spnComunidades = item.findViewById(R.id.spnComunity);
                         spnComunidades.setAdapter(spinnerAdapter);
                         break;
                     default:
@@ -72,6 +75,14 @@ public class FragmentExplore extends Fragment {
                 });
 
                 newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+            }
+        });
+
+
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
         return item;
