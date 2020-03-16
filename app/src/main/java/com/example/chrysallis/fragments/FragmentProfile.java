@@ -1,10 +1,12 @@
 package com.example.chrysallis.fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -154,29 +156,29 @@ public class FragmentProfile extends Fragment {
 
     public void cambiarImagen(){
 
-        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+        final CharSequence[] options = { getResources().getString(R.string.TakePhoto), getResources().getString(R.string.ChooseGallery),getResources().getString(R.string.cancel) };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Choose your profile picture");
+        builder.setTitle(getResources().getString(R.string.ChooseProfilePicture));
 
         builder.setItems(options, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int item) {
 
-                if (options[item].equals("Take Photo")) {
+                if (options[item].equals(getResources().getString(R.string.TakePhoto))) {
                     if(hasCamera()){
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         startActivityForResult(intent, 0);
 
                     }else{
-                        Toast.makeText(getContext(), "El dispositivo no tiene cámara", Toast.LENGTH_LONG);
+                        Toast.makeText(getContext(), getResources().getString(R.string.NoCamera), Toast.LENGTH_LONG);
                     }
-                } else if (options[item].equals("Choose from Gallery")) {
+                } else if (options[item].equals(getResources().getString(R.string.ChooseGallery))) {
                     Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(pickPhoto , 1);
 
-                } else if (options[item].equals("Cancel")) {
+                } else if (options[item].equals(getResources().getString(R.string.cancel))) {
                     dialog.dismiss();
                 }
             }
@@ -224,10 +226,10 @@ public class FragmentProfile extends Fragment {
         if(requestCode==1)
         {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getContext(), "Permission granted", Toast.LENGTH_SHORT).show();   //si el usuario acepta los permisos
+                Toast.makeText(getContext(), getResources().getString(R.string.PermisoDenegado), Toast.LENGTH_SHORT).show();   //si el usuario acepta los permisos
                 cambiarImagen();  //Ejecutamos el programa
             } else {
-                Toast.makeText(getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getResources().getString(R.string.PermisoDenegado), Toast.LENGTH_SHORT).show();
                 //si el usuario no nos da permisos no hacemos nada
             }
         }
@@ -296,7 +298,7 @@ public class FragmentProfile extends Fragment {
                 if(editTextPassword.getText().toString().equals(editTextConfirmation.getText().toString())){
                     String password = MainActivity.encryptThisString(editTextPassword.getText().toString());
                     socio.setPassword(password);
-                    saveUser(getString(R.string.passwordChanged),"No se ha podido cambiar la contraseña" );
+                    saveUser(getString(R.string.passwordChanged),getString(R.string.passwordNotChanged));
                 }else{
                     Toast.makeText(getActivity(),R.string.passwordsNotMatch, Toast.LENGTH_LONG).show();
                 }
@@ -343,10 +345,12 @@ public class FragmentProfile extends Fragment {
                             case 3:
                                 socio.setIdiomaDefecto("Euskera");
                                 idioma = getResources().getString(R.string.Euskera);
+                                lang = "eu";
                                 break;
                             case 4:
                                 socio.setIdiomaDefecto("Galician");
                                 idioma = getResources().getString(R.string.Galician);
+                                lang = "gl";
                                 break;
                         }
                     }
@@ -356,7 +360,7 @@ public class FragmentProfile extends Fragment {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        saveUser(getString(R.string.languageChanced), "No se ha podido cambiar el lenguaje");
+                        saveUser(getString(R.string.languageChanced), getString(R.string.languageNotChanced));
                         refrescarIdioma();
                         setLocale(lang);
                     }
@@ -401,6 +405,7 @@ public class FragmentProfile extends Fragment {
         res.updateConfiguration(conf, dm);
 
         DestacadosActivity.refrescar(getFragmentManager());
+        saveLocale(lang);
 
 
         /*new MaterialAlertDialogBuilder(getActivity())
@@ -415,5 +420,14 @@ public class FragmentProfile extends Fragment {
                 })
                 .show();*/
 
+    }
+
+    public void saveLocale(String lang) {
+        String langPref = "Language";
+        SharedPreferences prefs = getActivity().getSharedPreferences("CommonPrefs",
+                Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(langPref, lang);
+        editor.commit();
     }
 }

@@ -32,13 +32,20 @@
     <string name="cancel">Utzi</string>
     <string name="passwordsNotMatch">Pasahitzak ez datoz bat</string>
     <string name="changeLanguage">Change Languaje</string>
-    <string name="languageChanced">Language changed</string>
+    <string name="languageChanced">Hizkuntza aldatu da</string>
     <string name="restartApp">Restart App</string>
+    <string name="languageNotChanced" >Hizkuntza aldatu ez</string>
+    <string name="passwordNotChanged">Ezin izan da pasahitza aldatu</string>
+    <string name="PermisoDenegado">Baimena ukatuta</string>
+    <string name="ChooseGallery" >Aukeratu galeriatik</string>
+    <string name="NoCamera" >Telefonoak ez du kamerarik</string>
+    <string name="TakePhoto" >Argazki bat atera</string>
+    <string name="ChooseProfilePicture" >Aukeratu profileko argazkia</string>
     <string-array name="languages">
-        <item>Inglés</item>
-        <item>Castellano</item>
-        <item>Catalán</item>
-        <item>Euskera</item>
-        <item>Gallego</item>
+        <item>Ingelesez</item>
+        <item>Gaztelania</item>
+        <item>Katalanez</item>
+        <item>Euskal</item>
+        <item>Galiziako</item>
     </string-array>
 </resources>

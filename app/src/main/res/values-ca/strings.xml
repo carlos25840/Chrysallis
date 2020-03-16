@@ -34,6 +34,13 @@
     <string name="changeLanguage">Canviar idioma</string>
     <string name="languageChanced">Idioma canviat</string>
     <string name="restartApp">Restart App</string>
+    <string name="languageNotChanced" >Idioma no canviat</string>
+    <string name="passwordNotChanged">No s\'ha pogut canviar la contrasenya</string>
+    <string name="PermisoDenegado">Permís denegat</string>
+    <string name="ChooseGallery" >Trieu entre la galeria</string>
+    <string name="NoCamera" >El dispositiu no té càmera</string>
+    <string name="TakePhoto" >Fer una foto</string>
+    <string name="ChooseProfilePicture" >Trieu la imatge de perfil</string>
     <string-array name="languages">
         <item>Anglès</item>
         <item>Castellà</item>
