@@ -2,7 +2,9 @@ package com.example.chrysallis;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadLocale();
         setContentView(R.layout.activity_main);
         Button buttonLogin = findViewById(R.id.buttonLogin);
         EditText editTextPhone = findViewById(R.id.editTextPhone);
@@ -113,20 +116,20 @@ public class MainActivity extends AppCompatActivity {
             String idioma = socio.getIdiomaDefecto().toLowerCase();
             switch (idioma){
                 case "spanish":
-                    setLocale("es");
+                    setLocale("es", false);
                     break;
                 case "euskera":
-
+                    setLocale("eu", false);
                     break;
                 case "galician":
-
+                    setLocale("gl", false);
                     break;
                 case "catalan":
-                    setLocale("ca");
+                    setLocale("ca", false);
                     break;
                 case "english":
                 default:
-                    setLocale("en");
+                    setLocale("en", false);
                     break;
             }
         }
@@ -134,12 +137,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*Método que nos cambia el idioma del juego en función del seleccionado*/
-    public void setLocale(String lang) {
+    public void setLocale(String lang, boolean refrescar) {
         Locale myLocale = new Locale(lang);
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
+
     }
+
+    public void loadLocale() {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs",
+                Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+        setLocale(language, true);
+    }
+
 }

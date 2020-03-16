@@ -170,6 +170,8 @@ public class DestacadosActivity extends AppCompatActivity {
         navView.getMenu().findItem(R.id.navigation_chat).setTitle(R.string.title_chat);
 
     }
+
+
 }
 
 
