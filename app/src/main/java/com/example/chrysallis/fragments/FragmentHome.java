@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.chrysallis.Api.Api;
 import com.example.chrysallis.Api.ApiService.EventosService;
@@ -55,7 +56,7 @@ public class FragmentHome extends Fragment {
         eventos.add(evento5);
         //Inicialización RecyclerView
         recyclerView = view.findViewById(R.id.RecyclerDestacados);
-
+        msgNotEvents = view.findViewById(R.id.msgNotEvents);
 
         EventosService eventosService = Api.getApi().create(EventosService.class);
         Call<ArrayList<Evento>> eventosCall = eventosService.busquedaEventosComunidad(socio.getId_comunidad());
@@ -66,7 +67,6 @@ public class FragmentHome extends Fragment {
                     case 200:
                         eventos = response.body();
                         if(!eventos.isEmpty()){
-                            msgNotEvents = view.findViewById(R.id.msgNotEvents);
                             msgNotEvents.setVisibility(View.GONE);
                             EventoAdapter adaptador = new EventoAdapter(eventos);
                             recyclerView.setAdapter(adaptador);
@@ -80,8 +80,6 @@ public class FragmentHome extends Fragment {
                                     startActivity(intent);
                                 }
                             });
-                        }else{
-
                         }
                         break;
                     default:
@@ -91,7 +89,7 @@ public class FragmentHome extends Fragment {
 
             @Override
             public void onFailure(Call<ArrayList<Evento>> call, Throwable t) {
-
+                Toast.makeText(getContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
