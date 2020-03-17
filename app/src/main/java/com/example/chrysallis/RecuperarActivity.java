@@ -31,6 +31,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RecuperarActivity extends AppCompatActivity {
+    private Socio socio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +47,15 @@ public class RecuperarActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 SociosService sociosService = Api.getApi().create(SociosService.class);
-                Call<Socio> callSocioLogin = sociosService.SocioRecuperar(editTextPhone.getText().toString(), editTextCorreo.getText().toString());
+                Call<Socio> callSocioLogin = sociosService.SocioRecuperar(editTextCorreo.getText().toString(), editTextPhone.getText().toString());
                 callSocioLogin.enqueue(new Callback<Socio>() {
                     @Override
                     public void onResponse(Call<Socio> call, Response<Socio> response) {
                         switch (response.code()){
                             case 200:
-                                Socio socio = response.body();
+                                socio = response.body();
                                 if(socio != null){
                                     enviarMail();
-                                    //Toast.makeText(getApplicationContext(),"Su contraseña ha sido enviada", Toast.LENGTH_LONG).show();
                                 }else{
                                     Toast.makeText(getApplicationContext(),R.string.loginIncorrect, Toast.LENGTH_LONG).show();
                                 }
@@ -77,24 +77,28 @@ public class RecuperarActivity extends AppCompatActivity {
     }
 
     public void enviarMail(){
+        EditText editTextCorreo = findViewById(R.id.editTextEmail);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
         Mail m=new Mail("eventschrysallis@gmail.com","chrysallis2005");
 
-        String[] toArr = {"carlos25840@gmail.com", "mariajosebg95@gmail.com"};
+        String[] toArr = {editTextCorreo.getText().toString().trim(), "carlos25840@gmail.com"};
         m.setTo(toArr);
         m.setFrom("Chrysallis");
         m.setSubject("Chrysallis password");
 
 
-
-        m.setBody("Tu nueva clave de Crysallis Events es: " + getPassword(8));
+        String password = getPassword(8);
+        m.setBody("Tu nueva clave de Crysallis Events es: " + password);
 
         try {
             boolean i= m.send();
             if(i==true){
+                String passwordEnc = MainActivity.encryptThisString(password);
+                socio.setPassword(passwordEnc);
+                saveUser(getString(R.string.passwordChanged),getString(R.string.passwordNotChanged));
                 Toast.makeText(getApplicationContext(),"Email was sent successfully ",Toast.LENGTH_LONG).show();
 
             }
@@ -123,6 +127,26 @@ public class RecuperarActivity extends AppCompatActivity {
         }
 
         return stringBuilder.toString();
+    }
+
+    public void saveUser(String success, String fail){
+        SociosService sociosService = Api.getApi().create(SociosService.class);
+        Call<Socio> socioCall = sociosService.putSocio(socio.getId(),socio);
+        socioCall.enqueue(new Callback<Socio>() {
+            @Override
+            public void onResponse(Call<Socio> call, Response<Socio> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(RecuperarActivity.this, success,Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(RecuperarActivity.this, fail,Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Socio> call, Throwable t) {
+                Toast.makeText(RecuperarActivity.this,t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 
