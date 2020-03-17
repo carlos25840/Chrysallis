@@ -15,8 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EventoActivity"
-            ></activity>
+        <activity android:name=".RecuperarActivity"></activity>
+        <activity android:name=".EventoActivity" />
         <activity
             android:name=".DestacadosActivity"
             android:label="@string/destacados" />

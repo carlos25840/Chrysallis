@@ -33,13 +33,14 @@
     <string name="changeLanguage">Change Language</string>
     <string name="languageChanced">Language changed</string>
     <string name="restartApp">Restart App</string>
-    <string name="languageNotChanced" >Language not changed</string>
+    <string name="languageNotChanced">Language not changed</string>
     <string name="passwordNotChanged">Could not change password</string>
     <string name="PermisoDenegado">Permission denied</string>
-    <string name="ChooseGallery" >Choose from gallery</string>
-    <string name="NoCamera" >The device has no camera</string>
-    <string name="TakePhoto" />
-    <string name="ChooseProfilePicture" >Choose profile picture</string>
+    <string name="ChooseGallery">Choose from gallery</string>
+    <string name="NoCamera">The device has no camera</string>
+    <string name="TakePhoto" >Take a photo</string>
+    <string name="ChooseProfilePicture">Choose profile picture</string>
+    <string name="email">Email address</string>
     <string-array name="languages">
         <item>English</item>
         <item>Spanish</item>

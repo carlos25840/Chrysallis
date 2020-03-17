@@ -12,11 +12,14 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.chrysallis.Api.Api;
 import com.example.chrysallis.Api.ApiService.SociosService;
 import com.example.chrysallis.classes.Socio;
+
+import org.w3c.dom.Text;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         Button buttonLogin = findViewById(R.id.buttonLogin);
         EditText editTextPhone = findViewById(R.id.editTextPhone);
         EditText editTextPassword = findViewById(R.id.editTextPassword);
+        TextView recuperar = findViewById(R.id.recuperarClave);
 
         buttonLogin.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -72,6 +76,13 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
+
+            }
+        });
+
+        recuperar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });
