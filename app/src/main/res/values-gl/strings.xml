@@ -42,6 +42,7 @@
     <string name="TakePhoto" >Fai unha foto</string>
     <string name="ChooseProfilePicture" >Escolle a imaxe de perfil</string>
     <string name="email">Enderezo electrónico</string>
+    <string name="sendPassword">Enviar contrasinal</string>
     <string-array name="languages">
         <item>Inglés</item>
         <item>Español</item>

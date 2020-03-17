@@ -19,4 +19,7 @@ public interface SociosService {
 
     @PUT("api/Socios/{id}")
     Call<Socio>  putSocio(@Path("id") int id, @Body Socio socio);
+
+    @GET("api/Socios/busquedaRecuperar/{telefono}/{mail}")
+    Call<Socio> SocioRecuperar(@Path("telefono")String telefono,@Path("mail") String mail);
 }

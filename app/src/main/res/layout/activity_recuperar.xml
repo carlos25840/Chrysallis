@@ -30,7 +30,7 @@
                 android:inputType="phone"
                 android:textSize="@dimen/medio"
                 android:textAlignment="center"
-                android:id="@+id/editTextPhone"
+                android:id="@+id/editTextPhoneRecuperar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -66,5 +66,14 @@
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonRecuperar"
+        android:layout_margin="@dimen/marginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sendPassword"
+        android:textColor="@color/blanco"
+        android:textSize="@dimen/medio"/>
 
 </LinearLayout>
