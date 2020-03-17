@@ -84,7 +84,7 @@ public class RecuperarActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
         Mail m=new Mail("eventschrysallis@gmail.com","chrysallis2005");
 
-        String[] toArr = {editTextCorreo.getText().toString().trim(), "carlos25840@gmail.com"};
+        String[] toArr = {editTextCorreo.getText().toString().trim()};
         m.setTo(toArr);
         m.setFrom("Chrysallis");
         m.setSubject("Chrysallis password");
