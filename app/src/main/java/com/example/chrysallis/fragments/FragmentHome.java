@@ -11,25 +11,37 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.example.chrysallis.Api.Api;
+import com.example.chrysallis.Api.ApiService.EventosService;
 import com.example.chrysallis.EventoActivity;
 import com.example.chrysallis.MainActivity;
 import com.example.chrysallis.R;
 import com.example.chrysallis.adapters.EventoAdapter;
 import com.example.chrysallis.classes.Evento;
+import com.example.chrysallis.classes.Socio;
 
 import java.sql.Date;
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class FragmentHome extends Fragment {
+    private ArrayList<Evento> eventos;
+    private RecyclerView recyclerView;
+    private Socio socio;
+    private TextView msgNotEvents;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         //-----------------------------------PRUEBAS----------------------------------------------//
-        ArrayList<Evento> eventos = new ArrayList<>();
+        eventos = new ArrayList<>();
         Evento evento1 = new Evento("Colonies al pedraforca", "Colonias de 4 dias por semana santa", R.drawable.ca, new Date(121,07,28), "Barcelona");
         Evento evento2 = new Evento("Prueba", "descripción prueba", R.drawable.en, new Date(120,04,04), "Barcelona");
         Evento evento3 = new Evento("Prueba", "descripción prueba", R.drawable.es, new Date(120,04,04), "Barcelona");
@@ -42,28 +54,60 @@ public class FragmentHome extends Fragment {
         eventos.add(evento4);
         eventos.add(evento5);
         //Inicialización RecyclerView
-        RecyclerView recyclerView = view.findViewById(R.id.RecyclerDestacados);
+        recyclerView = view.findViewById(R.id.RecyclerDestacados);
 
-        EventoAdapter adaptador = new EventoAdapter(eventos);
 
-        recyclerView.setAdapter(adaptador);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        //Listener para abrir el seleccionado
-        adaptador.setOnClickListener(new View.OnClickListener() {
+        EventosService eventosService = Api.getApi().create(EventosService.class);
+        Call<ArrayList<Evento>> eventosCall = eventosService.busquedaEventosComunidad(socio.getId_comunidad());
+        eventosCall.enqueue(new Callback<ArrayList<Evento>>() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), EventoActivity.class);
-                intent.putExtra("evento", eventos.get(recyclerView.getChildAdapterPosition(v)));
+            public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
+                switch (response.code()){
+                    case 200:
+                        eventos = response.body();
+                        if(!eventos.isEmpty()){
+                            msgNotEvents = view.findViewById(R.id.msgNotEvents);
+                            msgNotEvents.setVisibility(View.GONE);
+                            EventoAdapter adaptador = new EventoAdapter(eventos);
+                            recyclerView.setAdapter(adaptador);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                            //Listener para abrir el seleccionado
+                            adaptador.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getActivity(), EventoActivity.class);
+                                    intent.putExtra("evento", eventos.get(recyclerView.getChildAdapterPosition(v)));
+                                    startActivity(intent);
+                                }
+                            });
+                        }else{
 
-                startActivity(intent);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Evento>> call, Throwable t) {
+
             }
         });
+
+
+
+
+
 
 
         //------------------------***************************************-----------------------//
         return view;
 
 
+    }
+
+    public FragmentHome(Socio socio){
+        this.socio= socio;
     }
 }

@@ -24,9 +24,9 @@
             app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextNameEvent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editTextNombre"
                 android:maxLines="1"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -46,47 +46,26 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3">
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/addressTextField"
+                    android:id="@+id/dateTextField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     app:boxStrokeColor="@color/colorPrimaryDark"
-                    android:hint="@string/address"
-                    app:startIconContentDescription="@string/address"
-                    app:startIconDrawable="@drawable/location"
+                    android:hint="@string/date"
                     app:helperTextEnabled="true"
+                    app:startIconContentDescription="@string/date"
+                    app:startIconDrawable="@drawable/date"
                     app:boxStrokeWidth="2dp"
                     app:endIconMode="clear_text">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/editTextUbicacion"
-                        android:maxLines="1"/>
+                        android:id="@+id/editTextFecha"
+                        android:editable="false" />
                 </com.google.android.material.textfield.TextInputLayout>
             </FrameLayout>
         </LinearLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/dateTextField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            app:boxStrokeColor="@color/colorPrimaryDark"
-            android:hint="@string/date"
-            app:helperTextEnabled="true"
-            app:startIconContentDescription="@string/date"
-            app:startIconDrawable="@drawable/date"
-            app:boxStrokeWidth="2dp"
-            app:endIconMode="clear_text">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/editTextFecha"
-                android:editable="false" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
         <Button
             android:id="@+id/buttonSearch"
             android:layout_width="wrap_content"
@@ -96,5 +75,4 @@
             android:textColor="@color/blanco"
             android:textSize="@dimen/medio" />
     </LinearLayout>
-
 </FrameLayout>

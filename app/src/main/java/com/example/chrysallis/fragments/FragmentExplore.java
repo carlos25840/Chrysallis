@@ -14,9 +14,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.chrysallis.Api.Api;
 import com.example.chrysallis.Api.ApiService.ComunidadesService;
+import com.example.chrysallis.Api.ApiService.EventosService;
 import com.example.chrysallis.R;
 import com.example.chrysallis.adapters.ComunidadesSpinnerAdapter;
 import com.example.chrysallis.classes.Comunidad;
@@ -31,15 +33,14 @@ import retrofit2.Response;
 
 
 public class FragmentExplore extends Fragment {
+    private Spinner spnComunidades;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View item = inflater.inflate(R.layout.fragment_explore, container, false);
         EditText txtDate = item.findViewById(R.id.editTextFecha);
-        EditText txtNombreEvento = item.findViewById(R.id.editTextNombre);
-        EditText txtUbicacion = item.findViewById(R.id.editTextUbicacion);
+        spnComunidades = item.findViewById(R.id.spnComunity);
         Button btnSearch = item.findViewById(R.id.buttonSearch);
-        Spinner spnComunidades = item.findViewById(R.id.spnComunity);;
         ComunidadesService comunidadesService = Api.getApi().create(ComunidadesService.class);
         Call<ArrayList<Comunidad>> comunidadesCall = comunidadesService.getComunidades();
         comunidadesCall.enqueue(new Callback<ArrayList<Comunidad>>() {
@@ -78,13 +79,6 @@ public class FragmentExplore extends Fragment {
             }
         });
 
-
-        btnSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         return item;
     }
 

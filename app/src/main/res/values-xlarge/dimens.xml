@@ -10,4 +10,5 @@
     <dimen name="icono">20dp</dimen>
     <dimen name="borde_fragments">8dp</dimen>
     <dimen name="sizeSpnSelectedItem">50sp</dimen>
+    <dimen name="msgNotEvents">20sp</dimen>
 </resources>
