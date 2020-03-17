@@ -43,6 +43,7 @@
     <string name="ChooseProfilePicture" >Escoge foto de perfil</string>
     <string name="email">Correo electrónico</string>
     <string name="msgNotEvents">No hay eventos nuevos actualmente.</string>
+    <string name="sendPassword">Enviar contraseña</string>
     <string-array name="languages">
         <item>Inglés</item>
         <item>Español</item>

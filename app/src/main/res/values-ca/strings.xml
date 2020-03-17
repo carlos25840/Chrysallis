@@ -43,6 +43,7 @@
     <string name="ChooseProfilePicture" >Trieu la imatge de perfil</string>
     <string name="email">Correu electrònic</string>
     <string name="msgNotEvents">No hi ha events nous actualment.</string>
+    <string name="sendPassword">Enviar contrasenya</string>
     <string-array name="languages">
         <item>Anglès</item>
         <item>Castellà</item>
