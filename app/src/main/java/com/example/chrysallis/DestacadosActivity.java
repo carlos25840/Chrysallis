@@ -102,7 +102,7 @@ public class DestacadosActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Socio socio = (Socio)intent.getSerializableExtra("socio");
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        homeFragment=new FragmentHome();
+        homeFragment=new FragmentHome(socio);
         profileFragment=new FragmentProfile(socio);
         exploreFragment=new FragmentExplore();
         chatFragment=new FragmentChat();

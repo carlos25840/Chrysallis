@@ -34,6 +34,7 @@
     <string name="changeLanguage">Cambio de idioma</string>
     <string name="languageChanced">Idioma cambiado</string>
     <string name="restartApp">Restart App</string>
+    <string name="msgNotEvents">There are currently no new events.</string>
     <string-array name="languages">
         <item>Inglés</item>
         <item>Español</item>
