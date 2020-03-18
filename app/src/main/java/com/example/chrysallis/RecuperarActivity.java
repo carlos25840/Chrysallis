@@ -13,19 +13,7 @@ import android.widget.Toast;
 import com.example.chrysallis.Api.Api;
 import com.example.chrysallis.Api.ApiService.SociosService;
 import com.example.chrysallis.classes.Socio;
-
-import java.io.UnsupportedEncodingException;
-import java.util.Properties;
 import java.util.Random;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -91,7 +79,7 @@ public class RecuperarActivity extends AppCompatActivity {
 
 
         String password = getPassword(8);
-        m.setBody("Tu nueva clave de Crysallis Events es: " + password);
+        m.setBody(getString(R.string.NewPasword) + password + getString(R.string.recomendacion));
 
         try {
             boolean i= m.send();
@@ -99,13 +87,10 @@ public class RecuperarActivity extends AppCompatActivity {
                 String passwordEnc = MainActivity.encryptThisString(password);
                 socio.setPassword(passwordEnc);
                 saveUser(getString(R.string.passwordChanged),getString(R.string.passwordNotChanged));
-                Toast.makeText(getApplicationContext(),"Email was sent successfully ",Toast.LENGTH_LONG).show();
-
             }
             else
             {
-                Toast.makeText(getApplicationContext(),"Email was not sent successfully ",Toast.LENGTH_LONG).show();
-
+                Toast.makeText(getApplicationContext(),R.string.errorEmail,Toast.LENGTH_LONG).show();
             }
 
         } catch (Exception e2) {

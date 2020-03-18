@@ -44,6 +44,9 @@
     <string name="email">Correo electrónico</string>
     <string name="msgNotEvents">No hay eventos nuevos actualmente.</string>
     <string name="sendPassword">Enviar contraseña</string>
+    <string name="NewPasword">Tu nueva contraseña de Crysallis Events es:\u0020</string>
+    <string name="recomendacion">\n\nRecomendamos cambiar esta contraseña \n\n No responder, este es un correo automático</string>
+    <string name="errorEmail">El correo electrónico no se envió correctamente</string>
     <string-array name="languages">
         <item>Inglés</item>
         <item>Español</item>
