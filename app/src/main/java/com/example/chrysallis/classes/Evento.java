@@ -10,10 +10,10 @@ public class Evento implements Serializable {
     private String descripcion;
     private int imagen;
     private int id;
-    private Date fecha;
+    private String fecha;
     private String ubicacion;
-    private Time hora;
-    private Date fechaLimite;
+    private String hora;
+    private String fechaLimite;
     private int numAsistentes;
     private int id_comunidad;
     private HashSet<Asistir> asistir;
@@ -21,7 +21,7 @@ public class Evento implements Serializable {
     private HashSet<Notificacion> notificaciones;
 
 
-    public Evento(String nombre, String descripcion, int imagen, int id, Date fecha, String ubicacion, Time hora, Date fechaLimite, int numAsistentes, int id_comunidad) {
+    public Evento(String nombre, String descripcion, int imagen, int id, String fecha, String ubicacion, String hora, String fechaLimite, int numAsistentes, int id_comunidad) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagen = imagen;
@@ -34,7 +34,7 @@ public class Evento implements Serializable {
         this.id_comunidad = id_comunidad;
     }
 
-    public Evento(String nombre, String descripcion, int imagen, Date fecha, String ubicacion) {
+    public Evento(String nombre, String descripcion, int imagen, String fecha, String ubicacion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagen = imagen;
@@ -74,11 +74,11 @@ public class Evento implements Serializable {
         this.id = id;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
@@ -90,19 +90,19 @@ public class Evento implements Serializable {
         this.ubicacion = ubicacion;
     }
 
-    public Time getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(Time hora) {
+    public void setHora(String hora) {
         this.hora = hora;
     }
 
-    public Date getFechaLimite() {
+    public String getFechaLimite() {
         return fechaLimite;
     }
 
-    public void setFechaLimite(Date fechaLimite) {
+    public void setFechaLimite(String fechaLimite) {
         this.fechaLimite = fechaLimite;
     }
 

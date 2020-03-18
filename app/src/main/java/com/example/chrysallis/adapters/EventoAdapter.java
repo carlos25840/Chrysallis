@@ -82,7 +82,8 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventosVie
             imagen.setImageResource(evento.getImagen());
             ubicacion.setText(evento.getUbicacion());
             descripcion.setText(evento.getDescripcion());
-            fecha.setText(evento.getFecha().toString());
+            String[] soloFecha = evento.getFecha().split("T");
+            fecha.setText(soloFecha[0]);
         }
     }
 }

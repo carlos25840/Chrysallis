@@ -43,7 +43,7 @@ public class FragmentHome extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         //-----------------------------------PRUEBAS----------------------------------------------//
         eventos = new ArrayList<>();
-        Evento evento1 = new Evento("Colonies al pedraforca", "Colonias de 4 dias por semana santa", R.drawable.ca, new Date(121,07,28), "Barcelona");
+       /* Evento evento1 = new Evento("Colonies al pedraforca", "Colonias de 4 dias por semana santa", R.drawable.ca, new Date(121,07,28), "Barcelona");
         Evento evento2 = new Evento("Prueba", "descripción prueba", R.drawable.en, new Date(120,04,04), "Barcelona");
         Evento evento3 = new Evento("Prueba", "descripción prueba", R.drawable.es, new Date(120,04,04), "Barcelona");
         Evento evento4 = new Evento("Prueba", "descripción prueba", R.drawable.chat, new Date(120,04,04), "Barcelona");
@@ -53,7 +53,7 @@ public class FragmentHome extends Fragment {
         eventos.add(evento2);
         eventos.add(evento3);
         eventos.add(evento4);
-        eventos.add(evento5);
+        eventos.add(evento5);*/
         //Inicialización RecyclerView
         recyclerView = view.findViewById(R.id.RecyclerDestacados);
         msgNotEvents = view.findViewById(R.id.msgNotEvents);
