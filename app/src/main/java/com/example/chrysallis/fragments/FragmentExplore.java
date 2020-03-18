@@ -31,7 +31,10 @@ import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.components.DatePickerFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -119,9 +122,31 @@ public class FragmentExplore extends Fragment {
                         });
                         break;
                     case 1:
+                        String[] aux = txtDate.getText().toString().split("/");
+                        String date = aux[2] + "-" + aux[1] + "-" + aux[0];
+                        eventosCall = eventosService.busquedaEventosComunidadDate(((Comunidad) spnComunidades.getSelectedItem()).getId(), date);
+                        eventosCall.enqueue(new Callback<ArrayList<Evento>>() {
+                            @Override
+                            public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
+                                switch (response.code()) {
+                                    case 200:
+                                        eventos = response.body();
+                                        rellenarRecyclerView();
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ArrayList<Evento>> call, Throwable t) {
+                                Toast.makeText(getContext(), t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+
                         break;
                     case 2:
-                        eventosCall = eventosService.busquedaEventosNameComunidad(txtName.getText().toString().trim(), ((Comunidad) spnComunidades.getSelectedItem()).getId());
+                        eventosCall = eventosService.busquedaEventosNameComunidad(txtName.getText().toString().trim(),((Comunidad) spnComunidades.getSelectedItem()).getId());
                         eventosCall.enqueue(new Callback<ArrayList<Evento>>() {
                             @Override
                             public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
@@ -142,6 +167,27 @@ public class FragmentExplore extends Fragment {
                         });
                         break;
                     case 3:
+                        aux = txtDate.getText().toString().split("/");
+                        date = aux[2] + "-" + aux[1] + "-" + aux[0];
+                        eventosCall = eventosService.busquedaEventosAll(txtName.getText().toString().trim(),((Comunidad) spnComunidades.getSelectedItem()).getId(),date);
+                        eventosCall.enqueue(new Callback<ArrayList<Evento>>() {
+                            @Override
+                            public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
+                                switch (response.code()) {
+                                    case 200:
+                                        eventos = response.body();
+                                        rellenarRecyclerView();
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ArrayList<Evento>> call, Throwable t) {
+                                Toast.makeText(getContext(), t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
                         break;
                 }
             }
