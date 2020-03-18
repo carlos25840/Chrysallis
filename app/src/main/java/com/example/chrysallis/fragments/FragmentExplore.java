@@ -42,6 +42,8 @@ public class FragmentExplore extends Fragment {
     private ArrayList<Evento> eventos;
     private Spinner spnComunidades;
     private RecyclerView recyclerView;
+    private EventoAdapter adaptador;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,10 +58,10 @@ public class FragmentExplore extends Fragment {
         comunidadesCall.enqueue(new Callback<ArrayList<Comunidad>>() {
             @Override
             public void onResponse(Call<ArrayList<Comunidad>> call, Response<ArrayList<Comunidad>> response) {
-                switch (response.code()){
+                switch (response.code()) {
                     case 200:
                         ArrayList<Comunidad> comunidades = response.body();
-                        ComunidadesSpinnerAdapter spinnerAdapter = new ComunidadesSpinnerAdapter(getActivity(),comunidades);
+                        ComunidadesSpinnerAdapter spinnerAdapter = new ComunidadesSpinnerAdapter(getActivity(), comunidades);
                         spnComunidades.setAdapter(spinnerAdapter);
                         break;
                     default:
@@ -80,7 +82,7 @@ public class FragmentExplore extends Fragment {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         // +1 because January is zero
-                        final String selectedDate = day + "/" + (month+1) + "/" + year;
+                        final String selectedDate = day + "/" + (month + 1) + "/" + year;
                         txtDate.setText(selectedDate);
                     }
                 });
@@ -94,13 +96,13 @@ public class FragmentExplore extends Fragment {
             public void onClick(View v) {
                 EventosService eventosService = Api.getApi().create(EventosService.class);
                 Call<ArrayList<Evento>> eventosCall;
-                switch(comprobarCampos()){
+                switch (comprobarCampos()) {
                     case 0:
-                        eventosCall = eventosService.busquedaEventosComunidad(((Comunidad)spnComunidades.getSelectedItem()).getId());
+                        eventosCall = eventosService.busquedaEventosComunidad(((Comunidad) spnComunidades.getSelectedItem()).getId());
                         eventosCall.enqueue(new Callback<ArrayList<Evento>>() {
                             @Override
                             public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
-                                switch (response.code()){
+                                switch (response.code()) {
                                     case 200:
                                         eventos = response.body();
                                         rellenarRecyclerView();
@@ -112,18 +114,18 @@ public class FragmentExplore extends Fragment {
 
                             @Override
                             public void onFailure(Call<ArrayList<Evento>> call, Throwable t) {
-                                Toast.makeText(getContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         });
                         break;
                     case 1:
                         break;
                     case 2:
-                        eventosCall = eventosService.busquedaEventosNameComunidad(txtName.getText().toString().trim(),((Comunidad)spnComunidades.getSelectedItem()).getId());
+                        eventosCall = eventosService.busquedaEventosNameComunidad(txtName.getText().toString().trim(), ((Comunidad) spnComunidades.getSelectedItem()).getId());
                         eventosCall.enqueue(new Callback<ArrayList<Evento>>() {
                             @Override
                             public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
-                                switch (response.code()){
+                                switch (response.code()) {
                                     case 200:
                                         eventos = response.body();
                                         rellenarRecyclerView();
@@ -135,7 +137,7 @@ public class FragmentExplore extends Fragment {
 
                             @Override
                             public void onFailure(Call<ArrayList<Evento>> call, Throwable t) {
-                                Toast.makeText(getContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         });
                         break;
@@ -147,25 +149,26 @@ public class FragmentExplore extends Fragment {
         return item;
     }
 
-    public int comprobarCampos(){
+    public int comprobarCampos() {
         EditText txtDate = getView().findViewById(R.id.editTextFecha);
         EditText txtName = getView().findViewById(R.id.editTextNameEvent);
         int control;
-        if(!txtName.getText().toString().trim().equals("") && !txtDate.getText().toString().trim().equals("")){
+        if (!txtName.getText().toString().trim().equals("") && !txtDate.getText().toString().trim().equals("")) {
             control = 3;
-        }else if (!txtName.getText().toString().trim().equals("")){
+        } else if (!txtName.getText().toString().trim().equals("")) {
             control = 2;
-        }else if(!txtDate.getText().toString().trim().equals("")){
+        } else if (!txtDate.getText().toString().trim().equals("")) {
             control = 1;
-        }else{
+        } else {
             control = 0;
         }
         return control;
     }
 
-    public void rellenarRecyclerView(){
-        if(!eventos.isEmpty()){
-            EventoAdapter adaptador = new EventoAdapter(eventos);
+    public void rellenarRecyclerView() {
+        if (!eventos.isEmpty()) {
+            recyclerView.setVisibility(getView().VISIBLE);
+            adaptador = new EventoAdapter(eventos);
             recyclerView.setAdapter(adaptador);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             //Listener para abrir el seleccionado
@@ -177,6 +180,10 @@ public class FragmentExplore extends Fragment {
                     startActivity(intent);
                 }
             });
+        }
+        else{
+            recyclerView.setVisibility(getView().GONE);
+            recyclerView.removeAllViewsInLayout();
         }
     }
 
