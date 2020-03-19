@@ -17,13 +17,11 @@ import android.widget.Toast;
 import com.example.chrysallis.Api.Api;
 import com.example.chrysallis.Api.ApiService.EventosService;
 import com.example.chrysallis.EventoActivity;
-import com.example.chrysallis.MainActivity;
 import com.example.chrysallis.R;
 import com.example.chrysallis.adapters.EventoAdapter;
 import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.classes.Socio;
 
-import java.sql.Date;
 import java.util.ArrayList;
 
 import retrofit2.Call;
