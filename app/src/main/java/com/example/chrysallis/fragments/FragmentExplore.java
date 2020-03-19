@@ -31,10 +31,7 @@ import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.components.DatePickerFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -38,7 +38,7 @@
     <string name="PermisoDenegado">Permission denied</string>
     <string name="ChooseGallery">Choose from gallery</string>
     <string name="NoCamera">The device has no camera</string>
-    <string name="TakePhoto" >Take a photo</string>
+    <string name="TakePhoto">Take a photo</string>
     <string name="ChooseProfilePicture">Choose profile picture</string>
     <string name="email">Email address</string>
     <string name="msgNotEvents">There are currently no new events.</string>
@@ -53,4 +53,5 @@
     <string name="NewPasword">Your new Crysallis Events password is:\u0020</string>
     <string name="recomendacion">\n\nWe recommend changing this password \n\n Do not reply, this is an automatic email</string>
     <string name="errorEmail">Email was not sent successfully</string>
+    <string name="title_activity_evento">Map</string>
 </resources>
