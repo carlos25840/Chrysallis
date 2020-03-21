@@ -36,7 +36,8 @@
 
         <activity
             android:name=".EventoActivity"
-            android:label="@string/title_activity_evento"></activity>
+            android:label="@string/title_activity_evento"
+            android:theme="@style/ActivityConBarra"></activity>
         <activity android:name=".RecuperarActivity" />
         <activity
             android:name=".DestacadosActivity"

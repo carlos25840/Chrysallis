@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.example.chrysallis.classes.Evento;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -14,6 +15,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,8 +34,18 @@ public class EventoActivity extends FragmentActivity implements OnMapReadyCallba
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        TextView txtEvent = findViewById(R.id.txtEvent);
+        TextView txtCom = findViewById(R.id.txtComunEvent);
+        TextView txtDate = findViewById(R.id.txtDateEvent);
+        TextView txtTime = findViewById(R.id.txtTimeEvent);
         Intent intent = getIntent();
         evento = (Evento) intent.getSerializableExtra("evento");
+        txtEvent.setText(evento.getNombre());
+        txtCom.setText(evento.getComunidades().getNombre());
+        String date = evento.getFecha().substring(0,10);
+        txtDate.setText(date);
+        String time = evento.getHora().substring(0,8);
+        txtTime.setText(time);
     }
 
 

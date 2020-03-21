@@ -16,6 +16,7 @@ public class Evento implements Serializable {
     private String fechaLimite;
     private int numAsistentes;
     private int id_comunidad;
+    private Comunidad comunidades;
     private HashSet<Asistir> asistir;
     private HashSet<Documento> documentos;
     private HashSet<Notificacion> notificaciones;
@@ -144,5 +145,9 @@ public class Evento implements Serializable {
 
     public void setNotificaciones(HashSet<Notificacion> notificaciones) {
         this.notificaciones = notificaciones;
+    }
+
+    public Comunidad getComunidades() {
+        return comunidades;
     }
 }

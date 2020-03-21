@@ -11,5 +11,6 @@
     <dimen name="borde_fragments">5dp</dimen>
     <dimen name="sizeSpnSelectedItem">20sp</dimen>
     <dimen name="msgNotEvents">20sp</dimen>
-    <dimen name="txtEvent">24sp</dimen>
+    <dimen name="txtNameEvent">25sp</dimen>
+    <dimen name="txtEvent">15sp</dimen>
 </resources>
