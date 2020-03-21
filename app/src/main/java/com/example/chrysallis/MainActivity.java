@@ -63,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
                                         intent.putExtra("socio", socio);
                                         startActivity(intent);
                                     }else{
-                                        Toast.makeText(getApplicationContext(),R.string.notActive, Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(),getResources().getString(R.string.notActive), Toast.LENGTH_LONG).show();
                                     }
                                 }else{
-                                    Toast.makeText(getApplicationContext(),R.string.loginIncorrect, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(),getResources().getString(R.string.loginIncorrect), Toast.LENGTH_LONG).show();
                                 }
 
                                 break;
