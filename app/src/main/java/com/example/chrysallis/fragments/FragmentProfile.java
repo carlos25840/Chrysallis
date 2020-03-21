@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
 import android.text.Html;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -249,6 +250,8 @@ public class FragmentProfile extends Fragment {
                         byte[] imagen = stream.toByteArray();
                         bmp.recycle();
                         socio.setImagenUsuario(imagen);
+
+                        saveUser(getString(R.string.languageChanced), getString(R.string.languageNotChanced));
                         refrescarImagen();
                     }
 
@@ -258,6 +261,8 @@ public class FragmentProfile extends Fragment {
                         Uri uri = data.getData();
                         byte[] imagen = convertImageToByte(uri);
                         socio.setImagenUsuario(imagen);
+
+                        saveUser(getString(R.string.languageChanced), getString(R.string.languageNotChanced));
                         refrescarImagen();
                     }
                     break;
@@ -266,18 +271,21 @@ public class FragmentProfile extends Fragment {
     }
 
     public byte[] convertImageToByte(Uri uri){
-        byte[] data = null;
+        byte[] encoded = null;
         try {
             ContentResolver cr = getContext().getContentResolver();
             InputStream inputStream = cr.openInputStream(uri);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            data = baos.toByteArray();
+            byte[] data = baos.toByteArray();
+            encoded = Base64.encode(data, 0);
+
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return data;
+        return encoded;
     }
 
     private void showDialogPassword() {
