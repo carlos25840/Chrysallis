@@ -47,6 +47,9 @@
     <string name="NewPasword">La teva nova contrasenya d\'Crysallis Events és:\u0020</string>
     <string name="recomendacion">\n\nRecomendamos canviar aquesta contrasenya\n\nNo respondre, aquest és un correu automàtic</string>
     <string name="errorEmail">El correu electrònic no s\'ha enviat correctament</string>
+    <string name="event">Event</string>
+    <string name="join">Apuntar-me</string>
+    <string name="notActive">Soci no actiu</string>
     <string-array name="languages">
         <item>Anglès</item>
         <item>Castellà</item>

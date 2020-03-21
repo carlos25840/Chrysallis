@@ -13,4 +13,6 @@
     <dimen name="msgNotEvents">20sp</dimen>
     <dimen name="txtNameEvent">25sp</dimen>
     <dimen name="txtEvent">15sp</dimen>
+    <dimen name="txtComEvent">19sp</dimen>
+    <dimen name="mrgEvent">10dp</dimen>
 </resources>

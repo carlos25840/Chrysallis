@@ -47,6 +47,9 @@
     <string name="NewPasword">O teu novo contrasinal de Crysallis Events é:\u0020</string>
     <string name="recomendacion">\n\nSe recomendamos cambiar este contrasinal \n\nNon responder, este é un correo electrónico automático</string>
     <string name="errorEmail">O correo electrónico non se enviou correctamente</string>
+    <string name="event">Evento</string>
+    <string name="join">Rexístrate</string>
+    <string name="notActive">Socio non activo</string>
     <string-array name="languages">
         <item>Inglés</item>
         <item>Español</item>

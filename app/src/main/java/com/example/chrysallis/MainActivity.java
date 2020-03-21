@@ -57,10 +57,14 @@ public class MainActivity extends AppCompatActivity {
                             case 200:
                                 Socio socio = response.body();
                                 if(socio != null){
-                                    idiomaSocio(socio);
-                                    Intent intent = new Intent(MainActivity.this, DestacadosActivity.class);
-                                    intent.putExtra("socio", socio);
-                                    startActivity(intent);
+                                    if(socio.isActivo()){
+                                        idiomaSocio(socio);
+                                        Intent intent = new Intent(MainActivity.this, DestacadosActivity.class);
+                                        intent.putExtra("socio", socio);
+                                        startActivity(intent);
+                                    }else{
+                                        Toast.makeText(getApplicationContext(),R.string.notActive, Toast.LENGTH_LONG).show();
+                                    }
                                 }else{
                                     Toast.makeText(getApplicationContext(),R.string.loginIncorrect, Toast.LENGTH_LONG).show();
                                 }

@@ -53,5 +53,7 @@
     <string name="NewPasword">Your new Crysallis Events password is:\u0020</string>
     <string name="recomendacion">\n\nWe recommend changing this password \n\n Do not reply, this is an automatic email</string>
     <string name="errorEmail">Email was not sent successfully</string>
-    <string name="title_activity_evento">Map</string>
+    <string name="event">Event</string>
+    <string name="join">Join</string>
+    <string name="notActive">Partner not active</string>
 </resources>

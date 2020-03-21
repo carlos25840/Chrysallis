@@ -1,12 +1,18 @@
 package com.example.chrysallis;
 
-import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.chrysallis.classes.Evento;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -16,21 +22,17 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.w3c.dom.Text;
-
 import java.io.IOException;
 import java.util.List;
 
-public class EventoActivity extends FragmentActivity implements OnMapReadyCallback {
-
+public class EventoActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private Evento evento;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evento);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -38,6 +40,9 @@ public class EventoActivity extends FragmentActivity implements OnMapReadyCallba
         TextView txtCom = findViewById(R.id.txtComunEvent);
         TextView txtDate = findViewById(R.id.txtDateEvent);
         TextView txtTime = findViewById(R.id.txtTimeEvent);
+        TextView txtDescription = findViewById(R.id.txtDesEvent);
+        TextView txtLocation = findViewById(R.id.txtLocationEvent);
+        Button button = findViewById(R.id.buttonJoin);
         Intent intent = getIntent();
         evento = (Evento) intent.getSerializableExtra("evento");
         txtEvent.setText(evento.getNombre());
@@ -46,8 +51,16 @@ public class EventoActivity extends FragmentActivity implements OnMapReadyCallba
         txtDate.setText(date);
         String time = evento.getHora().substring(0,8);
         txtTime.setText(time);
-    }
+        txtDescription.setText(evento.getDescripcion());
+        txtLocation.setText(evento.getUbicacion());
 
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
 
     /**
      * Manipulates the map once available.
@@ -61,7 +74,6 @@ public class EventoActivity extends FragmentActivity implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        //String address ="Carrer de la Rosa d'Alexandria, 66-84, 08906 L'Hospitalet de Llobregat, Barcelona";
         String address = evento.getUbicacion();
         Geocoder geocoder = new Geocoder(getApplicationContext());
         List<Address> addresses = null;
@@ -75,11 +87,21 @@ public class EventoActivity extends FragmentActivity implements OnMapReadyCallba
             double longitude= addresses.get(0).getLongitude();
             // Add a marker in Sydney and move the camera
             LatLng place = new LatLng(latitude, longitude);
-            mMap.addMarker(new MarkerOptions().position(place).title("Event"));
+            mMap.addMarker(new MarkerOptions().position(place).title(getString(R.string.event)));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(place));
         }else{
             LatLng place = new LatLng(41.384724, 2.171768);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(place));
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return true;
     }
 }

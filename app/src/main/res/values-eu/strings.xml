@@ -47,6 +47,9 @@
     <string name="NewPasword">Crysallis Events-en pasahitz berria hau da:\u0020</string>
     <string name="recomendacion">\n\nPasahitz hau aldatzea gomendatzen dugu \n\nEz dut erantzunik, mezu elektroniko automatikoa da</string>
     <string name="errorEmail">Posta elektronikoa ez da behar bezala bidali</string>
+    <string name="event">Gertaera</string>
+    <string name="join">Eman izena</string>
+    <string name="notActive">Bazkidea ez dago aktiboa</string>
     <string-array name="languages">
         <item>Ingelesez</item>
         <item>Gaztelania</item>
