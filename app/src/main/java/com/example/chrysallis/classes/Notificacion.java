@@ -1,6 +1,8 @@
 package com.example.chrysallis.classes;
 
-public class Notificacion {
+import java.io.Serializable;
+
+public class Notificacion implements Serializable {
     private int id;
     private String antelacion;
 }

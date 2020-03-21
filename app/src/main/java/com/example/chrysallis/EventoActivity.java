@@ -75,14 +75,14 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         String address = evento.getUbicacion();
-        Geocoder geocoder = new Geocoder(getApplicationContext());
+        Geocoder geocoder = new Geocoder(this);
         List<Address> addresses = null;
         try {
             addresses = geocoder.getFromLocationName(address, 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if(addresses.size() > 0) {
+        if(addresses != null) {
             double latitude= addresses.get(0).getLatitude();
             double longitude= addresses.get(0).getLongitude();
             // Add a marker in Sydney and move the camera

@@ -1,6 +1,8 @@
 package com.example.chrysallis.classes;
 
-public class Asistir {
+import java.io.Serializable;
+
+public class Asistir implements Serializable {
 
     private int id_socio;
     private int id_evento;
