@@ -56,4 +56,7 @@
     <string name="event">Event</string>
     <string name="join">Join</string>
     <string name="notActive">Partner not active</string>
+    <string name="numAttendants">Number of attendants</string>
+    <string name="notNumber">Not number introduced</string>
+    <string name="attendanceConfirmation">Attendance Confirmation</string>
 </resources>

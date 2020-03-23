@@ -2,15 +2,20 @@ package com.example.chrysallis;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.components.GeocodingLocation;
@@ -20,6 +25,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class EventoActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
@@ -113,5 +119,29 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         }
     }
 
+    private void showDialogPassword() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this, R.style.ThemeOverlay_MaterialComponents_Dialog_Alert);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View v = inflater.inflate(R.layout.dialog_asistir, null);
 
+
+        builder.setTitle(Html.fromHtml("<b>"+getString(R.string.attendanceConfirmation)+"</b>"));
+        builder.setView(v);
+
+        final EditText editTextPassword = v.findViewById(R.id.editTextNumAttendants);
+
+        builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(!editTextPassword.getText().toString().equals("")){
+                    String password = MainActivity.encryptThisString(editTextPassword.getText().toString());
+
+                }else{
+                    Toast.makeText(getApplicationContext(),R.string.notNumber, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, null);
+        builder.show();
+    }
 }

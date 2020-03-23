@@ -50,6 +50,9 @@
     <string name="event">Gertaera</string>
     <string name="join">Eman izena</string>
     <string name="notActive">Bazkidea ez dago aktiboa</string>
+    <string name="numAttendants">Number of attendants</string>
+    <string name="notNumber">Not number introduced</string>
+    <string name="attendanceConfirmation">Attendance Confirmation</string>
     <string-array name="languages">
         <item>Ingelesez</item>
         <item>Gaztelania</item>

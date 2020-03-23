@@ -50,6 +50,9 @@
     <string name="event">Event</string>
     <string name="join">Apuntar-me</string>
     <string name="notActive">Soci no actiu</string>
+    <string name="numAttendants">Number of attendants</string>
+    <string name="notNumber">Not number introduced</string>
+    <string name="attendanceConfirmation">Attendance Confirmation</string>
     <string-array name="languages">
         <item>Anglès</item>
         <item>Castellà</item>
