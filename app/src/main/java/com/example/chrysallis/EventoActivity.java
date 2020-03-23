@@ -150,7 +150,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                         @Override
                         public void onResponse(Call<Asistir> call, Response<Asistir> response) {
                             if(response.isSuccessful()){
-                                Toast.makeText(getApplicationContext(),getString(R.string.attendanceCorfirmed), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(),getString(R.string.attendanceConfirmed), Toast.LENGTH_LONG).show();
                             }else{
                                 Toast.makeText(getApplicationContext(),"MAAAL", Toast.LENGTH_LONG).show();
                             }
