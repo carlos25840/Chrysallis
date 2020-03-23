@@ -19,6 +19,10 @@ public class Socio implements Serializable {
     private int id_comunidad;
     private HashSet<Comunidad> comunidades1;
 
+    public void setId_comunidad(int id_comunidad) {
+        this.id_comunidad = id_comunidad;
+    }
+
     public int getId() {
         return id;
     }

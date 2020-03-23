@@ -32,20 +32,25 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.chrysallis.Api.Api;
+import com.example.chrysallis.Api.ApiService.ComunidadesService;
 import com.example.chrysallis.Api.ApiService.SociosService;
 import com.example.chrysallis.DestacadosActivity;
 import com.example.chrysallis.MainActivity;
 import com.example.chrysallis.R;
+import com.example.chrysallis.adapters.ComunidadesSpinnerAdapter;
+import com.example.chrysallis.classes.Comunidad;
 import com.example.chrysallis.classes.Socio;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -62,6 +67,7 @@ public class FragmentProfile extends Fragment {
     private ImageView imagenPerfil;
     private String idioma;
     private String lang;
+    TextView ubicacionPerfil;
 
     @Nullable
     @Override
@@ -84,16 +90,16 @@ public class FragmentProfile extends Fragment {
 
     public void mostrarPerfil(){
         TextView nombrePerfil = getView().findViewById(R.id.nombrePerfil);
-        TextView ubicacionPerfil = getView().findViewById(R.id.ubicacionPerfil);
+        ubicacionPerfil = getView().findViewById(R.id.ubicacionPerfil);
         TextView idiomaPerfil = getView().findViewById(R.id.languagePerfil);
         ImageButton editPassword = getView().findViewById(R.id.buttonEditPassword);
         ImageButton editLanguage =  getView().findViewById(R.id.buttonEditLanguage);
+        ImageButton editCommunity = getView().findViewById(R.id.buttonEditComunidad);
         nombrePerfil.setText(socio.getNombre());
-        ubicacionPerfil.setText(getResources().getString(R.string.community));
+
+        getComunidad();
 
         refrescarImagen();
-
-
         idioma = "english";
         if(socio.getIdiomaDefecto() != null){
             idioma = socio.getIdiomaDefecto().toLowerCase();
@@ -140,6 +146,42 @@ public class FragmentProfile extends Fragment {
                 showDialogLanguage();
             }
         });
+
+        editCommunity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogComunidad();
+            }
+        });
+
+
+    }
+
+    private void getComunidad() {
+
+
+        ComunidadesService comunidadesService = Api.getApi().create(ComunidadesService.class);
+        Call<Comunidad> comunidadCall = comunidadesService.getComunidad(socio.getId_comunidad());
+        comunidadCall.enqueue(new Callback<Comunidad>() {
+            @Override
+            public void onResponse(Call<Comunidad> call, Response<Comunidad> response) {
+                switch (response.code()) {
+                    case 200:
+                        Comunidad comunidad = response.body();
+                        ubicacionPerfil.setText(comunidad.getNombre());
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Comunidad> call, Throwable t) {
+
+            }
+        });
+
+
     }
 
 
@@ -437,5 +479,52 @@ public class FragmentProfile extends Fragment {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(langPref, lang);
         editor.commit();
+    }
+
+    private void showDialogComunidad() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity(), R.style.ThemeOverlay_MaterialComponents_Dialog_Alert);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View v = inflater.inflate(R.layout.dialog_comunidad, null);
+
+        builder.setTitle(Html.fromHtml("<b>"+getString(R.string.community)+"</b>"));
+        builder.setView(v);
+
+
+        Spinner spnComunidades = v.findViewById(R.id.spinnerComunidades);
+        ComunidadesService comunidadesService = Api.getApi().create(ComunidadesService.class);
+        Call<ArrayList<Comunidad>> comunidadesCall = comunidadesService.getComunidades();
+        comunidadesCall.enqueue(new Callback<ArrayList<Comunidad>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Comunidad>> call, Response<ArrayList<Comunidad>> response) {
+                switch (response.code()) {
+                    case 200:
+                        ArrayList<Comunidad> comunidades = response.body();
+                        ComunidadesSpinnerAdapter spinnerAdapter = new ComunidadesSpinnerAdapter(getActivity(), comunidades);
+                        spnComunidades.setAdapter(spinnerAdapter);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Comunidad>> call, Throwable t) {
+
+            }
+        });
+
+
+
+        builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                socio.setId_comunidad(((Comunidad) spnComunidades.getSelectedItem()).getId());
+                saveUser("Comunidad cambiada", "Error al cambiar la comunidad");
+
+                DestacadosActivity.refrescar(getFragmentManager());
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, null);
+        builder.show();
     }
 }
