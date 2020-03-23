@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +16,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.chrysallis.Api.Api;
+import com.example.chrysallis.Api.ApiService.AsistirService;
+import com.example.chrysallis.classes.Asistir;
 import com.example.chrysallis.classes.Evento;
+import com.example.chrysallis.classes.Socio;
 import com.example.chrysallis.components.GeocodingLocation;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -27,9 +30,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class EventoActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private Evento evento;
+    private Socio socio;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +55,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         Button button = findViewById(R.id.buttonJoin);
         Intent intent = getIntent();
         evento = (Evento) intent.getSerializableExtra("evento");
+        socio = (Socio)intent.getSerializableExtra("socio");
         txtEvent.setText(evento.getNombre());
         txtCom.setText(evento.getComunidades().getNombre());
         String date = evento.getFecha().substring(0,10);
@@ -58,7 +67,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showDialogAttendance();
             }
         });
     }
@@ -99,7 +108,6 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                 case 1:
                     Bundle bundle = message.getData();
                     locationAddress = bundle.getString("address");
-                    Log.d("latttt",locationAddress);
                     break;
                 default:
                     locationAddress = null;
@@ -119,7 +127,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         }
     }
 
-    private void showDialogPassword() {
+    private void showDialogAttendance() {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this, R.style.ThemeOverlay_MaterialComponents_Dialog_Alert);
         LayoutInflater inflater = this.getLayoutInflater();
         View v = inflater.inflate(R.layout.dialog_asistir, null);
@@ -130,18 +138,35 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
 
         final EditText editTextPassword = v.findViewById(R.id.editTextNumAttendants);
 
-        builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(!editTextPassword.getText().toString().equals("")){
-                    String password = MainActivity.encryptThisString(editTextPassword.getText().toString());
+                    int numAsist = Integer.parseInt(editTextPassword.getText().toString());
+                    Asistir asistir = new Asistir(socio.getId(),evento.getId(),numAsist);
+                    AsistirService asistirService = Api.getApi().create(AsistirService.class);
+                    Call<Asistir> asistirCall = asistirService.insertAsistir(asistir);
+                    asistirCall.enqueue(new Callback<Asistir>() {
+                        @Override
+                        public void onResponse(Call<Asistir> call, Response<Asistir> response) {
+                            if(response.isSuccessful()){
+                                Toast.makeText(getApplicationContext(),getString(R.string.attendanceCorfirmed), Toast.LENGTH_LONG).show();
+                            }else{
+                                Toast.makeText(getApplicationContext(),"MAAAL", Toast.LENGTH_LONG).show();
+                            }
+                        }
 
+                        @Override
+                        public void onFailure(Call<Asistir> call, Throwable t) {
+                            Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }else{
-                    Toast.makeText(getApplicationContext(),R.string.notNumber, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),getString(R.string.notNumber), Toast.LENGTH_LONG).show();
                 }
             }
         });
-        builder.setNegativeButton(R.string.cancel, null);
+        builder.setNegativeButton(getString(R.string.cancel), null);
         builder.show();
     }
 }

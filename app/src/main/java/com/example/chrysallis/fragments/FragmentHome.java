@@ -75,6 +75,7 @@ public class FragmentHome extends Fragment {
                                 public void onClick(View v) {
                                     Intent intent = new Intent(getActivity(), EventoActivity.class);
                                     intent.putExtra("evento", eventos.get(recyclerView.getChildAdapterPosition(v)));
+                                    intent.putExtra("socio", socio);
                                     startActivity(intent);
                                 }
                             });

@@ -10,4 +10,9 @@ public class Asistir implements Serializable {
     private String comentario;
     private int cuantos;
 
+    public Asistir(int id_socio, int id_evento, int cuantos) {
+        this.id_socio = id_socio;
+        this.id_evento = id_evento;
+        this.cuantos = cuantos;
+    }
 }
