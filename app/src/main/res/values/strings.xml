@@ -51,7 +51,7 @@
         <item>Galician</item>
     </string-array>
     <string name="NewPasword">Your new Crysallis Events password is:\u0020</string>
-    <string name="recomendacion">\n\nWe recommend changing this password \n\n Do not reply, this is an automatic email</string>
+    <string name="recomendacion">\n\nWe recommend changing this password \n\nDo not reply, this is an automatic email</string>
     <string name="errorEmail">Email was not sent successfully</string>
     <string name="event">Event</string>
     <string name="join">Join</string>
@@ -59,5 +59,9 @@
     <string name="numAttendants">Number of attendants</string>
     <string name="notNumber">Not number introduced</string>
     <string name="attendanceConfirmation">Attendance Confirmation</string>
-    <string name="attendanceConfirmed">Attenfance confirmed</string>
+    <string name="attendanceConfirmed">Attendance confirmed</string>
+    <string name="apuntado">You have signed up for the event</string>
+    <string name="time">Time</string>
+    <string name="description">Description</string>
+    <string name="noResponder">\\n\\nDo not reply, this is an automatic email</string>
 </resources>

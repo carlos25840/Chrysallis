@@ -54,6 +54,10 @@
     <string name="notNumber">Not number introduced</string>
     <string name="attendanceConfirmation">Attendance Confirmation</string>
     <string name="attendanceConfirmed">Attenfance confirmed</string>
+    <string name="apuntado">Usted se ha apuntado al evento</string>
+    <string name="time">Hora</string>
+    <string name="description">Descripción</string>
+    <string name="noResponder">\\n\\nDo not reply, this is an automatic email</string>
     <string-array name="languages">
         <item>Ingelesez</item>
         <item>Gaztelania</item>

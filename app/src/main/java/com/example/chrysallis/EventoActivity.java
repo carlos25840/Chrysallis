@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -151,6 +152,8 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                         public void onResponse(Call<Asistir> call, Response<Asistir> response) {
                             if(response.isSuccessful()){
                                 Toast.makeText(getApplicationContext(),getString(R.string.attendanceConfirmed), Toast.LENGTH_LONG).show();
+                                enviarMail();
+
                             }else{
                                 Toast.makeText(getApplicationContext(),"MAAAL", Toast.LENGTH_LONG).show();
                             }
@@ -168,5 +171,35 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         });
         builder.setNegativeButton(getString(R.string.cancel), null);
         builder.show();
+    }
+
+    public void enviarMail(){
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        Mail m=new Mail("eventschrysallis@gmail.com","chrysallis2005");
+
+        String[] toArr = {socio.getMail()};
+        m.setTo(toArr);
+        m.setFrom("Chrysallis");
+        m.setSubject(evento.getNombre());
+
+        m.setBody(getString(R.string.apuntado) + ": " + evento.getNombre() + "\n" +
+                getString(R.string.description) + ": " + evento.getDescripcion() + "\n" +
+                getString(R.string.date) + ": " + evento.getFecha().substring(0,10) + "\n" +
+                getString(R.string.time) + ": " + evento.getHora().substring(0,8) + "\n" +
+                getString(R.string.noResponder));
+
+        try {
+            boolean i= m.send();
+            if(i != true){
+                Toast.makeText(getApplicationContext(),R.string.errorEmail,Toast.LENGTH_LONG).show();
+            }
+
+        } catch (Exception e2) {
+            Toast.makeText(getApplicationContext(), e2.toString(), Toast.LENGTH_LONG).show();
+        }
+
     }
 }
