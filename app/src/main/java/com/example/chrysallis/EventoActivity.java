@@ -102,7 +102,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                 String[] result = locationAddress.split(";");
                 double latitude= Double.parseDouble(result[0]);
                 double longitude= Double.parseDouble(result[1]);
-                // Add a marker in Sydney and move the camera
+                // Add a marker in the event and move the camera
                 LatLng place = new LatLng(latitude,longitude);
                 mMap.addMarker(new MarkerOptions().position(place).title(getString(R.string.event)));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(place));
