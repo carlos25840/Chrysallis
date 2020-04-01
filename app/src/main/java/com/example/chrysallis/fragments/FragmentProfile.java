@@ -188,9 +188,11 @@ public class FragmentProfile extends Fragment {
     public void refrescarImagen(){
 
         if(socio.getImagenUsuario() != null){
-            Bitmap bmp = BitmapFactory.decodeByteArray(socio.getImagenUsuario(), 0, socio.getImagenUsuario().length);
-            imagenPerfil.setImageBitmap(Bitmap.createScaledBitmap(bmp, imagenPerfil.getWidth(),
-                    imagenPerfil.getHeight(), false));
+
+            byte[] byteArray = Base64.decode(socio.getImagenUsuario(), Base64.DEFAULT);
+
+            Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            imagenPerfil.setImageBitmap(bmp);
         }else{
             imagenPerfil.setImageResource(R.drawable.imagen_profile);
         }
@@ -290,10 +292,12 @@ public class FragmentProfile extends Fragment {
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
                         bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
                         byte[] imagen = stream.toByteArray();
-                        bmp.recycle();
-                        socio.setImagenUsuario(imagen);
 
-                        saveUser(getString(R.string.languageChanced), getString(R.string.languageNotChanced));
+                        String foto = Base64.encodeToString(imagen, Base64.DEFAULT);
+
+                        socio.setImagenUsuario(foto);
+
+                        saveUser("Imagen cambiada", "Imagen no cambiada");
                         refrescarImagen();
                     }
 
@@ -302,9 +306,10 @@ public class FragmentProfile extends Fragment {
                     if (resultCode == RESULT_OK && data != null) {
                         Uri uri = data.getData();
                         byte[] imagen = convertImageToByte(uri);
-                        socio.setImagenUsuario(imagen);
+                        String foto = Base64.encodeToString(imagen, Base64.DEFAULT);
+                        socio.setImagenUsuario(foto);
 
-                        saveUser(getString(R.string.languageChanced), getString(R.string.languageNotChanced));
+                        saveUser("Imagen cambiada", "Imagen no cambiada");
                         refrescarImagen();
                     }
                     break;
@@ -313,21 +318,20 @@ public class FragmentProfile extends Fragment {
     }
 
     public byte[] convertImageToByte(Uri uri){
-        byte[] encoded = null;
+        byte[] data = null;
         try {
             ContentResolver cr = getContext().getContentResolver();
             InputStream inputStream = cr.openInputStream(uri);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] data = baos.toByteArray();
-            encoded = Base64.encode(data, 0);
+            data = baos.toByteArray();
 
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return encoded;
+        return data;
     }
 
     private void showDialogPassword() {
