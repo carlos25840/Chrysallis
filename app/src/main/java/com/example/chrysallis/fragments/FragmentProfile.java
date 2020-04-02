@@ -192,12 +192,15 @@ public class FragmentProfile extends Fragment {
             byte[] byteArray = Base64.decode(socio.getImagenUsuario(), Base64.DEFAULT);
 
             Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+
             imagenPerfil.setImageBitmap(bmp);
         }else{
             imagenPerfil.setImageResource(R.drawable.imagen_profile);
         }
 
     }
+
+
 
     public void cambiarImagen(){
 
@@ -290,27 +293,38 @@ public class FragmentProfile extends Fragment {
                     if (resultCode == RESULT_OK && data != null) {
                         Bitmap bmp = (Bitmap) data.getExtras().get("data");
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        Bitmap resized = Bitmap.createScaledBitmap(bmp, 150, 150, true);
+                        resized.compress(Bitmap.CompressFormat.PNG, 100, stream);
                         byte[] imagen = stream.toByteArray();
 
                         String foto = Base64.encodeToString(imagen, Base64.DEFAULT);
-
-                        socio.setImagenUsuario(foto);
-
-                        saveUser("Imagen cambiada", "Imagen no cambiada");
-                        refrescarImagen();
+                        if(imagen.length < 2097152){
+                            socio.setImagenUsuario(foto);
+                            saveUser("Imagen cambiada", "Imagen no cambiada");
+                            refrescarImagen();
+                        }
+                        else{
+                            Toast.makeText(getActivity(), "La imagen no puede pesar mas de 2 MB",Toast.LENGTH_LONG).show();
+                        }
                     }
 
                     break;
                 case 1:
                     if (resultCode == RESULT_OK && data != null) {
+
                         Uri uri = data.getData();
                         byte[] imagen = convertImageToByte(uri);
-                        String foto = Base64.encodeToString(imagen, Base64.DEFAULT);
-                        socio.setImagenUsuario(foto);
 
-                        saveUser("Imagen cambiada", "Imagen no cambiada");
-                        refrescarImagen();
+                        String foto = Base64.encodeToString(imagen, Base64.DEFAULT);
+
+                        if(imagen.length < 2097152){
+                            socio.setImagenUsuario(foto);
+                            saveUser("Imagen cambiada", "Imagen no cambiada");
+                            refrescarImagen();
+                        }
+                        else{
+                            Toast.makeText(getActivity(), "La imagen no puede pesar mas de 2 MB",Toast.LENGTH_LONG).show();
+                        }
                     }
                     break;
             }
@@ -322,9 +336,10 @@ public class FragmentProfile extends Fragment {
         try {
             ContentResolver cr = getContext().getContentResolver();
             InputStream inputStream = cr.openInputStream(uri);
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            Bitmap bmp = BitmapFactory.decodeStream(inputStream);
+            Bitmap resized = Bitmap.createScaledBitmap(bmp, 150, 150, true);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            resized.compress(Bitmap.CompressFormat.PNG, 100, baos);
             data = baos.toByteArray();
 
 
