@@ -22,6 +22,7 @@ import com.example.chrysallis.Api.ApiService.AsistirService;
 import com.example.chrysallis.classes.Asistir;
 import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.classes.Socio;
+import com.example.chrysallis.components.ErrorMessage;
 import com.example.chrysallis.components.GeocodingLocation;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,6 +31,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -155,7 +157,9 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                                 enviarMail();
 
                             }else{
-                                Toast.makeText(getApplicationContext(),"MAAAL", Toast.LENGTH_LONG).show();
+                                Gson gson = new Gson();
+                                ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
+                                Toast.makeText(getApplicationContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         }
 

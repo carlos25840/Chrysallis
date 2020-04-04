@@ -63,7 +63,6 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventosVie
         private TextView nom;
         private ImageButtonRounded imagen;
         private TextView ubicacion;
-        private TextView descripcion;
         private TextView fecha;
 
         //constructor del viewholder para guardar las views
@@ -72,16 +71,14 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventosVie
             nom = itemView.findViewById(R.id.TxtEvento);
             imagen = itemView.findViewById(R.id.ImgEvento);
             ubicacion = itemView.findViewById(R.id.TxtUbicacion);
-            descripcion = itemView.findViewById(R.id.TxtDescripcion);
             fecha = itemView.findViewById(R.id.TxtFecha);
         }
 
-        // metodo bindPlace para rellenar los campos del eventoItem
+        // metodo bindEvento para rellenar los campos del eventoItem
         public void bindEvento(Evento evento) {
             nom.setText(evento.getNombre());
             imagen.setImageResource(evento.getImagen());
             ubicacion.setText(evento.getUbicacion());
-            descripcion.setText(evento.getDescripcion());
             String[] soloFecha = evento.getFecha().split("T");
             fecha.setText(soloFecha[0]);
         }

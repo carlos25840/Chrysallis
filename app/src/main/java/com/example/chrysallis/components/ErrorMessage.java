@@ -10,8 +10,4 @@ public class ErrorMessage {
     public String getMessage() {
         return Message;
     }
-
-    public void setMessage(String message) {
-        this.Message = message;
-    }
 }

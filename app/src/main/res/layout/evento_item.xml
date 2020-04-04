@@ -49,13 +49,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/small"
-                android:text="Descripcion"
-                android:id="@+id/TxtDescripcion"
-                android:textColor="@color/colorAccent"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/small"
                 android:text="Fecha"
                 android:id="@+id/TxtFecha"
                 android:textColor="@color/colorAccent"/>
