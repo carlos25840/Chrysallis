@@ -32,20 +32,25 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.chrysallis.Api.Api;
+import com.example.chrysallis.Api.ApiService.ComunidadesService;
 import com.example.chrysallis.Api.ApiService.SociosService;
 import com.example.chrysallis.DestacadosActivity;
 import com.example.chrysallis.MainActivity;
 import com.example.chrysallis.R;
+import com.example.chrysallis.adapters.ComunidadesSpinnerAdapter;
+import com.example.chrysallis.classes.Comunidad;
 import com.example.chrysallis.classes.Socio;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -62,6 +67,7 @@ public class FragmentProfile extends Fragment {
     private ImageView imagenPerfil;
     private String idioma;
     private String lang;
+    TextView ubicacionPerfil;
 
     @Nullable
     @Override
@@ -84,17 +90,17 @@ public class FragmentProfile extends Fragment {
 
     public void mostrarPerfil(){
         TextView nombrePerfil = getView().findViewById(R.id.nombrePerfil);
-        TextView ubicacionPerfil = getView().findViewById(R.id.ubicacionPerfil);
+        ubicacionPerfil = getView().findViewById(R.id.ubicacionPerfil);
         TextView idiomaPerfil = getView().findViewById(R.id.languagePerfil);
         ImageButton editPassword = getView().findViewById(R.id.buttonEditPassword);
         ImageButton editLanguage =  getView().findViewById(R.id.buttonEditLanguage);
+        ImageButton editCommunity = getView().findViewById(R.id.buttonEditComunidad);
         ImageButton powerOff = getView().findViewById(R.id.powerOff);
         nombrePerfil.setText(socio.getNombre());
-        ubicacionPerfil.setText(getResources().getString(R.string.community));
+
+        getComunidad();
 
         refrescarImagen();
-
-
         idioma = "english";
         if(socio.getIdiomaDefecto() != null){
             idioma = socio.getIdiomaDefecto().toLowerCase();
@@ -148,20 +154,61 @@ public class FragmentProfile extends Fragment {
                 powerOffButton();
             }
         });
+
+        editCommunity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogComunidad();
+            }
+        });
+
+
+    }
+
+    private void getComunidad() {
+
+
+        ComunidadesService comunidadesService = Api.getApi().create(ComunidadesService.class);
+        Call<Comunidad> comunidadCall = comunidadesService.getComunidad(socio.getId_comunidad());
+        comunidadCall.enqueue(new Callback<Comunidad>() {
+            @Override
+            public void onResponse(Call<Comunidad> call, Response<Comunidad> response) {
+                switch (response.code()) {
+                    case 200:
+                        Comunidad comunidad = response.body();
+                        ubicacionPerfil.setText(comunidad.getNombre());
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Comunidad> call, Throwable t) {
+
+            }
+        });
+
+
     }
 
 
     public void refrescarImagen(){
 
         if(socio.getImagenUsuario() != null){
-            Bitmap bmp = BitmapFactory.decodeByteArray(socio.getImagenUsuario(), 0, socio.getImagenUsuario().length);
-            imagenPerfil.setImageBitmap(Bitmap.createScaledBitmap(bmp, imagenPerfil.getWidth(),
-                    imagenPerfil.getHeight(), false));
+
+            byte[] byteArray = Base64.decode(socio.getImagenUsuario(), Base64.DEFAULT);
+
+            Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+
+            imagenPerfil.setImageBitmap(bmp);
         }else{
             imagenPerfil.setImageResource(R.drawable.imagen_profile);
         }
 
     }
+
+
 
     public void cambiarImagen(){
 
@@ -254,24 +301,38 @@ public class FragmentProfile extends Fragment {
                     if (resultCode == RESULT_OK && data != null) {
                         Bitmap bmp = (Bitmap) data.getExtras().get("data");
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        Bitmap resized = Bitmap.createScaledBitmap(bmp, 150, 150, true);
+                        resized.compress(Bitmap.CompressFormat.PNG, 100, stream);
                         byte[] imagen = stream.toByteArray();
-                        bmp.recycle();
-                        socio.setImagenUsuario(imagen);
 
-                        saveUser(getString(R.string.languageChanced), getString(R.string.languageNotChanced));
-                        refrescarImagen();
+                        String foto = Base64.encodeToString(imagen, Base64.DEFAULT);
+                        if(imagen.length < 2097152){
+                            socio.setImagenUsuario(foto);
+                            saveUser("Imagen cambiada", "Imagen no cambiada");
+                            refrescarImagen();
+                        }
+                        else{
+                            Toast.makeText(getActivity(), "La imagen no puede pesar mas de 2 MB",Toast.LENGTH_LONG).show();
+                        }
                     }
 
                     break;
                 case 1:
                     if (resultCode == RESULT_OK && data != null) {
+
                         Uri uri = data.getData();
                         byte[] imagen = convertImageToByte(uri);
-                        socio.setImagenUsuario(imagen);
 
-                        saveUser(getString(R.string.languageChanced), getString(R.string.languageNotChanced));
-                        refrescarImagen();
+                        String foto = Base64.encodeToString(imagen, Base64.DEFAULT);
+
+                        if(imagen.length < 2097152){
+                            socio.setImagenUsuario(foto);
+                            saveUser("Imagen cambiada", "Imagen no cambiada");
+                            refrescarImagen();
+                        }
+                        else{
+                            Toast.makeText(getActivity(), "La imagen no puede pesar mas de 2 MB",Toast.LENGTH_LONG).show();
+                        }
                     }
                     break;
             }
@@ -279,21 +340,21 @@ public class FragmentProfile extends Fragment {
     }
 
     public byte[] convertImageToByte(Uri uri){
-        byte[] encoded = null;
+        byte[] data = null;
         try {
             ContentResolver cr = getContext().getContentResolver();
             InputStream inputStream = cr.openInputStream(uri);
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            Bitmap bmp = BitmapFactory.decodeStream(inputStream);
+            Bitmap resized = Bitmap.createScaledBitmap(bmp, 150, 150, true);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] data = baos.toByteArray();
-            encoded = Base64.encode(data, 0);
+            resized.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            data = baos.toByteArray();
 
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return encoded;
+        return data;
     }
 
     private void showDialogPassword() {
@@ -452,4 +513,51 @@ public class FragmentProfile extends Fragment {
         startActivity(intent);
     }
 
+
+    private void showDialogComunidad() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity(), R.style.ThemeOverlay_MaterialComponents_Dialog_Alert);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View v = inflater.inflate(R.layout.dialog_comunidad, null);
+
+        builder.setTitle(Html.fromHtml("<b>"+getString(R.string.community)+"</b>"));
+        builder.setView(v);
+
+
+        Spinner spnComunidades = v.findViewById(R.id.spinnerComunidades);
+        ComunidadesService comunidadesService = Api.getApi().create(ComunidadesService.class);
+        Call<ArrayList<Comunidad>> comunidadesCall = comunidadesService.getComunidades();
+        comunidadesCall.enqueue(new Callback<ArrayList<Comunidad>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Comunidad>> call, Response<ArrayList<Comunidad>> response) {
+                switch (response.code()) {
+                    case 200:
+                        ArrayList<Comunidad> comunidades = response.body();
+                        ComunidadesSpinnerAdapter spinnerAdapter = new ComunidadesSpinnerAdapter(getActivity(), comunidades);
+                        spnComunidades.setAdapter(spinnerAdapter);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Comunidad>> call, Throwable t) {
+
+            }
+        });
+
+
+
+        builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                socio.setId_comunidad(((Comunidad) spnComunidades.getSelectedItem()).getId());
+                saveUser("Comunidad cambiada", "Error al cambiar la comunidad");
+
+                DestacadosActivity.refrescar(getFragmentManager());
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, null);
+        builder.show();
+    }
 }
