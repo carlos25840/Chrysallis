@@ -88,6 +88,7 @@ public class FragmentProfile extends Fragment {
         TextView idiomaPerfil = getView().findViewById(R.id.languagePerfil);
         ImageButton editPassword = getView().findViewById(R.id.buttonEditPassword);
         ImageButton editLanguage =  getView().findViewById(R.id.buttonEditLanguage);
+        ImageButton powerOff = getView().findViewById(R.id.powerOff);
         nombrePerfil.setText(socio.getNombre());
         ubicacionPerfil.setText(getResources().getString(R.string.community));
 
@@ -138,6 +139,13 @@ public class FragmentProfile extends Fragment {
             @Override
             public void onClick(View v) {
                 showDialogLanguage();
+            }
+        });
+
+        powerOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                powerOffButton();
             }
         });
     }
@@ -438,4 +446,10 @@ public class FragmentProfile extends Fragment {
         editor.putString(langPref, lang);
         editor.commit();
     }
+
+    public void powerOffButton(){
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        startActivity(intent);
+    }
+
 }

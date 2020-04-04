@@ -99,5 +99,11 @@
         android:text="@string/contact"
         android:textColor="@color/colorAccent"
         android:id="@+id/contactarPerfil"/>
+    <ImageButton
+        android:id="@+id/powerOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/power_off"
+        android:background="@android:color/transparent"/>
 
 </LinearLayout>
