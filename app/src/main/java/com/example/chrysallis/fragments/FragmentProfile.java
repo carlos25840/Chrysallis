@@ -509,8 +509,10 @@ public class FragmentProfile extends Fragment {
     }
 
     public void powerOffButton(){
+
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
+        getActivity().finish();
     }
 
 
