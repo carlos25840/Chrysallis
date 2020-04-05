@@ -4,16 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
 import android.text.Html;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,10 +60,12 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         TextView txtEvent = findViewById(R.id.txtEvent);
         TextView txtCom = findViewById(R.id.txtComunEvent);
         TextView txtDate = findViewById(R.id.txtDateEvent);
+        TextView txtLimitDate = findViewById(R.id.txtLimitDateEvent);
         TextView txtTime = findViewById(R.id.txtTimeEvent);
         TextView txtDescription = findViewById(R.id.txtDesEvent);
         TextView txtLocation = findViewById(R.id.txtLocationEvent);
         Button btnJoin = findViewById(R.id.buttonJoin);
+        ImageView imgEvento = findViewById(R.id.imgEvent);
         Intent intent = getIntent();
         evento = (Evento) intent.getSerializableExtra("evento");
         socio = (Socio)intent.getSerializableExtra("socio");
@@ -68,11 +74,17 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         String date = convertDate(evento.getFecha());
         String limitDate = convertDate(evento.getFechaLimite());
         txtDate.setText(date);
+        txtLimitDate.setText(limitDate);
         String time = evento.getHora().substring(0,8);
         txtTime.setText(time);
         txtDescription.setText(evento.getDescripcion());
         txtLocation.setText(evento.getUbicacion());
         Asistir asistirAux = new Asistir(socio.getId(),evento.getId());
+        if(evento.getImagen() != null){
+            byte[] byteArray = Base64.decode(evento.getImagen(), Base64.DEFAULT);
+            Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            imgEvento.setImageBitmap(bmp);
+        }
         if(socio.getAsistir().contains(asistirAux)){
             btnJoin.setText(getString(R.string.joined));
         }else{

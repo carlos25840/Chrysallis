@@ -8,7 +8,7 @@ import java.util.HashSet;
 public class Evento implements Serializable {
     private String nombre;
     private String descripcion;
-    private int imagen;
+    private String imagen;
     private int id;
     private String fecha;
     private String ubicacion;
@@ -22,7 +22,7 @@ public class Evento implements Serializable {
     private HashSet<Notificacion> notificaciones;
 
 
-    public Evento(String nombre, String descripcion, int imagen, int id, String fecha, String ubicacion, String hora, String fechaLimite, int numAsistentes, int id_comunidad) {
+    public Evento(String nombre, String descripcion, String imagen, int id, String fecha, String ubicacion, String hora, String fechaLimite, int numAsistentes, int id_comunidad) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagen = imagen;
@@ -35,7 +35,7 @@ public class Evento implements Serializable {
         this.id_comunidad = id_comunidad;
     }
 
-    public Evento(String nombre, String descripcion, int imagen, String fecha, String ubicacion) {
+    public Evento(String nombre, String descripcion, String imagen, String fecha, String ubicacion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagen = imagen;
@@ -43,11 +43,11 @@ public class Evento implements Serializable {
         this.ubicacion = ubicacion;
     }
 
-    public int getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
-    public void setImagen(int imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
 

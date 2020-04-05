@@ -77,7 +77,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventosVie
         // metodo bindEvento para rellenar los campos del eventoItem
         public void bindEvento(Evento evento) {
             nom.setText(evento.getNombre());
-            imagen.setImageResource(evento.getImagen());
+            //imagen.setImageResource(evento.getImagen());
             ubicacion.setText(evento.getUbicacion());
             String[] soloFecha = evento.getFecha().split("T");
             fecha.setText(soloFecha[0]);
