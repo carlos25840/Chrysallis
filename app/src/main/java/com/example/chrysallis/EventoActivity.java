@@ -65,7 +65,8 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         socio = (Socio)intent.getSerializableExtra("socio");
         txtEvent.setText(evento.getNombre());
         txtCom.setText(evento.getComunidades().getNombre());
-        String date = evento.getFecha().substring(0,10);
+        String date = convertDate(evento.getFecha());
+        String limitDate = convertDate(evento.getFechaLimite());
         txtDate.setText(date);
         String time = evento.getHora().substring(0,8);
         txtTime.setText(time);
@@ -79,9 +80,9 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                 @Override
                 public void onClick(View v) {
                     Date currentTime = Calendar.getInstance().getTime();
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                     String formattedDate = df.format(currentTime);
-                    if(evento.getFechaLimite().compareTo(formattedDate) == 1 || evento.getFechaLimite().compareTo(formattedDate) == 0){
+                    if(limitDate.compareTo(formattedDate) == 1 || limitDate.compareTo(formattedDate) == 0){
                         showDialogAttendance();
                     }else{
                         Toast.makeText(getApplicationContext(),"MAAAL", Toast.LENGTH_LONG).show();
@@ -223,5 +224,11 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
             Toast.makeText(getApplicationContext(), e2.toString(), Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    public String convertDate(String date){
+        String formatDate[] = date.substring(0,10).split("-");
+        date = formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0];
+        return date;
     }
 }
