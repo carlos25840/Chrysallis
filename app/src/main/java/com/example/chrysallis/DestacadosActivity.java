@@ -105,7 +105,7 @@ public class DestacadosActivity extends AppCompatActivity {
         homeFragment=new FragmentHome(socio);
         profileFragment=new FragmentProfile(socio);
         exploreFragment=new FragmentExplore();
-        chatFragment=new FragmentChat();
+        chatFragment=new FragmentChat(socio);
 
         fragments.add(homeFragment);
         fragments.add(profileFragment);
