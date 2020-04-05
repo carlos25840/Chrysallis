@@ -44,11 +44,12 @@ public class Asistir implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        boolean equals = false;
+        if (this == o) equals = true;
+        if (o == null || getClass() != o.getClass()) equals = false;
         Asistir asistir = (Asistir) o;
-        return id_socio == asistir.id_socio &&
-                id_evento == asistir.id_evento;
+        if(id_socio == asistir.id_socio && id_evento == asistir.id_evento) equals = true;
+        return equals;
     }
 
     @Override
