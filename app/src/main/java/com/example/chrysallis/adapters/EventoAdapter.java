@@ -1,5 +1,8 @@
 package com.example.chrysallis.adapters;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +80,11 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventosVie
         // metodo bindEvento para rellenar los campos del eventoItem
         public void bindEvento(Evento evento) {
             nom.setText(evento.getNombre());
-            //imagen.setImageResource(evento.getImagen());
+            if(evento.getImagen() != null){
+                byte[] byteArray = Base64.decode(evento.getImagen(), Base64.DEFAULT);
+                Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                imagen.setImageBitmap(bmp);
+            }
             ubicacion.setText(evento.getUbicacion());
             String[] soloFecha = evento.getFecha().split("T");
             fecha.setText(soloFecha[0]);

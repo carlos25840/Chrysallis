@@ -59,6 +59,7 @@
     <string name="description">Descripción</string>
     <string name="noResponder">\\n\\nDo not reply, this is an automatic email</string>
     <string name="joined">Participando</string>
+    <string name="fechaLimite">No es posible participar. Fecha límite de inscripción alcanzada.</string>
     <string-array name="languages">
         <item>Inglés</item>
         <item>Español</item>

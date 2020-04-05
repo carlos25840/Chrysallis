@@ -57,6 +57,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        //Views
         TextView txtEvent = findViewById(R.id.txtEvent);
         TextView txtCom = findViewById(R.id.txtComunEvent);
         TextView txtDate = findViewById(R.id.txtDateEvent);
@@ -66,9 +67,11 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         TextView txtLocation = findViewById(R.id.txtLocationEvent);
         Button btnJoin = findViewById(R.id.buttonJoin);
         ImageView imgEvento = findViewById(R.id.imgEvent);
+        //Se recupera el intent y los dos extras (socio y evento)
         Intent intent = getIntent();
         evento = (Evento) intent.getSerializableExtra("evento");
         socio = (Socio)intent.getSerializableExtra("socio");
+        //Asignación de valores a las views
         txtEvent.setText(evento.getNombre());
         txtCom.setText(evento.getComunidades().getNombre());
         String date = convertDate(evento.getFecha());
@@ -79,25 +82,28 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         txtTime.setText(time);
         txtDescription.setText(evento.getDescripcion());
         txtLocation.setText(evento.getUbicacion());
-        Asistir asistirAux = new Asistir(socio.getId(),evento.getId());
+        //Si el evento tiene una imagen se convierte a Bitmap y se le asigna a la View
         if(evento.getImagen() != null){
             byte[] byteArray = Base64.decode(evento.getImagen(), Base64.DEFAULT);
             Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
             imgEvento.setImageBitmap(bmp);
         }
+        //Se comprueba si el socio ya está participando en evento para que no se vuelva a apuntar y el texto del botón cambie
+        Asistir asistirAux = new Asistir(socio.getId(),evento.getId());
         if(socio.getAsistir().contains(asistirAux)){
             btnJoin.setText(getString(R.string.joined));
         }else{
             btnJoin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //Se comprueba que la fecha actual no sea mayor que la fecha límite
                     Date currentTime = Calendar.getInstance().getTime();
                     SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                     String formattedDate = df.format(currentTime);
                     if(limitDate.compareTo(formattedDate) == 1 || limitDate.compareTo(formattedDate) == 0){
                         showDialogAttendance();
                     }else{
-                        Toast.makeText(getApplicationContext(),"MAAAL", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),getString(R.string.fechaLimite), Toast.LENGTH_LONG).show();
                     }
 
                 }
