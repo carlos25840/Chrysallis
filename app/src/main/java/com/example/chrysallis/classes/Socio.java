@@ -17,7 +17,7 @@ public class Socio implements Serializable {
     private String idiomaDefecto;
     private boolean estatal;
     private int id_comunidad;
-    private HashSet<Comunidad> comunidades1;
+    private HashSet<Asistir> asistir;
 
     public void setId_comunidad(int id_comunidad) {
         this.id_comunidad = id_comunidad;
@@ -71,8 +71,8 @@ public class Socio implements Serializable {
         return id_comunidad;
     }
 
-    public HashSet<Comunidad> getComunidades1() {
-        return comunidades1;
+    public HashSet<Asistir> getAsistir() {
+        return asistir;
     }
 
     public String getImagenUsuario() {

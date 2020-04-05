@@ -64,4 +64,5 @@
     <string name="time">Time</string>
     <string name="description">Description</string>
     <string name="noResponder">\\n\\nDo not reply, this is an automatic email</string>
+    <string name="joined">Joined</string>
 </resources>

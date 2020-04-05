@@ -33,6 +33,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,7 +59,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         TextView txtTime = findViewById(R.id.txtTimeEvent);
         TextView txtDescription = findViewById(R.id.txtDesEvent);
         TextView txtLocation = findViewById(R.id.txtLocationEvent);
-        Button button = findViewById(R.id.buttonJoin);
+        Button btnJoin = findViewById(R.id.buttonJoin);
         Intent intent = getIntent();
         evento = (Evento) intent.getSerializableExtra("evento");
         socio = (Socio)intent.getSerializableExtra("socio");
@@ -67,12 +71,26 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         txtTime.setText(time);
         txtDescription.setText(evento.getDescripcion());
         txtLocation.setText(evento.getUbicacion());
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialogAttendance();
-            }
-        });
+        Asistir asistirAux = new Asistir(socio.getId(),evento.getId());
+        if(socio.getAsistir().contains(asistirAux)){
+            btnJoin.setText(getString(R.string.joined));
+        }else{
+            btnJoin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Date currentTime = Calendar.getInstance().getTime();
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    String formattedDate = df.format(currentTime);
+                    if(evento.getFechaLimite().compareTo(formattedDate) == 1 || evento.getFechaLimite().compareTo(formattedDate) == 0){
+                        showDialogAttendance();
+                    }else{
+                        Toast.makeText(getApplicationContext(),"MAAAL", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            });
+        }
+
     }
 
     /**
