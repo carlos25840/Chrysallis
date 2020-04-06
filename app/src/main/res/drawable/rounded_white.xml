@@ -7,12 +7,12 @@
                 android:color="@color/blanco"/>
             <stroke
                 android:width="@dimen/borde"
-                android:color="@color/colorAccent" />
+                android:color="@color/grisClaro" />
             <padding
-                android:bottom="8dp"
-                android:left="8dp"
-                android:right="8dp"
-                android:top="8dp" />
+                android:bottom="@dimen/mrgEvent"
+                android:left="@dimen/mrgEvent"
+                android:right="@dimen/mrgEvent"
+                android:top="@dimen/mrgEvent" />
         </shape>
     </item>
 </selector>

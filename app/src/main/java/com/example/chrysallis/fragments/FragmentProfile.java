@@ -2,7 +2,9 @@ package com.example.chrysallis.fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -79,7 +81,6 @@ public class FragmentProfile extends Fragment {
     //Cuando se crea la activity
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         imagenPerfil = getView().findViewById(R.id.ImgPerfil);
         mostrarPerfil();
     }
@@ -510,9 +511,11 @@ public class FragmentProfile extends Fragment {
 
     public void powerOffButton(){
 
-        Intent intent = new Intent(getActivity(), MainActivity.class);
+        /*Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
-        getActivity().finish();
+        getActivity().finish();*/
+        //android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(2);
     }
 
 

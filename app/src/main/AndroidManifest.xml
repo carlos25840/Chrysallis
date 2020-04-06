@@ -20,9 +20,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EventoActivity"
-            android:theme="@style/ActivityConBarra"
-            android:label=""></activity>
+        <activity android:name=".ChatActivity"
+            android:theme="@style/ActivityConBarra" />
+        <activity
+            android:name=".EventoActivity"
+            android:label=""
+            android:theme="@style/ActivityConBarra" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

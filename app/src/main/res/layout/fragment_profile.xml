@@ -15,7 +15,8 @@
         android:textColor="@color/colorPrimary"
         android:id="@+id/nombrePerfil"/>
 
-    <ImageView
+
+    <com.example.chrysallis.components.ImageButtonRounded
         android:layout_width="@dimen/imagenPerfil"
         android:layout_height="@dimen/imagenPerfil"
         android:scaleType="centerCrop"

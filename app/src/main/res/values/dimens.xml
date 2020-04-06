@@ -15,4 +15,5 @@
     <dimen name="txtEvent">15sp</dimen>
     <dimen name="txtComEvent">19sp</dimen>
     <dimen name="mrgEvent">10dp</dimen>
+    <dimen name="iconoMensaje">50dp</dimen>
 </resources>
