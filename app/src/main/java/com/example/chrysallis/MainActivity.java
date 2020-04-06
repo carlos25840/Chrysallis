@@ -154,6 +154,17 @@ public class MainActivity extends AppCompatActivity {
 
     /*Método que nos cambia el idioma del juego en función del seleccionado*/
     public void setLocale(String lang, boolean refrescar) {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs",
+                Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+        if(!lang.equals(language)){
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString(langPref, lang);
+            editor.commit();
+        }
+
+
         Locale myLocale = new Locale(lang);
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
@@ -170,5 +181,6 @@ public class MainActivity extends AppCompatActivity {
         String language = prefs.getString(langPref, "");
         setLocale(language, true);
     }
+
 
 }
