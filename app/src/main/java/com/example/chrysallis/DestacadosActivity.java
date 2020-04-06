@@ -52,11 +52,9 @@ public class DestacadosActivity extends AppCompatActivity {
     private static BottomNavigationView navView;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(null);
         setContentView(R.layout.activity_destacados);
         //Initializing viewPager
         viewPager = findViewById(R.id.viewpager);
@@ -106,17 +104,11 @@ public class DestacadosActivity extends AppCompatActivity {
         profileFragment=new FragmentProfile(socio);
         exploreFragment=new FragmentExplore();
         chatFragment=new FragmentChat(socio);
-
         fragments.add(homeFragment);
         fragments.add(profileFragment);
         fragments.add(exploreFragment);
         fragments.add(chatFragment);
-
         adapter.addFragments(fragments);
-
-
-
-
         viewPager.setAdapter(adapter);
     }
 
@@ -170,6 +162,7 @@ public class DestacadosActivity extends AppCompatActivity {
         navView.getMenu().findItem(R.id.navigation_chat).setTitle(R.string.title_chat);
 
     }
+
 
 
 }
