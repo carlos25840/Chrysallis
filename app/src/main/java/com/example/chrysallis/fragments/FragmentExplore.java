@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.chrysallis.Api.Api;
@@ -28,6 +29,7 @@ import com.example.chrysallis.adapters.ComunidadesSpinnerAdapter;
 import com.example.chrysallis.adapters.EventoAdapter;
 import com.example.chrysallis.classes.Comunidad;
 import com.example.chrysallis.classes.Evento;
+import com.example.chrysallis.classes.Socio;
 import com.example.chrysallis.components.DatePickerFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -39,20 +41,30 @@ import retrofit2.Response;
 
 
 public class FragmentExplore extends Fragment {
+    //Atributos
     private ArrayList<Evento> eventos;
     private Spinner spnComunidades;
     private RecyclerView recyclerView;
     private EventoAdapter adaptador;
+    private Socio socio;
+    private TextView msgNotEvents;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View item = inflater.inflate(R.layout.fragment_explore, container, false);
+        //Views
         EditText txtDate = item.findViewById(R.id.editTextFecha);
         EditText txtName = item.findViewById(R.id.editTextNameEvent);
         spnComunidades = item.findViewById(R.id.spnComunity);
         recyclerView = item.findViewById(R.id.recyclerEventosSearch);
         Button btnSearch = item.findViewById(R.id.buttonSearch);
+        msgNotEvents = item.findViewById(R.id.msgNotEventsExplore);
+
+        //Oculta el mensaje de que no hay eventos
+        msgNotEvents.setVisibility(getView().GONE);
+
+        //Rellena el spinner de comunidades llamando a la Api
         ComunidadesService comunidadesService = Api.getApi().create(ComunidadesService.class);
         Call<ArrayList<Comunidad>> comunidadesCall = comunidadesService.getComunidades();
         comunidadesCall.enqueue(new Callback<ArrayList<Comunidad>>() {
@@ -74,6 +86,8 @@ public class FragmentExplore extends Fragment {
 
             }
         });
+
+        //Muestra un calendario estilo fragment para seleccionar la fecha
         txtDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +105,7 @@ public class FragmentExplore extends Fragment {
             }
         });
 
+        //Evento del btnSearch que dependiendo de los campos rellenados busca una cosa u otra llamando a la Api
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,11 +235,13 @@ public class FragmentExplore extends Fragment {
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), EventoActivity.class);
                     intent.putExtra("evento", eventos.get(recyclerView.getChildAdapterPosition(v)));
+                    intent.putExtra("socio",socio);
                     startActivity(intent);
                 }
             });
         }
         else{
+            msgNotEvents.setVisibility(getView().VISIBLE);
             recyclerView.setVisibility(getView().GONE);
             recyclerView.removeAllViewsInLayout();
         }
@@ -232,6 +249,10 @@ public class FragmentExplore extends Fragment {
 
     private void showDatePickerDialog() {
 
+    }
+
+    public FragmentExplore(Socio socio){
+        this.socio= socio;
     }
 
 }
