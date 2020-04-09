@@ -33,7 +33,10 @@ import com.example.chrysallis.classes.Socio;
 import com.example.chrysallis.components.DatePickerFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -96,8 +99,30 @@ public class FragmentExplore extends Fragment {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         // +1 because January is zero
+                        String d, m , y;
+                        if(day < 10){
+                            d = "0" + day;
+                        }else{
+                            d = Integer.toString(day);
+                        }
+                        if((month + 1) < 10){
+                            m = "0" + (month + 1);
+                        }else{
+                            m = Integer.toString(month + 1);
+                        }
+                        String selected = d + "/" + m + "/" + year;
                         final String selectedDate = day + "/" + (month + 1) + "/" + year;
-                        txtDate.setText(selectedDate);
+
+                        Date currentTime = Calendar.getInstance().getTime();
+                        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                        String formattedDate = df.format(currentTime);
+                        int com = selected.compareTo(formattedDate);
+                        if(com < 0){
+                            txtDate.setText("");
+                            Toast.makeText(getContext(),getString(R.string.wrongDate), Toast.LENGTH_LONG).show();
+                        }else{
+                            txtDate.setText(selectedDate);
+                        }
                     }
                 });
 

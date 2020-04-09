@@ -60,6 +60,7 @@
     <string name="noResponder">\\n\\nDo not reply, this is an automatic email</string>
     <string name="joined">Joined</string>
     <string name="fechaLimite">Ezin da parte hartu. Izena emateko azken eguna.</string>
+    <string name="wrongDate">Data okerra, uneko edo handiagoa den data aukeratu behar duzu</string>
     <string-array name="languages">
         <item>Ingelesez</item>
         <item>Gaztelania</item>

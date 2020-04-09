@@ -60,6 +60,7 @@
     <string name="noResponder">\\n\\nDo not reply, this is an automatic email</string>
     <string name="joined">Joined</string>
     <string name="fechaLimite">Non é posible participar. Chegado o prazo de inscrición.</string>
+    <string name="wrongDate">Data incorrecta, ten que seleccionar unha data actual ou superior</string>
     <string-array name="languages">
         <item>Inglés</item>
         <item>Español</item>

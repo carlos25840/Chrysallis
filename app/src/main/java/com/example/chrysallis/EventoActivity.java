@@ -49,6 +49,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
     private GoogleMap mMap;
     private Evento evento;
     private Socio socio;
+    private Boolean asistencia = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,10 +93,12 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         Asistir asistirAux = new Asistir(socio.getId(),evento.getId());
         if(socio.getAsistir().contains(asistirAux)){
             btnJoin.setText(getString(R.string.joined));
-        }else{
-            btnJoin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            asistencia = true;
+        }
+        btnJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!asistencia){
                     //Se comprueba que la fecha actual no sea mayor que la fecha límite
                     Date currentTime = Calendar.getInstance().getTime();
                     SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
@@ -105,10 +108,10 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                     }else{
                         Toast.makeText(getApplicationContext(),getString(R.string.fechaLimite), Toast.LENGTH_LONG).show();
                     }
-
                 }
-            });
-        }
+
+            }
+        });
 
     }
 
@@ -192,7 +195,9 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                             if(response.isSuccessful()){
                                 Toast.makeText(getApplicationContext(),getString(R.string.attendanceConfirmed), Toast.LENGTH_LONG).show();
                                 enviarMail();
-
+                                Button btnJoin = findViewById(R.id.buttonJoin);
+                                btnJoin.setText(getString(R.string.joined));
+                                asistencia = true;
                             }else{
                                 Gson gson = new Gson();
                                 ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);

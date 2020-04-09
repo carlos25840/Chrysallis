@@ -63,7 +63,7 @@ public class FragmentHome extends Fragment {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = df.format(currentTime);
         EventosService eventosService = Api.getApi().create(EventosService.class);
-        Call<ArrayList<Evento>> eventosCall = eventosService.busquedaEventosComunidadDate(socio.getId_comunidad(),formattedDate);
+        Call<ArrayList<Evento>> eventosCall = eventosService.busquedaEventosComunidadDates(socio.getId_comunidad(),formattedDate);
         eventosCall.enqueue(new Callback<ArrayList<Evento>>() {
             @Override
             public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
