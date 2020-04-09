@@ -136,9 +136,12 @@ public class FragmentExplore extends Fragment {
             public void onClick(View v) {
                 EventosService eventosService = Api.getApi().create(EventosService.class);
                 Call<ArrayList<Evento>> eventosCall;
+                Date currentTime = Calendar.getInstance().getTime();
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String formattedDate = df.format(currentTime);
                 switch (comprobarCampos()) {
                     case 0:
-                        eventosCall = eventosService.busquedaEventosComunidad(((Comunidad) spnComunidades.getSelectedItem()).getId());
+                        eventosCall = eventosService.busquedaEventosComunidad(((Comunidad) spnComunidades.getSelectedItem()).getId(),formattedDate);
                         eventosCall.enqueue(new Callback<ArrayList<Evento>>() {
                             @Override
                             public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
@@ -183,7 +186,7 @@ public class FragmentExplore extends Fragment {
 
                         break;
                     case 2:
-                        eventosCall = eventosService.busquedaEventosNameComunidad(txtName.getText().toString().trim(),((Comunidad) spnComunidades.getSelectedItem()).getId());
+                        eventosCall = eventosService.busquedaEventosNameComunidad(txtName.getText().toString().trim(),((Comunidad) spnComunidades.getSelectedItem()).getId(),formattedDate);
                         eventosCall.enqueue(new Callback<ArrayList<Evento>>() {
                             @Override
                             public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {

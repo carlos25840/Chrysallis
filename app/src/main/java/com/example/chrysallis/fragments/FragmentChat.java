@@ -20,7 +20,12 @@ import com.example.chrysallis.R;
 import com.example.chrysallis.adapters.EventoChatAdapter;
 import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.classes.Socio;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,10 +43,11 @@ public class FragmentChat extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
         eventos = new ArrayList<>();
         recyclerView = view.findViewById(R.id.RecyclerChats);
-
-
+        Date currentTime = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = df.format(currentTime);
         EventosService eventosService = Api.getApi().create(EventosService.class);
-        Call<ArrayList<Evento>> eventosCall = eventosService.busquedaEventosComunidad(socio.getId_comunidad());
+        Call<ArrayList<Evento>> eventosCall = eventosService.busquedaEventosComunidad(socio.getId_comunidad(),formattedDate);
         eventosCall.enqueue(new Callback<ArrayList<Evento>>() {
             @Override
             public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
