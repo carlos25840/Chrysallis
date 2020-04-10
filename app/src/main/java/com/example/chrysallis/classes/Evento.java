@@ -20,6 +20,7 @@ public class Evento implements Serializable {
     private HashSet<Asistir> asistir;
     private HashSet<Documento> documentos;
     private HashSet<Notificacion> notificaciones;
+    private HashSet<Mensaje> mensajes;
 
 
     public Evento(String nombre, String descripcion, String imagen, int id, String fecha, String ubicacion, String hora, String fechaLimite, int numAsistentes, int id_comunidad) {
@@ -145,6 +146,10 @@ public class Evento implements Serializable {
 
     public void setNotificaciones(HashSet<Notificacion> notificaciones) {
         this.notificaciones = notificaciones;
+    }
+
+    public HashSet<Mensaje> getMensajes() {
+        return mensajes;
     }
 
     public Comunidad getComunidades() {
