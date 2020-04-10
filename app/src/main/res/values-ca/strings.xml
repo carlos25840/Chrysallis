@@ -61,6 +61,7 @@
     <string name="joined">Participant</string>
     <string name="fechaLimite">No és possible participar-hi. Data límit d\'inscripció assolida.</string>
     <string name="wrongDate">Data incorrecta, necessites seleccionar una data que sigui l\'actual o superior</string>
+    <string name="documents">Documents</string>
     <string-array name="languages">
         <item>Anglès</item>
         <item>Castellà</item>

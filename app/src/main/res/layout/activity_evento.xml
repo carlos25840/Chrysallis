@@ -140,6 +140,20 @@
                 tools:context=".EventosActivity"
                 android:layout_margin="@dimen/borde_fragments"/>
         </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/documents"
+            android:textSize="@dimen/txtComEvent"
+            android:textStyle="bold"
+            android:textColor="@color/colorAccent"
+            android:layout_margin="@dimen/mrgEvent"/>
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sizeGrid"
+            android:numColumns="1"
+            android:id="@+id/gridDocs"
+            android:layout_margin="@dimen/mrgEvent">
+        </GridView>
     </LinearLayout>
-
 </ScrollView>

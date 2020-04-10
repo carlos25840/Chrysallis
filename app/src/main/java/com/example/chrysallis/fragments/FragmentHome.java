@@ -19,6 +19,7 @@ import com.example.chrysallis.Api.ApiService.EventosService;
 import com.example.chrysallis.EventoActivity;
 import com.example.chrysallis.R;
 import com.example.chrysallis.adapters.EventoAdapter;
+import com.example.chrysallis.classes.Documento;
 import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.classes.Socio;
 
@@ -26,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -80,7 +82,7 @@ public class FragmentHome extends Fragment {
                                 @Override
                                 public void onClick(View v) {
                                     Intent intent = new Intent(getActivity(), EventoActivity.class);
-                                    intent.putExtra("evento", eventos.get(recyclerView.getChildAdapterPosition(v)));
+                                    intent.putExtra("evento",eventos.get(recyclerView.getChildAdapterPosition(v)));
                                     intent.putExtra("socio", socio);
                                     startActivity(intent);
                                 }

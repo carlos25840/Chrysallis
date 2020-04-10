@@ -1,12 +1,16 @@
 package com.example.chrysallis;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
@@ -15,15 +19,21 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.chrysallis.Api.Api;
 import com.example.chrysallis.Api.ApiService.AsistirService;
+import com.example.chrysallis.Api.ApiService.DocumentosService;
+import com.example.chrysallis.adapters.DocumentoAdapter;
 import com.example.chrysallis.classes.Asistir;
+import com.example.chrysallis.classes.Documento;
 import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.classes.Socio;
 import com.example.chrysallis.components.ErrorMessage;
@@ -37,7 +47,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -50,6 +65,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
     private Evento evento;
     private Socio socio;
     private Boolean asistencia = false;
+    private ArrayList<Documento> documentos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +84,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         TextView txtLocation = findViewById(R.id.txtLocationEvent);
         Button btnJoin = findViewById(R.id.buttonJoin);
         ImageView imgEvento = findViewById(R.id.imgEvent);
+        GridView gridDocs = findViewById(R.id.gridDocs);
         //Se recupera el intent y los dos extras (socio y evento)
         Intent intent = getIntent();
         evento = (Evento) intent.getSerializableExtra("evento");
@@ -83,6 +100,74 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         txtTime.setText(time);
         txtDescription.setText(evento.getDescripcion());
         txtLocation.setText(evento.getUbicacion());
+
+        //Recupera os documentos
+        DocumentosService documentosService = Api.getApi().create(DocumentosService.class);
+        Call<ArrayList<Documento>> listCall = documentosService.busquedaDocumentosEvento(evento.getId());
+        listCall.enqueue(new Callback<ArrayList<Documento>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Documento>> call, Response<ArrayList<Documento>> response) {
+                switch (response.code()){
+                    case 200:
+                        documentos = response.body();
+                        if(!documentos.isEmpty()){
+                            //Se crea el adapter y se asigna a la grid
+                            DocumentoAdapter documentoAdapter = new DocumentoAdapter(getApplicationContext(),documentos);
+                            gridDocs.setAdapter(documentoAdapter);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Documento>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        txtLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Search for restaurants nearby
+                Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + txtLocation.getText().toString());
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
+            }
+        });
+
+
+        gridDocs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Documento documento = documentos.get(position);
+                byte[] pdfAsBytes = Base64.decode(documento.getDocumento(), 0);
+
+                File filePath = new File(getCacheDir() + documento.getNombre());
+                FileOutputStream os = null;
+                try {
+                    os = new FileOutputStream(filePath, true);
+                    os.write(pdfAsBytes);
+                    os.flush();
+                    os.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Intent intent1 = new Intent(EventoActivity.this,PdfViewActivity.class);
+                intent1.putExtra("file",filePath);
+                try {
+                    startActivity(intent1);
+                } catch (ActivityNotFoundException e) {
+                    // Instruct the user to install a PDF reader here, or something
+                }
+
+            }
+        });
+
         //Si el evento tiene una imagen se convierte a Bitmap y se le asigna a la View
         if(evento.getImagen() != null){
             byte[] byteArray = Base64.decode(evento.getImagen(), Base64.DEFAULT);

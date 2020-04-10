@@ -61,6 +61,7 @@
     <string name="joined">Participando</string>
     <string name="fechaLimite">No es posible participar. Fecha límite de inscripción alcanzada.</string>
     <string name="wrongDate">Fecha incorrecta, necesitas seleccionar una fecha que sea la actual o superior</string>
+    <string name="documents">Documentos</string>
     <string-array name="languages">
         <item>Inglés</item>
         <item>Español</item>
