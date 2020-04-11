@@ -19,10 +19,15 @@ import com.example.chrysallis.Api.ApiService.EventosService;
 import com.example.chrysallis.EventoActivity;
 import com.example.chrysallis.R;
 import com.example.chrysallis.adapters.EventoAdapter;
+import com.example.chrysallis.classes.Documento;
 import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.classes.Socio;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,8 +61,11 @@ public class FragmentHome extends Fragment {
         recyclerView = view.findViewById(R.id.RecyclerDestacados);
         msgNotEvents = view.findViewById(R.id.msgNotEvents);
 
+        Date currentTime = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = df.format(currentTime);
         EventosService eventosService = Api.getApi().create(EventosService.class);
-        Call<ArrayList<Evento>> eventosCall = eventosService.busquedaEventosComunidad(socio.getId_comunidad());
+        Call<ArrayList<Evento>> eventosCall = eventosService.busquedaEventosComunidad(socio.getId_comunidad(),formattedDate);
         eventosCall.enqueue(new Callback<ArrayList<Evento>>() {
             @Override
             public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
@@ -74,7 +82,7 @@ public class FragmentHome extends Fragment {
                                 @Override
                                 public void onClick(View v) {
                                     Intent intent = new Intent(getActivity(), EventoActivity.class);
-                                    intent.putExtra("evento", eventos.get(recyclerView.getChildAdapterPosition(v)));
+                                    intent.putExtra("evento",eventos.get(recyclerView.getChildAdapterPosition(v)));
                                     intent.putExtra("socio", socio);
                                     startActivity(intent);
                                 }

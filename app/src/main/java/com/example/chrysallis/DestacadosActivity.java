@@ -102,7 +102,7 @@ public class DestacadosActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         homeFragment=new FragmentHome(socio);
         profileFragment=new FragmentProfile(socio);
-        exploreFragment=new FragmentExplore();
+        exploreFragment=new FragmentExplore(socio);
         chatFragment=new FragmentChat(socio);
         fragments.add(homeFragment);
         fragments.add(profileFragment);

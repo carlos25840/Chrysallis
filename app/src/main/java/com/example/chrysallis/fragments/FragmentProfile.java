@@ -271,13 +271,13 @@ public class FragmentProfile extends Fragment {
                     == PackageManager.PERMISSION_GRANTED ) {
                 Log.v("TAG","Permission is granted");
                 permiso = true;
-            } else {                                    //si no tiene permiso lo pide
+            } else { //Si no tiene permiso lo pide
                 Log.v("TAG","Permission is revoked");
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CAMERA);
                 permiso = false;
             }
         }
-        else { //si la version es menor de android 6.0
+        else { //Si la version es menor de android 6.0
             Log.v("TAG","Permission is granted");
             permiso = true;
         }

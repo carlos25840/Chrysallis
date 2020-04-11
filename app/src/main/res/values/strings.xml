@@ -66,4 +66,11 @@
     <string name="noResponder">\\n\\nDo not reply, this is an automatic email</string>
     <string name="joined">Joined</string>
     <string name="fechaLimite">It is not possible to participate. Registration deadline reached.</string>
+    <string name="wrongDate">Wrong date,  you need to select a date that is current or higher</string>
+    <string name="documents">Documents</string>
+    <string name="notAttendanceConfirmation">Unsubscribe confirmation</string>
+    <string name="notAttendance">Are you sure you want to unsubscribe?</string>
+    <string name="notAttendanceConfirmed">Unsubscribe  confirmed</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>

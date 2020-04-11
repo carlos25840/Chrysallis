@@ -86,8 +86,8 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventosVie
                 imagen.setImageBitmap(bmp);
             }
             ubicacion.setText(evento.getUbicacion());
-            String[] soloFecha = evento.getFecha().split("T");
-            fecha.setText(soloFecha[0]);
+            String formatDate[] = evento.getFecha().substring(0,10).split("-");
+            fecha.setText(formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0]);
         }
     }
 }

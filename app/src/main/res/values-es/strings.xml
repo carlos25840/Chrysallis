@@ -60,6 +60,13 @@
     <string name="noResponder">\\n\\nDo not reply, this is an automatic email</string>
     <string name="joined">Participando</string>
     <string name="fechaLimite">No es posible participar. Fecha límite de inscripción alcanzada.</string>
+    <string name="wrongDate">Fecha incorrecta, necesitas seleccionar una fecha que sea la actual o superior</string>
+    <string name="documents">Documentos</string>
+    <string name="notAttendanceConfirmation">Confirmación de baja</string>
+    <string name="notAttendance">¿Te quieres dar de baja?</string>
+    <string name="notAttendanceConfirmed">Baja confirmada</string>
+    <string name="no">No</string>
+    <string name="yes">Sí</string>
     <string-array name="languages">
         <item>Inglés</item>
         <item>Español</item>

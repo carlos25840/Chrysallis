@@ -1,19 +1,16 @@
 package com.example.chrysallis.Api.ApiService;
 
 import com.example.chrysallis.classes.Asistir;
-import com.example.chrysallis.classes.Evento;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
+import retrofit2.http.DELETE;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface AsistirService {
     @POST("api/Asistir")
     Call<Asistir> insertAsistir(@Body Asistir asistir);
-
-    @GET ("api/Asistir/searchid")
-    Call<Asistir> getEventosApuntado(@Body int id);
+    @DELETE("api/Asistir/{id_socio}/{id_evento}")
+    Call<Asistir> deleteAsistir(@Path("id_socio") int id_socio, @Path("id_evento") int id_evento);
 }

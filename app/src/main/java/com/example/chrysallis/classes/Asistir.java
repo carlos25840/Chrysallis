@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Asistir implements Serializable {
-
     private int id_socio;
     private int id_evento;
     private int valoracion;
