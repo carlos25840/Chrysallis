@@ -41,6 +41,7 @@ import android.widget.Toast;
 import com.example.chrysallis.Api.Api;
 import com.example.chrysallis.Api.ApiService.ComunidadesService;
 import com.example.chrysallis.Api.ApiService.SociosService;
+import com.example.chrysallis.ApuntadoActivity;
 import com.example.chrysallis.DestacadosActivity;
 import com.example.chrysallis.MainActivity;
 import com.example.chrysallis.R;
@@ -81,6 +82,7 @@ public class FragmentProfile extends Fragment {
     //Cuando se crea la activity
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         imagenPerfil = getView().findViewById(R.id.ImgPerfil);
         mostrarPerfil();
     }
@@ -95,6 +97,7 @@ public class FragmentProfile extends Fragment {
         TextView idiomaPerfil = getView().findViewById(R.id.languagePerfil);
         ImageButton editPassword = getView().findViewById(R.id.buttonEditPassword);
         ImageButton editLanguage =  getView().findViewById(R.id.buttonEditLanguage);
+        TextView seeEvents = getView().findViewById(R.id.eventosPerfil);
         ImageButton editCommunity = getView().findViewById(R.id.buttonEditComunidad);
         ImageButton powerOff = getView().findViewById(R.id.powerOff);
         nombrePerfil.setText(socio.getNombre());
@@ -163,6 +166,12 @@ public class FragmentProfile extends Fragment {
             }
         });
 
+        seeEvents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEvents();
+            }
+        });
 
     }
 
@@ -564,5 +573,12 @@ public class FragmentProfile extends Fragment {
         });
         builder.setNegativeButton(R.string.cancel, null);
         builder.show();
+    }
+
+    public void showEvents(){
+
+        Intent intent = new Intent(getActivity(), ApuntadoActivity.class);
+        intent.putExtra("socio", socio);
+        startActivity(intent);
     }
 }

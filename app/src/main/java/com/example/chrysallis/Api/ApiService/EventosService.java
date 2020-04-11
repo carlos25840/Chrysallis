@@ -1,11 +1,13 @@
 package com.example.chrysallis.Api.ApiService;
 
+import com.example.chrysallis.classes.Asistir;
 import com.example.chrysallis.classes.Evento;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
@@ -21,4 +23,7 @@ public interface EventosService {
 
     @GET("api/Eventos/Search/{nombre}/{id_comunidad}/{date}")
     Call<ArrayList<Evento>> busquedaEventosAll(@Path("nombre")String nombre,@Path("id_comunidad")int id_comunidad,@Path("date")String date);
+
+    @GET ("api/Asistir/searchid/{id_socio}")
+    Call<ArrayList<Evento>> getEventosApuntado(@Path("id_socio") int id);
 }

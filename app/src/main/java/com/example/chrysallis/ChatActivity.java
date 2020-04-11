@@ -29,4 +29,14 @@ public class ChatActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    public static class ApuntadoActivity extends AppCompatActivity {
+
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_apuntado);
+        }
+
+
+    }
 }

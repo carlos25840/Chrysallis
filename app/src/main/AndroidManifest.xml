@@ -39,9 +39,10 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".RecuperarActivity" />
+        <activity android:name=".ApuntadoActivity" />
         <activity
             android:name=".DestacadosActivity"
-            android:label="@string/destacados" />
+            android:label="@string/destacados"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
