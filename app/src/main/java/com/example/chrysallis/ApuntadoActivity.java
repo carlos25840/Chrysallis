@@ -1,5 +1,6 @@
 package com.example.chrysallis;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -83,22 +84,22 @@ public class ApuntadoActivity extends AppCompatActivity {
 
     public void rellenarRecyclerView(){
         if (!eventos.isEmpty()) {
-
             adaptador = new EventoAdapter(eventos);
             recyclerView.setAdapter(adaptador);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
             //Listener para abrir el seleccionado
             adaptador.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(ApuntadoActivity.this, EventoActivity.class);
-                    intent.putExtra("evento", eventos.get(recyclerView.getChildAdapterPosition(v)));
-                    intent.putExtra("socio", socio);
+                    Evento e = eventos.get(recyclerView.getChildAdapterPosition(v));
+                    intent.putExtra("evento", e);
+                    intent.putExtra("socio",socio);
                     startActivity(intent);
                 }
             });
-        } else {
-
+        }
+        else{
             recyclerView.removeAllViewsInLayout();
         }
     }
