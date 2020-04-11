@@ -1,5 +1,7 @@
 package com.example.chrysallis.classes;
 
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 
 public class Mensaje implements Serializable,Comparable<Mensaje>{
@@ -9,6 +11,13 @@ public class Mensaje implements Serializable,Comparable<Mensaje>{
     private String mensaje;
     private String fecha;
     private Socio socios;
+
+    public Mensaje(int id_socio, int id_evento, String mensaje, String fecha) {
+        this.id_socio = id_socio;
+        this.id_evento = id_evento;
+        this.mensaje = mensaje;
+        this.fecha = fecha;
+    }
 
     public int getId() {
         return id;

@@ -72,6 +72,7 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.Mensajes
         private TextView nom;
         private TextView textoMensaje;
         private RelativeLayout cardView;
+        private TextView textoHora;
 
         //constructor del viewholder para guardar las views
         public MensajesViewHolder(View itemView) {
@@ -79,6 +80,7 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.Mensajes
             nom = itemView.findViewById(R.id.nombreMensaje);
             textoMensaje = itemView.findViewById(R.id.textoMensaje);
             cardView = itemView.findViewById(R.id.cardMensaje);
+            textoHora = itemView.findViewById(R.id.textoHora);
 
         }
 
@@ -94,6 +96,8 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.Mensajes
             else{
                 cardView.setGravity(Gravity.RIGHT);
             }
+            String soloHora = mensaje.getFecha().substring(11,16);
+            textoHora.setText(soloHora);
         }
     }
 }

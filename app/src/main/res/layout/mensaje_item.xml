@@ -33,6 +33,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Esta es una prueba de un mensaje que se enviará y tendrá como maximo 500 caracteres"/>
+            <TextView
+                android:id="@+id/textoHora"
+                android:textSize="@dimen/small"
+                android:textColor="@color/grisClaro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"/>
 
 
 
