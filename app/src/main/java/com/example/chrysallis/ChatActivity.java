@@ -60,7 +60,7 @@ public class ChatActivity extends AppCompatActivity {
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                 String formattedDate = df.format(currentTime);
 
-                Mensaje mensaje = new Mensaje(socio.getId(),evento.getId(), txtMensaje.getText().toString(), formattedDate);
+                Mensaje mensaje = new Mensaje(socio.getId(),evento.getId(), socio.getNombre() + ":" + txtMensaje.getText().toString(), formattedDate);
                 txtMensaje.setText("");
                 MensajesService mensajesService = Api.getApi().create(MensajesService.class);
                 Call<Mensaje> mensajeCall = mensajesService.insertMensaje(mensaje);

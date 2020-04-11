@@ -87,9 +87,9 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.Mensajes
         // metodo bindEvento para rellenar los campos del eventoItem
         public void bindMensaje(Mensaje mensaje, Socio socio) {
 
-
-            nom.setText("prueba de nombre");
-            textoMensaje.setText(mensaje.getMensaje());
+            String[] mensajeSplitted = mensaje.getMensaje().split(":");
+            nom.setText(mensajeSplitted[0]);
+            textoMensaje.setText(mensaje.getMensaje().replace(mensajeSplitted[0] + ":", ""));
             if(mensaje.getId_socio() == socio.getId()){
                 cardView.setGravity(Gravity.LEFT);
             }
