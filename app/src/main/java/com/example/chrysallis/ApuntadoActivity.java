@@ -38,6 +38,7 @@ public class ApuntadoActivity extends AppCompatActivity {
     private ArrayList<Evento> eventos;
     private RecyclerView recyclerView;
     private EventoAdapter adaptador;
+    private Socio socio;
 
 
 
@@ -48,7 +49,7 @@ public class ApuntadoActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        Socio socio = (Socio)intent.getSerializableExtra("socio");
+        socio = (Socio)intent.getSerializableExtra("socio");
         int id = socio.getId();
         recyclerView = findViewById(R.id.recyclerEventosApuntado);
 
@@ -92,6 +93,7 @@ public class ApuntadoActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(ApuntadoActivity.this, EventoActivity.class);
                     intent.putExtra("evento", eventos.get(recyclerView.getChildAdapterPosition(v)));
+                    intent.putExtra("socio", socio);
                     startActivity(intent);
                 }
             });
