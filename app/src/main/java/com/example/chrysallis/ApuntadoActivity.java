@@ -78,11 +78,6 @@ public class ApuntadoActivity extends AppCompatActivity {
             }
         });
 
-        rellenarRecyclerView();
-
-
-
-
     }
 
     public void rellenarRecyclerView(){
