@@ -1,7 +1,6 @@
 package com.example.chrysallis;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -10,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
@@ -24,7 +22,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -193,6 +190,9 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                     }else{
                         Toast.makeText(getApplicationContext(),getString(R.string.fechaLimite), Toast.LENGTH_LONG).show();
                     }
+                }else{
+                    //Si el socio está apuntado se muestra un diálogo para que se pueda desapuntar
+                    showDialogNotAttendance();
                 }
 
             }
@@ -255,6 +255,42 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         }
     }
 
+
+    private void showDialogNotAttendance(){
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this, R.style.ThemeOverlay_MaterialComponents_Dialog_Alert);
+        LayoutInflater inflater = this.getLayoutInflater();
+        builder.setTitle(Html.fromHtml("<b>"+getString(R.string.notAttendanceConfirmation)+"</b>"));
+         builder.setMessage(getString(R.string.notAttendance));
+         builder.setNegativeButton(getString(R.string.no),null);
+         builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+             @Override
+             public void onClick(DialogInterface dialog, int which) {
+                 AsistirService asistirService = Api.getApi().create(AsistirService.class);
+                 Call<Asistir> asistirCall = asistirService.deleteAsistir(socio.getId(),evento.getId());
+                 asistirCall.enqueue(new Callback<Asistir>() {
+                     @Override
+                     public void onResponse(Call<Asistir> call, Response<Asistir> response) {
+                         if(response.isSuccessful()){
+                             Toast.makeText(getApplicationContext(),getString(R.string.notAttendanceConfirmed), Toast.LENGTH_LONG).show();
+                             Button btnJoin = findViewById(R.id.buttonJoin);
+                             btnJoin.setText(getString(R.string.join));
+                             asistencia = false;
+                         }else{
+                             Gson gson = new Gson();
+                             ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
+                             Toast.makeText(getApplicationContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
+                         }
+                     }
+
+                     @Override
+                     public void onFailure(Call<Asistir> call, Throwable t) {
+
+                     }
+                 });
+             }
+         });
+        builder.show();
+    }
     private void showDialogAttendance() {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this, R.style.ThemeOverlay_MaterialComponents_Dialog_Alert);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -283,6 +319,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                                 Button btnJoin = findViewById(R.id.buttonJoin);
                                 btnJoin.setText(getString(R.string.joined));
                                 asistencia = true;
+                                socio.getAsistir().add(asistir);
                             }else{
                                 Gson gson = new Gson();
                                 ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);

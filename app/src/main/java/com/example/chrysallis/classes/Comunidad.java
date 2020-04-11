@@ -1,10 +1,12 @@
 package com.example.chrysallis.classes;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.HashSet;
 
 public class Comunidad implements Serializable {
-
     private int id;
     private String nombre;
     private HashSet<Evento> eventos;
