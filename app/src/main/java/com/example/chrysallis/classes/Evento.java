@@ -1,11 +1,6 @@
 package com.example.chrysallis.classes;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
-import java.sql.Time;
-import java.util.Date;
 import java.util.HashSet;
 
 public class Evento implements Serializable {
