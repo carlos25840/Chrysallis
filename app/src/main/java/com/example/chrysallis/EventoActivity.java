@@ -114,6 +114,9 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                         }
                         break;
                     default:
+                        Gson gson = new Gson();
+                        ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
+                        Toast.makeText(getApplicationContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
                         break;
                 }
             }
@@ -275,6 +278,8 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                              Button btnJoin = findViewById(R.id.buttonJoin);
                              btnJoin.setText(getString(R.string.join));
                              asistencia = false;
+                             Asistir asistir = new Asistir(socio.getId(),evento.getId());
+                             socio.getAsistir().remove(asistir);
                          }else{
                              Gson gson = new Gson();
                              ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
@@ -284,7 +289,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
 
                      @Override
                      public void onFailure(Call<Asistir> call, Throwable t) {
-
+                         Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
                      }
                  });
              }

@@ -20,6 +20,8 @@ import com.example.chrysallis.R;
 import com.example.chrysallis.adapters.EventoChatAdapter;
 import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.classes.Socio;
+import com.example.chrysallis.components.ErrorMessage;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -71,6 +73,9 @@ public class FragmentChat extends Fragment {
                         }
                         break;
                     default:
+                        Gson gson = new Gson();
+                        ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
+                        Toast.makeText(getContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
                         break;
                 }
             }

@@ -31,7 +31,9 @@ import com.example.chrysallis.classes.Comunidad;
 import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.classes.Socio;
 import com.example.chrysallis.components.DatePickerFragment;
+import com.example.chrysallis.components.ErrorMessage;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -80,6 +82,9 @@ public class FragmentExplore extends Fragment {
                         spnComunidades.setAdapter(spinnerAdapter);
                         break;
                     default:
+                        Gson gson = new Gson();
+                        ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
+                        Toast.makeText(getContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
                         break;
                 }
             }
@@ -174,6 +179,9 @@ public class FragmentExplore extends Fragment {
                                         rellenarRecyclerView();
                                         break;
                                     default:
+                                        Gson gson = new Gson();
+                                        ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
+                                        Toast.makeText(getContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
                                         break;
                                 }
                             }
@@ -196,6 +204,9 @@ public class FragmentExplore extends Fragment {
                                         rellenarRecyclerView();
                                         break;
                                     default:
+                                        Gson gson = new Gson();
+                                        ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
+                                        Toast.makeText(getContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
                                         break;
                                 }
                             }
@@ -219,6 +230,9 @@ public class FragmentExplore extends Fragment {
                                         rellenarRecyclerView();
                                         break;
                                     default:
+                                        Gson gson = new Gson();
+                                        ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
+                                        Toast.makeText(getContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
                                         break;
                                 }
                             }

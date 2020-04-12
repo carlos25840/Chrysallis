@@ -26,4 +26,7 @@ public interface EventosService {
 
     @GET ("api/Eventos/SearchSocio/{id_socio}")
     Call<ArrayList<Evento>> getEventosApuntado(@Path("id_socio") int id_socio);
+
+    @GET ("api/Eventos/{id}")
+    Call<Evento> getEvento(@Path("id") int id);
 }

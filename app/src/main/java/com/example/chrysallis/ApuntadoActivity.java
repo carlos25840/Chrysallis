@@ -27,6 +27,8 @@ import com.example.chrysallis.classes.Asistir;
 import com.example.chrysallis.classes.Comunidad;
 import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.classes.Socio;
+import com.example.chrysallis.components.ErrorMessage;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -40,9 +42,7 @@ public class ApuntadoActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private EventoAdapter adaptador;
     private Socio socio;
-
-
-
+    private Evento evento;
 
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(null);
@@ -57,19 +57,19 @@ public class ApuntadoActivity extends AppCompatActivity {
 
 
         EventosService eventosService = Api.getApi().create(EventosService.class);
-        Call<ArrayList<Evento>> eventosCall;
-
-        eventosCall = eventosService.getEventosApuntado(id);
+        Call<ArrayList<Evento>> eventosCall = eventosService.getEventosApuntado(id);
         eventosCall.enqueue(new Callback<ArrayList<Evento>>() {
             @Override
             public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
                 switch (response.code()) {
                     case 200:
                         eventos = response.body();
-
                         rellenarRecyclerView();
                         break;
                     default:
+                        Gson gson = new Gson();
+                        ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
+                        Toast.makeText(getApplicationContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
                         break;
                 }
             }
@@ -93,9 +93,33 @@ public class ApuntadoActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(ApuntadoActivity.this, EventoActivity.class);
                     Evento e = eventos.get(recyclerView.getChildAdapterPosition(v));
-                    intent.putExtra("evento", e);
-                    intent.putExtra("socio",socio);
-                    startActivity(intent);
+                    EventosService eventosService = Api.getApi().create(EventosService.class);
+                    Call<Evento> eventoCall = eventosService.getEvento(e.getId());
+                    eventoCall.enqueue(new Callback<Evento>() {
+                        @Override
+                        public void onResponse(Call<Evento> call, Response<Evento> response) {
+                            switch (response.code()) {
+                                case 200:
+                                    evento = response.body();
+                                    intent.putExtra("evento",evento);
+                                    intent.putExtra("socio",socio);
+                                    startActivity(intent);
+                                    break;
+                                default:
+                                    Gson gson = new Gson();
+                                    ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
+                                    Toast.makeText(getApplicationContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
+                                    break;
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<Evento> call, Throwable t) {
+
+                        }
+                    });
+
                 }
             });
         }
