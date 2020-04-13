@@ -41,6 +41,7 @@ public class FragmentHome extends Fragment {
     private RecyclerView recyclerView;
     private Socio socio;
     private TextView msgNotEvents;
+    public final static int REQUEST_EVENTO_ACTIVITY = 1;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -86,7 +87,7 @@ public class FragmentHome extends Fragment {
                                     Intent intent = new Intent(getActivity(), EventoActivity.class);
                                     intent.putExtra("evento",eventos.get(recyclerView.getChildAdapterPosition(v)));
                                     intent.putExtra("socio", socio);
-                                    startActivity(intent);
+                                    startActivityForResult(intent,REQUEST_EVENTO_ACTIVITY);
                                 }
                             });
 
@@ -116,6 +117,13 @@ public class FragmentHome extends Fragment {
         return view;
 
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    if(requestCode == REQUEST_EVENTO_ACTIVITY) {
+            socio = (Socio)data.getSerializableExtra("socio");
+        }
     }
 
     public FragmentHome(Socio socio){

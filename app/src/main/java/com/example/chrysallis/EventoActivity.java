@@ -63,7 +63,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
     private GoogleMap mMap;
     private Evento evento;
     private Socio socio;
-    private Boolean asistencia = false;
+    private static Boolean asistencia = false;
     private ArrayList<Documento> documentos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -453,5 +453,15 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
             }
         }
         return a;
+    }
+
+    @Override
+    public void onBackPressed() {
+        int resultCode = 1;
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("socio", socio);
+        setResult(resultCode, resultIntent);
+        finish();
+        super.onBackPressed();
     }
 }
