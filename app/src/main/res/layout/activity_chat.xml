@@ -16,11 +16,13 @@
         <EditText
             android:id="@+id/txtMensaje"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:maxLines="5"
             android:background="@drawable/rounded_white"
             android:layout_margin="@dimen/borde_fragments"
-            android:hint="Escribe un mensaje..."/>
+            android:hint="Escribe un mensaje..."
+            android:maxLength="400"/>
 
         <ImageButton
             android:id="@+id/btnEnviar"

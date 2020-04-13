@@ -2,7 +2,7 @@
 <resources>
     <dimen name="medio">20sp</dimen>
     <dimen name="borde">2dp</dimen>
-    <dimen name="radio">90dp</dimen>
+    <dimen name="radio">20dp</dimen>
     <dimen name="marginButton">20dp</dimen>
     <dimen name="small">18sp</dimen>
     <dimen name="imagenUsuario">90dp</dimen>
