@@ -17,4 +17,5 @@
     <dimen name="mrgEvent">20dp</dimen>
     <dimen name="iconoMensaje">80dp</dimen>
     <dimen name="sizeGrid">200dp</dimen>
+    <dimen name="btnJoin">25sp</dimen>
 </resources>

@@ -67,6 +67,10 @@
     <string name="notAttendanceConfirmed">Baixa confirmada</string>
     <string name="no">No</string>
     <string name="yes">Si</string>
+    <string name="comment">Comentari</string>
+    <string name="noStars">No hi ha estrelles seleccionades</string>
+    <string name="ratingSaved">Valoració guardada</string>
+    <string name="rate">Valora</string>
     <string-array name="languages">
         <item>Anglès</item>
         <item>Castellà</item>

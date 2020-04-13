@@ -67,6 +67,10 @@
     <string name="notAttendanceConfirmed">Baixo confirmado</string>
     <string name="no">Non</string>
     <string name="yes">Si</string>
+    <string name="comment">Comentario</string>
+    <string name="noStars">Non hai estrelas seleccionadas</string>
+    <string name="ratingSaved">Valoración gardada</string>
+    <string name="rate">Valora</string>
     <string-array name="languages">
         <item>Inglés</item>
         <item>Español</item>

@@ -73,4 +73,8 @@
     <string name="notAttendanceConfirmed">Unsubscribe  confirmed</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="comment">Comment</string>
+    <string name="noStars">No selected stars</string>
+    <string name="ratingSaved">Saved rating</string>
+    <string name="rate">Rate</string>
 </resources>

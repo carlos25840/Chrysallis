@@ -67,6 +67,10 @@
     <string name="notAttendanceConfirmed">Baxua baieztatu da</string>
     <string name="no">Ez</string>
     <string name="yes">Bai</string>
+    <string name="comment">Iruzkin</string>
+    <string name="noStars">Ez dago hautatutako izarrik</string>
+    <string name="ratingSaved">Gordetako balorazioa</string>
+    <string name="rate">Valora</string>
     <string-array name="languages">
         <item>Ingelesez</item>
         <item>Gaztelania</item>

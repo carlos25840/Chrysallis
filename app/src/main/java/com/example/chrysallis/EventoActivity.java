@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -98,6 +100,10 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         txtDescription.setText(evento.getDescripcion());
         txtLocation.setText(evento.getUbicacion());
 
+        //Se obtiene la fecha actual
+        Date currentTime = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = df.format(currentTime);
         //Recupera os documentos
         DocumentosService documentosService = Api.getApi().create(DocumentosService.class);
         Call<ArrayList<Documento>> listCall = documentosService.busquedaDocumentosEvento(evento.getId());
@@ -177,27 +183,31 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         //Se comprueba si el socio ya está participando en evento para que no se vuelva a apuntar y el texto del botón cambie
         Asistir asistirAux = new Asistir(socio.getId(),evento.getId());
         if(socio.getAsistir().contains(asistirAux)){
-            btnJoin.setText(getString(R.string.joined));
             asistencia = true;
+            if(date.compareTo(formattedDate) >= 0){
+                btnJoin.setText(getString(R.string.joined));
+            }else{
+                btnJoin.setText(getString(R.string.rate));
+            }
         }
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!asistencia){
-                    //Se comprueba que la fecha actual no sea mayor que la fecha límite
-                    Date currentTime = Calendar.getInstance().getTime();
-                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                    String formattedDate = df.format(currentTime);
-                    if(limitDate.compareTo(formattedDate) == 1 || limitDate.compareTo(formattedDate) == 0){
-                        showDialogAttendance();
+
+                if(date.compareTo(formattedDate) >= 0){
+                    if(!asistencia){
+                        if(limitDate.compareTo(formattedDate) >= 0){
+                            showDialogAttendance();
+                        }else{
+                            Toast.makeText(getApplicationContext(),getString(R.string.fechaLimite), Toast.LENGTH_LONG).show();
+                        }
                     }else{
-                        Toast.makeText(getApplicationContext(),getString(R.string.fechaLimite), Toast.LENGTH_LONG).show();
+                        //Si el socio está apuntado se muestra un diálogo para que se pueda desapuntar
+                        showDialogNotAttendance();
                     }
                 }else{
-                    //Si el socio está apuntado se muestra un diálogo para que se pueda desapuntar
-                    showDialogNotAttendance();
+                    showDialogAssessment();
                 }
-
             }
         });
 
@@ -305,13 +315,13 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         builder.setTitle(Html.fromHtml("<b>"+getString(R.string.attendanceConfirmation)+"</b>"));
         builder.setView(v);
 
-        final EditText editTextPassword = v.findViewById(R.id.editTextNumAttendants);
+        final EditText editTextNumAttendants = v.findViewById(R.id.editTextNumAttendants);
 
         builder.setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if(!editTextPassword.getText().toString().equals("")){
-                    int numAsist = Integer.parseInt(editTextPassword.getText().toString());
+                if(!editTextNumAttendants.getText().toString().equals("")){
+                    int numAsist = Integer.parseInt(editTextNumAttendants.getText().toString());
                     Asistir asistir = new Asistir(socio.getId(),evento.getId(),numAsist);
                     AsistirService asistirService = Api.getApi().create(AsistirService.class);
                     Call<Asistir> asistirCall = asistirService.insertAsistir(asistir);
@@ -339,6 +349,55 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                     });
                 }else{
                     Toast.makeText(getApplicationContext(),getString(R.string.notNumber), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        builder.setNegativeButton(getString(R.string.cancel), null);
+        builder.show();
+    }
+
+
+    private void showDialogAssessment() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this, R.style.ThemeOverlay_MaterialComponents_Dialog_Alert);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View v = inflater.inflate(R.layout.dialog_valorar, null);
+
+
+        builder.setTitle(Html.fromHtml("<b>"+getString(R.string.attendanceConfirmation)+"</b>"));
+        builder.setView(v);
+        final RatingBar ratingBarPoints = v.findViewById(R.id.ratingBarPuntos);
+        final EditText editTextComment = v.findViewById(R.id.editTextComment);
+
+        builder.setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(ratingBarPoints.getRating() != 0){
+                    Asistir asistir = getAsistir();
+                    if(asistir != null){
+                        asistir.setValoracion((int)ratingBarPoints.getRating());
+                        asistir.setComentario(editTextComment.getText().toString());
+                        AsistirService asistirService = Api.getApi().create(AsistirService.class);
+                        Call<Asistir> asistirCall = asistirService.putAsistir(socio.getId(),evento.getId(),asistir);
+                        asistirCall.enqueue(new Callback<Asistir>() {
+                            @Override
+                            public void onResponse(Call<Asistir> call, Response<Asistir> response) {
+                                if(response.isSuccessful()){
+                                    Toast.makeText(getApplicationContext(),getString(R.string.ratingSaved), Toast.LENGTH_LONG).show();
+
+                                }else{
+                                    Gson gson = new Gson();
+                                    ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
+                                    Toast.makeText(getApplicationContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Asistir> call, Throwable t) {
+                                Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), getString(R.string.noStars), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -380,5 +439,19 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         String formatDate[] = date.substring(0,10).split("-");
         date = formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0];
         return date;
+    }
+
+    public Asistir getAsistir(){
+        Asistir a = null;
+        boolean found = false;
+        Iterator<Asistir> iterator = socio.getAsistir().iterator();
+        while(iterator.hasNext() && !found){
+            Asistir aux = (Asistir) iterator.next();
+            if(aux.getId_evento() == evento.getId() && aux.getId_socio() == socio.getId()){
+                found = true;
+                a = aux;
+            }
+        }
+        return a;
     }
 }

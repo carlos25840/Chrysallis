@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/join"
                     android:textColor="@color/blanco"
-                    android:textSize="@dimen/txtEvent"/>
+                    android:textSize="@dimen/btnJoin"/>
             </LinearLayout>
         </LinearLayout>
         <TextView

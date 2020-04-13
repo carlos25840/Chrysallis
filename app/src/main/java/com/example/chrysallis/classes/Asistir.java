@@ -21,6 +21,7 @@ public class Asistir implements Serializable {
         this.id_evento = id_evento;
     }
 
+
     public int getId_socio() {
         return id_socio;
     }
@@ -54,5 +55,13 @@ public class Asistir implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id_socio, id_evento);
+    }
+
+    public void setValoracion(int valoracion) {
+        this.valoracion = valoracion;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
     }
 }
