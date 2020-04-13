@@ -77,12 +77,13 @@ public class EventoChatAdapter extends RecyclerView.Adapter<EventoChatAdapter.Ev
         public void bindEvento(Evento evento) {
             ArrayList<Mensaje> mensajesArray = new ArrayList<>(evento.getMensajes());
             Collections.sort(mensajesArray);
-            Mensaje ultimoMsg = mensajesArray.get(mensajesArray.size()-1);
             nom.setText(evento.getNombre());
-            ultimoMensaje.setText(ultimoMsg.getMensaje());
-
-            String soloHora = ultimoMsg.getFecha().substring(11,16);
-            hora.setText(soloHora);
+            if(!mensajesArray.isEmpty()){
+                Mensaje ultimoMsg = mensajesArray.get(mensajesArray.size()-1);
+                ultimoMensaje.setText(ultimoMsg.getMensaje());
+                String soloHora = ultimoMsg.getFecha().substring(11,16);
+                hora.setText(soloHora);
+            }
         }
     }
 }

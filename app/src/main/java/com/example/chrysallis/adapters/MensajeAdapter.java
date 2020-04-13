@@ -91,10 +91,10 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.Mensajes
             nom.setText(mensajeSplitted[0]);
             textoMensaje.setText(mensaje.getMensaje().replace(mensajeSplitted[0] + ":", ""));
             if(mensaje.getId_socio() == socio.getId()){
-                cardView.setGravity(Gravity.LEFT);
+                cardView.setGravity(Gravity.RIGHT);
             }
             else{
-                cardView.setGravity(Gravity.RIGHT);
+                cardView.setGravity(Gravity.LEFT);
             }
             String soloHora = mensaje.getFecha().substring(11,16);
             textoHora.setText(soloHora);

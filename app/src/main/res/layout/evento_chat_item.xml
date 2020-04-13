@@ -54,7 +54,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/small"
-            android:text="Hora"
             android:id="@+id/TxtFechaUltimo"
             android:textColor="@color/colorAccent"
             android:maxLines="1"/>
