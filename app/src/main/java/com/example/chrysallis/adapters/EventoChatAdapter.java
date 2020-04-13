@@ -10,8 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chrysallis.R;
 import com.example.chrysallis.classes.Evento;
+import com.example.chrysallis.classes.Mensaje;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class EventoChatAdapter extends RecyclerView.Adapter<EventoChatAdapter.EventosViewHolder> implements View.OnClickListener{
@@ -73,9 +75,14 @@ public class EventoChatAdapter extends RecyclerView.Adapter<EventoChatAdapter.Ev
 
         // metodo bindEvento para rellenar los campos del eventoItem
         public void bindEvento(Evento evento) {
+            ArrayList<Mensaje> mensajesArray = new ArrayList<>(evento.getMensajes());
+            Collections.sort(mensajesArray);
+            Mensaje ultimoMsg = mensajesArray.get(mensajesArray.size()-1);
             nom.setText(evento.getNombre());
-            ultimoMensaje.setText("Vamos a ir en mi coche a las colonias porque es muy bonito blah blah");
-            hora.setText("20:00");
+            ultimoMensaje.setText(ultimoMsg.getMensaje());
+
+            String soloHora = ultimoMsg.getFecha().substring(11,16);
+            hora.setText(soloHora);
         }
     }
 }

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -13,6 +14,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
         <EditText
+            android:id="@+id/txtMensaje"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -21,6 +23,7 @@
             android:hint="Escribe un mensaje..."/>
 
         <ImageButton
+            android:id="@+id/btnEnviar"
             android:padding="@dimen/mrgEvent"
             android:layout_width="@dimen/iconoMensaje"
             android:layout_height="@dimen/iconoMensaje"

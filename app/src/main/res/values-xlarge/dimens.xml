@@ -18,4 +18,5 @@
     <dimen name="iconoMensaje">80dp</dimen>
     <dimen name="sizeGrid">200dp</dimen>
     <dimen name="btnJoin">25sp</dimen>
+    <dimen name="maxWidth">550dp</dimen>
 </resources>
