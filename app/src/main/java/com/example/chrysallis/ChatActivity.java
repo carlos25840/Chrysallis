@@ -1,8 +1,10 @@
 package com.example.chrysallis;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +22,8 @@ import com.example.chrysallis.adapters.MensajeAdapter;
 import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.classes.Mensaje;
 import com.example.chrysallis.classes.Socio;
+import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,6 +48,9 @@ public class ChatActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ImageButton enviar = findViewById(R.id.btnEnviar);
         EditText txtMensaje = findViewById(R.id.txtMensaje);
+        SwipyRefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
+
+
         Intent intent = getIntent();
         evento = (Evento) intent.getSerializableExtra("evento");
         socio = (Socio) intent.getSerializableExtra("socio");
@@ -82,6 +89,16 @@ public class ChatActivity extends AppCompatActivity {
                 });
             }
         });
+
+
+        refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                cargarMensajes();
+                refreshLayout.setRefreshing(false);
+            }
+        });
+
 
 
     }
