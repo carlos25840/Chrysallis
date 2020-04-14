@@ -50,6 +50,8 @@ import com.example.chrysallis.classes.Comunidad;
 import com.example.chrysallis.classes.Socio;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import org.w3c.dom.Text;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -95,11 +97,14 @@ public class FragmentProfile extends Fragment {
         TextView nombrePerfil = getView().findViewById(R.id.nombrePerfil);
         ubicacionPerfil = getView().findViewById(R.id.ubicacionPerfil);
         TextView idiomaPerfil = getView().findViewById(R.id.languagePerfil);
-        ImageButton editPassword = getView().findViewById(R.id.buttonEditPassword);
-        ImageButton editLanguage =  getView().findViewById(R.id.buttonEditLanguage);
         TextView seeEvents = getView().findViewById(R.id.eventosPerfil);
-        ImageButton editCommunity = getView().findViewById(R.id.buttonEditComunidad);
-        ImageButton powerOff = getView().findViewById(R.id.powerOff);
+        TextView txtComunidad = getView().findViewById(R.id.ubicacionPerfil);
+        TextView txtPassword = getView().findViewById(R.id.passwordPerfil);
+        TextView txtIdioma = getView().findViewById(R.id.languagePerfil);
+        ImageButton btnEditPassword = getView().findViewById(R.id.buttonEditPassword);
+        ImageButton btnEditLanguage =  getView().findViewById(R.id.buttonEditLanguage);
+        ImageButton btnEditCommunity = getView().findViewById(R.id.buttonEditComunidad);
+        ImageButton btnPowerOff = getView().findViewById(R.id.powerOff);
         nombrePerfil.setText(socio.getNombre());
 
         getComunidad();
@@ -138,34 +143,22 @@ public class FragmentProfile extends Fragment {
             }
         });
 
-        editPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialogPassword();
-            }
-        });
-
-        editLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialogLanguage();
-            }
-        });
-
-        powerOff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                powerOffButton();
-            }
-        });
-
-        editCommunity.setOnClickListener(new View.OnClickListener() {
+        //Listeners cambio de Comunidad
+        txtComunidad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialogComunidad();
             }
         });
 
+        btnEditCommunity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogComunidad();
+            }
+        });
+
+        //Listener de Eventos
         seeEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,11 +166,48 @@ public class FragmentProfile extends Fragment {
             }
         });
 
+        //Listeners de cambio de password
+        txtPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogPassword();
+            }
+        });
+
+        btnEditPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogPassword();
+            }
+        });
+
+        //Listeners de cambio de idioma
+        txtIdioma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogLanguage();
+            }
+        });
+
+        btnEditLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogLanguage();
+            }
+        });
+
+        btnPowerOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                powerOffButton();
+            }
+        });
+
+
+
     }
 
     private void getComunidad() {
-
-
         ComunidadesService comunidadesService = Api.getApi().create(ComunidadesService.class);
         Call<Comunidad> comunidadCall = comunidadesService.getComunidad(socio.getId_comunidad());
         comunidadCall.enqueue(new Callback<Comunidad>() {
