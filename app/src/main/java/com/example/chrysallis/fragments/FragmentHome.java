@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.chrysallis.Api.Api;
 import com.example.chrysallis.Api.ApiService.EventosService;
+import com.example.chrysallis.DestacadosActivity;
 import com.example.chrysallis.EventoActivity;
 import com.example.chrysallis.R;
 import com.example.chrysallis.adapters.EventoAdapter;
@@ -121,8 +122,8 @@ public class FragmentHome extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-    if(requestCode == REQUEST_EVENTO_ACTIVITY) {
-            socio = (Socio)data.getSerializableExtra("socio");
+        if(requestCode == REQUEST_EVENTO_ACTIVITY){
+            socio =(Socio)data.getSerializableExtra("socio");
         }
     }
 

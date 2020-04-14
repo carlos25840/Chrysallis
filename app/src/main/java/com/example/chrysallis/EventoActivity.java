@@ -63,8 +63,9 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
     private GoogleMap mMap;
     private Evento evento;
     private Socio socio;
-    private static Boolean asistencia = false;
+    private Boolean asistencia = false;
     private ArrayList<Documento> documentos;
+    private String parentName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +87,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         GridView gridDocs = findViewById(R.id.gridDocs);
         //Se recupera el intent y los dos extras (socio y evento)
         Intent intent = getIntent();
+        parentName = intent.getStringExtra("parent");
         evento = (Evento) intent.getSerializableExtra("evento");
         socio = (Socio)intent.getSerializableExtra("socio");
         //Asignación de valores a las views
@@ -181,13 +183,18 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
             imgEvento.setImageBitmap(bmp);
         }
         //Se comprueba si el socio ya está participando en evento para que no se vuelva a apuntar y el texto del botón cambie
-        Asistir asistirAux = new Asistir(socio.getId(),evento.getId());
-        if(socio.getAsistir().contains(asistirAux)){
+        if(parentName != null){
+            btnJoin.setText(getString(R.string.joined));
             asistencia = true;
-            if(date.compareTo(formattedDate) >= 0){
-                btnJoin.setText(getString(R.string.joined));
-            }else{
-                btnJoin.setText(getString(R.string.rate));
+        }else{
+            Asistir asistirAux = new Asistir(socio.getId(),evento.getId());
+            if(socio.getAsistir().contains(asistirAux)){
+                asistencia = true;
+                if(date.compareTo(formattedDate) >= 0){
+                    btnJoin.setText(getString(R.string.joined));
+                }else{
+                    btnJoin.setText(getString(R.string.rate));
+                }
             }
         }
         btnJoin.setOnClickListener(new View.OnClickListener() {
@@ -457,10 +464,9 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     public void onBackPressed() {
-        int resultCode = 1;
         Intent resultIntent = new Intent();
         resultIntent.putExtra("socio", socio);
-        setResult(resultCode, resultIntent);
+        setResult(RESULT_OK, resultIntent);
         finish();
         super.onBackPressed();
     }

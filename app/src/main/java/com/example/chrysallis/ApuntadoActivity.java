@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,25 +38,27 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 public class ApuntadoActivity extends AppCompatActivity {
 
     private ArrayList<Evento> eventos;
     private RecyclerView recyclerView;
     private EventoAdapter adaptador;
+    private TextView msgNotEvents;
     private Socio socio;
     private Evento evento;
 
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(null);
         setContentView(R.layout.activity_apuntado);
-
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         socio = (Socio)intent.getSerializableExtra("socio");
         int id = socio.getId();
         recyclerView = findViewById(R.id.recyclerEventosApuntado);
-
-
+        msgNotEvents = findViewById(R.id.msgNotEventsApuntado);
 
         EventosService eventosService = Api.getApi().create(EventosService.class);
         Call<ArrayList<Evento>> eventosCall = eventosService.getEventosApuntado(id);
@@ -84,6 +88,8 @@ public class ApuntadoActivity extends AppCompatActivity {
 
     public void rellenarRecyclerView(){
         if (!eventos.isEmpty()) {
+            recyclerView.setVisibility(VISIBLE);
+            msgNotEvents.setVisibility(GONE);
             adaptador = new EventoAdapter(eventos);
             recyclerView.setAdapter(adaptador);
             recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -103,6 +109,7 @@ public class ApuntadoActivity extends AppCompatActivity {
                                     evento = response.body();
                                     intent.putExtra("evento",evento);
                                     intent.putExtra("socio",socio);
+                                    intent.putExtra("parent", "apuntado");
                                     startActivity(intent);
                                     break;
                                 default:
@@ -124,8 +131,20 @@ public class ApuntadoActivity extends AppCompatActivity {
             });
         }
         else{
+            msgNotEvents.setVisibility(VISIBLE);
+            recyclerView.setVisibility(GONE);
             recyclerView.removeAllViewsInLayout();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return true;
     }
 
 

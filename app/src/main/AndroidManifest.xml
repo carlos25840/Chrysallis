@@ -41,7 +41,9 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".RecuperarActivity" />
-        <activity android:name=".ApuntadoActivity" />
+        <activity android:name=".ApuntadoActivity"
+            android:label=""
+            android:theme="@style/ActivityConBarra"/>
         <activity
             android:name=".DestacadosActivity"
             android:label="@string/destacados"/>

@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.chrysallis.Api.Api;
 import com.example.chrysallis.Api.ApiService.ComunidadesService;
 import com.example.chrysallis.Api.ApiService.EventosService;
+import com.example.chrysallis.DestacadosActivity;
 import com.example.chrysallis.EventoActivity;
 import com.example.chrysallis.R;
 import com.example.chrysallis.adapters.ComunidadesSpinnerAdapter;
@@ -53,6 +54,7 @@ public class FragmentExplore extends Fragment {
     private EventoAdapter adaptador;
     private Socio socio;
     private TextView msgNotEvents;
+    public final static int REQUEST_EVENTO_ACTIVITY = 1;
 
     @Nullable
     @Override
@@ -99,39 +101,7 @@ public class FragmentExplore extends Fragment {
         txtDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextInputEditText txtDate = item.findViewById(R.id.editTextFecha);
-                DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        // +1 because January is zero
-                        String d, m , y;
-                        if(day < 10){
-                            d = "0" + day;
-                        }else{
-                            d = Integer.toString(day);
-                        }
-                        if((month + 1) < 10){
-                            m = "0" + (month + 1);
-                        }else{
-                            m = Integer.toString(month + 1);
-                        }
-                        String selected = d + "/" + m + "/" + year;
-                        final String selectedDate = day + "/" + (month + 1) + "/" + year;
-
-                        Date currentTime = Calendar.getInstance().getTime();
-                        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                        String formattedDate = df.format(currentTime);
-                        int com = selected.compareTo(formattedDate);
-                        if(com < 0){
-                            txtDate.setText("");
-                            Toast.makeText(getContext(),getString(R.string.wrongDate), Toast.LENGTH_LONG).show();
-                        }else{
-                            txtDate.setText(selectedDate);
-                        }
-                    }
-                });
-
-                newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+                showDatePickerDialog();
             }
         });
 
@@ -268,6 +238,7 @@ public class FragmentExplore extends Fragment {
     public void rellenarRecyclerView() {
         if (!eventos.isEmpty()) {
             recyclerView.setVisibility(getView().VISIBLE);
+            msgNotEvents.setVisibility(getView().GONE);
             adaptador = new EventoAdapter(eventos);
             recyclerView.setAdapter(adaptador);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -278,7 +249,7 @@ public class FragmentExplore extends Fragment {
                     Intent intent = new Intent(getActivity(), EventoActivity.class);
                     intent.putExtra("evento", eventos.get(recyclerView.getChildAdapterPosition(v)));
                     intent.putExtra("socio",socio);
-                    startActivity(intent);
+                    startActivityForResult(intent,REQUEST_EVENTO_ACTIVITY);
                 }
             });
         }
@@ -290,7 +261,46 @@ public class FragmentExplore extends Fragment {
     }
 
     private void showDatePickerDialog() {
+        TextInputEditText txtDate = getView().findViewById(R.id.editTextFecha);
+        DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // +1 because January is zero
+                String d, m , y;
+                if(day < 10){
+                    d = "0" + day;
+                }else{
+                    d = Integer.toString(day);
+                }
+                if((month + 1) < 10){
+                    m = "0" + (month + 1);
+                }else{
+                    m = Integer.toString(month + 1);
+                }
+                String selected = d + "/" + m + "/" + year;
+                final String selectedDate = day + "/" + (month + 1) + "/" + year;
 
+                Date currentTime = Calendar.getInstance().getTime();
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                String formattedDate = df.format(currentTime);
+                int com = selected.compareTo(formattedDate);
+                if(com < 0){
+                    txtDate.setText("");
+                    Toast.makeText(getContext(),getString(R.string.wrongDate), Toast.LENGTH_LONG).show();
+                }else{
+                    txtDate.setText(selectedDate);
+                }
+            }
+        });
+
+        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == REQUEST_EVENTO_ACTIVITY){
+            socio =(Socio)data.getSerializableExtra("socio");
+        }
     }
 
     public FragmentExplore(Socio socio){
