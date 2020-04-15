@@ -1,5 +1,6 @@
 package com.example.chrysallis;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ActivityNotFoundException;
@@ -189,25 +190,22 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         asistirCall.enqueue(new Callback<Asistir>() {
             @Override
             public void onResponse(Call<Asistir> call, Response<Asistir> response) {
-                if(response.isSuccessful()){
-                    Asistir asistir = response.body();
-                    if(asistir != null){
+                switch(response.code()){
+                    case 200:
+                        Asistir asistir = response.body();
                         asistencia = true;
                         if(date.compareTo(formattedDate) >= 0){
                             btnJoin.setText(getString(R.string.joined));
                         }else{
                             btnJoin.setText(getString(R.string.rate));
                         }
-                    }else{
+                        break;
+                    case 404:
                         asistencia = false;
-                    }
-                }else{
-                    Gson gson = new Gson();
-                    ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
-                    Toast.makeText(getApplicationContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
+                    default:
+                        break;
                 }
             }
-
             @Override
             public void onFailure(Call<Asistir> call, Throwable t) {
                 Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
@@ -405,41 +403,53 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         final RatingBar ratingBarPoints = v.findViewById(R.id.ratingBarPuntos);
         final EditText editTextComment = v.findViewById(R.id.editTextComment);
 
-        builder.setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(ratingBarPoints.getRating() != 0){
-                    Asistir asistir = getAsistir();
-                    if(asistir != null){
-                        asistir.setValoracion((int)ratingBarPoints.getRating());
-                        asistir.setComentario(editTextComment.getText().toString());
-                        AsistirService asistirService = Api.getApi().create(AsistirService.class);
-                        Call<Asistir> asistirCall = asistirService.putAsistir(socio.getId(),evento.getId(),asistir);
-                        asistirCall.enqueue(new Callback<Asistir>() {
-                            @Override
-                            public void onResponse(Call<Asistir> call, Response<Asistir> response) {
-                                if(response.isSuccessful()){
-                                    Toast.makeText(getApplicationContext(),getString(R.string.ratingSaved), Toast.LENGTH_LONG).show();
 
-                                }else{
-                                    Gson gson = new Gson();
-                                    ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
-                                    Toast.makeText(getApplicationContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
-                                }
+        builder.setPositiveButton(getString(R.string.accept), null);
+        builder.setNegativeButton(getString(R.string.cancel), null);
+
+        AlertDialog dialog = builder.create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialog) {
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(ratingBarPoints.getRating() != 0){
+                            Asistir asistir = getAsistir();
+                            if(asistir != null){
+                                asistir.setValoracion((int)ratingBarPoints.getRating());
+                                asistir.setComentario(editTextComment.getText().toString());
+                                AsistirService asistirService = Api.getApi().create(AsistirService.class);
+                                Call<Asistir> asistirCall = asistirService.putAsistir(socio.getId(),evento.getId(),asistir);
+                                asistirCall.enqueue(new Callback<Asistir>() {
+                                    @Override
+                                    public void onResponse(Call<Asistir> call, Response<Asistir> response) {
+                                        if(response.isSuccessful()){
+                                            Toast.makeText(getApplicationContext(),getString(R.string.ratingSaved), Toast.LENGTH_LONG).show();
+
+                                        }else{
+                                            Gson gson = new Gson();
+                                            ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
+                                            Toast.makeText(getApplicationContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                    @Override
+                                    public void onFailure(Call<Asistir> call, Throwable t) {
+                                        Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                                dialog.dismiss();
                             }
-                            @Override
-                            public void onFailure(Call<Asistir> call, Throwable t) {
-                                Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        });
+                        }else{
+                            Toast.makeText(getApplicationContext(), getString(R.string.noStars), Toast.LENGTH_LONG).show();
+                        }
+
                     }
-                }else{
-                    Toast.makeText(getApplicationContext(), getString(R.string.noStars), Toast.LENGTH_LONG).show();
-                }
+                });
             }
         });
-        builder.setNegativeButton(getString(R.string.cancel), null);
-        builder.show();
+        dialog.show();
     }
 
     public void enviarMail(){
