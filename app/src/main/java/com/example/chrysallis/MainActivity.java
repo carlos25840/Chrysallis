@@ -70,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
                                 }
 
                                 break;
+                            case 404:
+                                Toast.makeText(getApplicationContext(),getResources().getString(R.string.loginIncorrect), Toast.LENGTH_LONG).show();
+                                break;
                             default:
                                 break;
                         }

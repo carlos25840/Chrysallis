@@ -48,7 +48,6 @@ public class ApuntadoActivity extends AppCompatActivity {
     private EventoAdapter adaptador;
     private TextView msgNotEvents;
     private Socio socio;
-    private Evento evento;
 
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(null);
@@ -98,34 +97,9 @@ public class ApuntadoActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(ApuntadoActivity.this, EventoActivity.class);
-                    Evento e = eventos.get(recyclerView.getChildAdapterPosition(v));
-                    EventosService eventosService = Api.getApi().create(EventosService.class);
-                    Call<Evento> eventoCall = eventosService.getEvento(e.getId());
-                    eventoCall.enqueue(new Callback<Evento>() {
-                        @Override
-                        public void onResponse(Call<Evento> call, Response<Evento> response) {
-                            switch (response.code()) {
-                                case 200:
-                                    evento = response.body();
-                                    intent.putExtra("evento",evento);
-                                    intent.putExtra("socio",socio);
-                                    intent.putExtra("parent", "apuntado");
-                                    startActivity(intent);
-                                    break;
-                                default:
-                                    Gson gson = new Gson();
-                                    ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
-                                    Toast.makeText(getApplicationContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
-                                    break;
-                            }
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<Evento> call, Throwable t) {
-
-                        }
-                    });
+                    intent.putExtra("evento",eventos.get(recyclerView.getChildAdapterPosition(v)));
+                    intent.putExtra("socio",socio);
+                    startActivity(intent);
 
                 }
             });

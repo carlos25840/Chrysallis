@@ -65,7 +65,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
     private Socio socio;
     private Boolean asistencia = false;
     private ArrayList<Documento> documentos;
-    private String parentName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +87,6 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         GridView gridDocs = findViewById(R.id.gridDocs);
         //Se recupera el intent y los dos extras (socio y evento)
         Intent intent = getIntent();
-        parentName = intent.getStringExtra("parent");
         evento = (Evento) intent.getSerializableExtra("evento");
         socio = (Socio)intent.getSerializableExtra("socio");
         //Asignación de valores a las views
@@ -106,7 +105,8 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         Date currentTime = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         String formattedDate = df.format(currentTime);
-        //Recupera os documentos
+
+        //Recupera los documentos
         DocumentosService documentosService = Api.getApi().create(DocumentosService.class);
         Call<ArrayList<Documento>> listCall = documentosService.busquedaDocumentosEvento(evento.getId());
         listCall.enqueue(new Callback<ArrayList<Documento>>() {
@@ -134,6 +134,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                 Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+        //On Click del textView de la dirección que abre Google Maps
         txtLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,7 +184,36 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
             imgEvento.setImageBitmap(bmp);
         }
         //Se comprueba si el socio ya está participando en evento para que no se vuelva a apuntar y el texto del botón cambie
-        if(parentName != null){
+        AsistirService asistirService = Api.getApi().create(AsistirService.class);
+        Call<Asistir> asistirCall = asistirService.getAsistir(socio.getId(),evento.getId());
+        asistirCall.enqueue(new Callback<Asistir>() {
+            @Override
+            public void onResponse(Call<Asistir> call, Response<Asistir> response) {
+                if(response.isSuccessful()){
+                    Asistir asistir = response.body();
+                    if(asistir != null){
+                        asistencia = true;
+                        if(date.compareTo(formattedDate) >= 0){
+                            btnJoin.setText(getString(R.string.joined));
+                        }else{
+                            btnJoin.setText(getString(R.string.rate));
+                        }
+                    }else{
+                        asistencia = false;
+                    }
+                }else{
+                    Gson gson = new Gson();
+                    ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
+                    Toast.makeText(getApplicationContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Asistir> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        /*if(parentName != null){
             btnJoin.setText(getString(R.string.joined));
             asistencia = true;
         }else{
@@ -196,7 +226,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                     btnJoin.setText(getString(R.string.rate));
                 }
             }
-        }
+        }*/
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
