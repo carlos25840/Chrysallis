@@ -123,9 +123,6 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                         }
                         break;
                     default:
-                        Gson gson = new Gson();
-                        ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
-                        Toast.makeText(getApplicationContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
                         break;
                 }
             }
@@ -211,20 +208,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                 Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-        /*if(parentName != null){
-            btnJoin.setText(getString(R.string.joined));
-            asistencia = true;
-        }else{
-            Asistir asistirAux = new Asistir(socio.getId(),evento.getId());
-            if(socio.getAsistir().contains(asistirAux)){
-                asistencia = true;
-                if(date.compareTo(formattedDate) >= 0){
-                    btnJoin.setText(getString(R.string.joined));
-                }else{
-                    btnJoin.setText(getString(R.string.rate));
-                }
-            }
-        }*/
+
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -411,8 +395,8 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(final DialogInterface dialog) {
-                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
-                button.setOnClickListener(new View.OnClickListener() {
+                Button btnAccept = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                btnAccept.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(ratingBarPoints.getRating() != 0){
