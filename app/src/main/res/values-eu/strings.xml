@@ -31,9 +31,9 @@
     <string name="accept">Onartu</string>
     <string name="cancel">Utzi</string>
     <string name="passwordsNotMatch">Pasahitzak ez datoz bat</string>
-    <string name="changeLanguage">Change Languaje</string>
+    <string name="changeLanguage">Hizkuntza aldatu</string>
     <string name="languageChanced">Hizkuntza aldatu da</string>
-    <string name="restartApp">Restart App</string>
+    <string name="restartApp">Berrabiarazi aplikazioa</string>
     <string name="languageNotChanced" >Hizkuntza aldatu ez</string>
     <string name="passwordNotChanged">Ezin izan da pasahitza aldatu</string>
     <string name="PermisoDenegado">Baimena ukatuta</string>
@@ -50,15 +50,15 @@
     <string name="event">Gertaera</string>
     <string name="join">Eman izena</string>
     <string name="notActive">Bazkidea ez dago aktiboa</string>
-    <string name="numAttendants">Number of attendants</string>
-    <string name="notNumber">Not number introduced</string>
-    <string name="attendanceConfirmation">Attendance Confirmation</string>
-    <string name="attendanceConfirmed">Attenfance confirmed</string>
+    <string name="numAttendants">Bertaratutako kopurua</string>
+    <string name="notNumber">Ez da zenbakia sartu</string>
+    <string name="attendanceConfirmation">Asistentziaren berrespena</string>
+    <string name="attendanceConfirmed">Bertaratzea berretsi zen</string>
     <string name="apuntado">Usted se ha apuntado al evento</string>
-    <string name="time">Hora</string>
-    <string name="description">Descripción</string>
+    <string name="time">Denbora</string>
+    <string name="description">Azalpena</string>
     <string name="noResponder">\n\nDo not reply, this is an automatic email</string>
-    <string name="joined">Joined</string>
+    <string name="joined">Alta</string>
     <string name="fechaLimite">Ezin da parte hartu. Izena emateko azken eguna.</string>
     <string name="wrongDate">Data okerra, uneko edo handiagoa den data aukeratu behar duzu</string>
     <string name="documents">Dokumentuak</string>
@@ -71,6 +71,12 @@
     <string name="noStars">Ez dago hautatutako izarrik</string>
     <string name="ratingSaved">Gordetako balorazioa</string>
     <string name="rate">Valora</string>
+    <string name="PermisoConcedido">Emandako baimena</string>
+    <string name="ImageChanged">Irudia aldatu da</string>
+    <string name="ImageCannot2mb">Irudiak ezin du 2 MB baino gehiago izan</string>
+    <string name="ImageNotChanged">Irudia ez da aldatu</string>
+    <string name="communityNotChanged">Komunitatea ez da aldatu</string>
+    <string name="communityChanged">Komunitatea aldatu da</string>
     <string-array name="languages">
         <item>Ingelesez</item>
         <item>Gaztelania</item>

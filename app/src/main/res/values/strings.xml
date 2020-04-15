@@ -77,4 +77,10 @@
     <string name="noStars">No selected stars</string>
     <string name="ratingSaved">Saved rating</string>
     <string name="rate">Rate</string>
+    <string name="PermisoConcedido">Permiso concedido</string>
+    <string name="ImageChanged">Image has been changed</string>
+    <string name="ImageCannot2mb">Image cannot exceed 2 MB</string>
+    <string name="ImageNotChanged">Image has not been changed</string>
+    <string name="communityNotChanged">Community has not been changed</string>
+    <string name="communityChanged">Community has been changed</string>
 </resources>

@@ -299,16 +299,16 @@ public class FragmentProfile extends Fragment {
             if (getContext().checkSelfPermission(Manifest.permission.CAMERA) //Si tiene permiso
                     == PackageManager.PERMISSION_GRANTED && getContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) //Si tiene permiso
                     == PackageManager.PERMISSION_GRANTED ) {
-                Log.v("TAG","Permission is granted");
+                Log.v("TAG",getResources().getString(R.string.PermisoConcedido));
                 permiso = true;
             } else { //Si no tiene permiso lo pide
-                Log.v("TAG","Permission is revoked");
+                Log.v("TAG",getResources().getString(R.string.PermisoDenegado));
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CAMERA);
                 permiso = false;
             }
         }
         else { //Si la version es menor de android 6.0
-            Log.v("TAG","Permission is granted");
+            Log.v("TAG",getResources().getString(R.string.PermisoConcedido));
             permiso = true;
         }
         return permiso;
@@ -321,8 +321,7 @@ public class FragmentProfile extends Fragment {
 
         if(requestCode==1)
         {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getContext(), getResources().getString(R.string.PermisoDenegado), Toast.LENGTH_SHORT).show();   //si el usuario acepta los permisos
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {  //si el usuario acepta los permisos
                 cambiarImagen();  //Ejecutamos el programa
             } else {
                 Toast.makeText(getContext(), getResources().getString(R.string.PermisoDenegado), Toast.LENGTH_SHORT).show();
@@ -348,11 +347,11 @@ public class FragmentProfile extends Fragment {
                         String foto = Base64.encodeToString(imagen, Base64.DEFAULT);
                         if(imagen.length < 2097152){
                             socio.setImagenUsuario(foto);
-                            saveUser("Imagen cambiada", "Imagen no cambiada");
+                            saveUser(getResources().getString(R.string.ImageChanged), getResources().getString(R.string.ImageNotChanged));
                             refrescarImagen();
                         }
                         else{
-                            Toast.makeText(getActivity(), "La imagen no puede pesar mas de 2 MB",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), getResources().getString(R.string.ImageCannot2mb),Toast.LENGTH_LONG).show();
                         }
                     }
 
@@ -367,11 +366,11 @@ public class FragmentProfile extends Fragment {
 
                         if(imagen.length < 2097152){
                             socio.setImagenUsuario(foto);
-                            saveUser("Imagen cambiada", "Imagen no cambiada");
+                            saveUser(getResources().getString(R.string.ImageChanged), getResources().getString(R.string.ImageNotChanged));
                             refrescarImagen();
                         }
                         else{
-                            Toast.makeText(getActivity(), "La imagen no puede pesar mas de 2 MB",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), getResources().getString(R.string.ImageCannot2mb),Toast.LENGTH_LONG).show();
                         }
                     }
                     break;
@@ -512,7 +511,7 @@ public class FragmentProfile extends Fragment {
         idiomaPerfil.setText(idioma);
     }
 
-    /*Método que nos cambia el idioma del juego en función del seleccionado*/
+    /*Método que nos cambia el idioma en función del seleccionado*/
     public void setLocale(String lang) {
         Locale myLocale = new Locale(lang);
         Resources res = getResources();
@@ -596,7 +595,7 @@ public class FragmentProfile extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 socio.setId_comunidad(((Comunidad) spnComunidades.getSelectedItem()).getId());
-                saveUser("Comunidad cambiada", "Error al cambiar la comunidad");
+                saveUser(getResources().getString(R.string.communityChanged), getResources().getString(R.string.communityNotChanged));
 
                 DestacadosActivity.refrescar(getFragmentManager());
             }
