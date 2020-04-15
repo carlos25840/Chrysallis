@@ -3,7 +3,7 @@ package com.example.chrysallis.fragments;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
@@ -31,6 +31,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -225,7 +226,7 @@ public class FragmentProfile extends Fragment {
 
             @Override
             public void onFailure(Call<Comunidad> call, Throwable t) {
-
+                Toast.makeText(getActivity(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -408,20 +409,29 @@ public class FragmentProfile extends Fragment {
         final EditText editTextPassword = v.findViewById(R.id.editTextPassword);
         final EditText editTextConfirmation = v.findViewById(R.id.editTextConfirmation);
 
-        builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.accept, null);
+        builder.setNegativeButton(R.string.cancel, null);
+        AlertDialog dialog = builder.create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(editTextPassword.getText().toString().equals(editTextConfirmation.getText().toString())){
-                    String password = MainActivity.encryptThisString(editTextPassword.getText().toString());
-                    socio.setPassword(password);
-                    saveUser(getString(R.string.passwordChanged),getString(R.string.passwordNotChanged));
-                }else{
-                    Toast.makeText(getActivity(),R.string.passwordsNotMatch, Toast.LENGTH_LONG).show();
-                }
+            public void onShow(DialogInterface dialog) {
+                Button btnAccept = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                btnAccept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(editTextPassword.getText().toString().equals(editTextConfirmation.getText().toString())){
+                            String password = MainActivity.encryptThisString(editTextPassword.getText().toString());
+                            socio.setPassword(password);
+                            saveUser(getString(R.string.passwordChanged),getString(R.string.passwordNotChanged));
+                            dialog.dismiss();
+                        }else{
+                            Toast.makeText(getActivity(),R.string.passwordsNotMatch, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
             }
         });
-        builder.setNegativeButton(R.string.cancel, null);
-        builder.show();
+        dialog.show();
     }
 
     public void showDialogLanguage() {
@@ -522,19 +532,6 @@ public class FragmentProfile extends Fragment {
 
         DestacadosActivity.refrescar(getFragmentManager());
         saveLocale(lang);
-
-
-        /*new MaterialAlertDialogBuilder(getActivity())
-                .setTitle(R.string.restartApp)
-                .setMessage("Message")
-                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(getActivity(),MainActivity.class);
-                        startActivity(intent);
-                    }
-                })
-                .show();*/
 
     }
 
