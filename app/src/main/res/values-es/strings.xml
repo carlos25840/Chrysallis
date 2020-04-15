@@ -57,7 +57,7 @@
     <string name="apuntado">Usted se ha apuntado al evento</string>
     <string name="time">Hora</string>
     <string name="description">Descripción</string>
-    <string name="noResponder">\\n\\nDo not reply, this is an automatic email</string>
+    <string name="noResponder">\n\nDo not reply, this is an automatic email</string>
     <string name="joined">Participando</string>
     <string name="fechaLimite">No es posible participar. Fecha límite de inscripción alcanzada.</string>
     <string name="wrongDate">Fecha incorrecta, necesitas seleccionar una fecha que sea la actual o superior</string>
