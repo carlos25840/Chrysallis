@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.chrysallis.Api.Api;
@@ -45,6 +46,8 @@ public class FragmentChat extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
         eventos = new ArrayList<>();
         recyclerView = view.findViewById(R.id.RecyclerChats);
+
+        TextView msgNoEvents = view.findViewById(R.id.msgNotEventsChat);
         Date currentTime = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = df.format(currentTime);
@@ -60,6 +63,8 @@ public class FragmentChat extends Fragment {
                             EventoChatAdapter adaptador = new EventoChatAdapter(eventos);
                             recyclerView.setAdapter(adaptador);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                            msgNoEvents.setVisibility(View.GONE);
                             //Listener para abrir el seleccionado
                             adaptador.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -71,6 +76,9 @@ public class FragmentChat extends Fragment {
                                 }
                             });
 
+                        }
+                        else{
+                            msgNoEvents.setVisibility(View.VISIBLE);
                         }
                         break;
                     default:
