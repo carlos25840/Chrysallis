@@ -79,7 +79,7 @@ public class FragmentChat extends Fragment {
                             EventoChatAdapter adaptador = new EventoChatAdapter(eventos);
                             recyclerView.setAdapter(adaptador);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+                            recyclerView.setVisibility(View.VISIBLE);
                             msgNoEvents.setVisibility(View.GONE);
                             //Listener para abrir el seleccionado
                             adaptador.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +95,7 @@ public class FragmentChat extends Fragment {
                         }
                         else{
                             msgNoEvents.setVisibility(View.VISIBLE);
+                            recyclerView.setVisibility(View.GONE);
                         }
                         break;
                     default:
