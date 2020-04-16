@@ -102,6 +102,9 @@ public class FragmentProfile extends Fragment {
         TextView txtComunidad = getView().findViewById(R.id.ubicacionPerfil);
         TextView txtPassword = getView().findViewById(R.id.passwordPerfil);
         TextView txtIdioma = getView().findViewById(R.id.languagePerfil);
+        TextView txtContact = getView().findViewById(R.id.contactarPerfil);
+        TextView txtLogout = getView().findViewById(R.id.txtLogout);
+
         ImageButton btnEditPassword = getView().findViewById(R.id.buttonEditPassword);
         ImageButton btnEditLanguage =  getView().findViewById(R.id.buttonEditLanguage);
         ImageButton btnEditCommunity = getView().findViewById(R.id.buttonEditComunidad);
@@ -198,6 +201,22 @@ public class FragmentProfile extends Fragment {
         });
 
         btnPowerOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                powerOffButton();
+            }
+        });
+
+        txtContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("https://chrysallis.org.es/contacto/general/");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+
+        txtLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 powerOffButton();

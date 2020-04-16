@@ -135,6 +135,8 @@ public class DestacadosActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_chat:
                     pageAnterior = viewPager.getCurrentItem();
+                    FragmentManager fm = getSupportFragmentManager();
+                    fm.beginTransaction().detach(chatFragment).attach(chatFragment).addToBackStack(null).commit();
                     viewPager.setCurrentItem(3);
                     return true;
             }

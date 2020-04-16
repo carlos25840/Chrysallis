@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="medio">20sp</dimen>
+    <dimen name="medio">22sp</dimen>
     <dimen name="borde">2dp</dimen>
     <dimen name="radio">20dp</dimen>
     <dimen name="marginButton">20dp</dimen>
@@ -19,4 +19,5 @@
     <dimen name="sizeGrid">100dp</dimen>
     <dimen name="btnJoin">13sp</dimen>
     <dimen name="maxWidth">300dp</dimen>
+    <dimen name="grande">28sp</dimen>
 </resources>

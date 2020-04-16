@@ -4,7 +4,7 @@
     <dimen name="borde">4dp</dimen>
     <dimen name="radio">25dp</dimen>
     <dimen name="marginButton">30dp</dimen>
-    <dimen name="small">25sp</dimen>
+    <dimen name="small">20sp</dimen>
     <dimen name="imagenUsuario">120dp</dimen>
     <dimen name="imagenPerfil">180dp</dimen>
     <dimen name="icono">30dp</dimen>
@@ -19,4 +19,5 @@
     <dimen name="sizeGrid">150dp</dimen>
     <dimen name="btnJoin">18sp</dimen>
     <dimen name="maxWidth">450dp</dimen>
+    <dimen name="grande">30sp</dimen>
 </resources>

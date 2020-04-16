@@ -38,6 +38,7 @@ import retrofit2.Response;
 
 public class FragmentChat extends Fragment {
 
+    public final static int REQUEST_CHAT_ACTIVITY = 1;
     private ArrayList<Evento> eventos;
     private RecyclerView recyclerView;
     private Socio socio;
@@ -88,7 +89,7 @@ public class FragmentChat extends Fragment {
                                     Intent intent = new Intent(getActivity(), ChatActivity.class);
                                     intent.putExtra("evento", eventos.get(recyclerView.getChildAdapterPosition(v)));
                                     intent.putExtra("socio", socio);
-                                    startActivity(intent);
+                                    startActivityForResult(intent, REQUEST_CHAT_ACTIVITY);
                                 }
                             });
 
@@ -114,5 +115,12 @@ public class FragmentChat extends Fragment {
     }
     public FragmentChat(Socio socio){
         this.socio= socio;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == REQUEST_CHAT_ACTIVITY){
+            getFragmentManager().beginTransaction().detach(this).attach(this).addToBackStack(null).commit();
+        }
     }
 }

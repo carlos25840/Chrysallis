@@ -97,7 +97,16 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.Mensajes
                 cardView.setGravity(Gravity.LEFT);
             }
             String soloHora = mensaje.getFecha().substring(11,16);
-            textoHora.setText(soloHora);
+            String fecha = convertDate(mensaje.getFecha());
+            textoHora.setText(fecha + " " + soloHora);
+        }
+
+        public String convertDate(String date){
+            String formatDate[] = date.substring(0,10).split("-");
+            date = formatDate[2] + "-" + formatDate[1] + "-" + formatDate[0];
+            date = date.substring(0,5);
+            return date;
         }
     }
+
 }
