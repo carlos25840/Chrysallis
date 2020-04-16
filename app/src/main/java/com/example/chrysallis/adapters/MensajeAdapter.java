@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -21,9 +22,10 @@ import com.example.chrysallis.classes.Socio;
 import java.util.ArrayList;
 
 
-public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.MensajesViewHolder> implements View.OnClickListener{
+public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.MensajesViewHolder> implements View.OnClickListener, View.OnLongClickListener{
     private ArrayList<Mensaje> mensajes;
     private View.OnClickListener listener;
+    private View.OnLongClickListener listenerLong;
     private Socio socio;
 
     public MensajeAdapter(ArrayList<Mensaje> mensajes, Socio socio) {
@@ -38,6 +40,7 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.Mensajes
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.mensaje_item, viewGroup, false);
         itemView.setOnClickListener(this);
+        itemView.setOnLongClickListener(this);
         MensajesViewHolder mensajesViewHolder = new MensajesViewHolder(itemView);
         return mensajesViewHolder;
     }
@@ -61,10 +64,22 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.Mensajes
         this.listener = listener;
     }
 
+    //Metodo onItemCliclListener
+    public void setOnLongClickListener(View.OnLongClickListener listener) {
+        this.listenerLong = listener;
+    }
+
     @Override
     public void onClick(View view) {
         if(listener != null)
             listener.onClick(view);
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        if(listenerLong != null)
+            listenerLong.onLongClick(v);
+        return false;
     }
 
     public static class MensajesViewHolder extends RecyclerView.ViewHolder {

@@ -84,4 +84,8 @@
     <string name="communityNotChanged">Community has not been changed</string>
     <string name="communityChanged">Community has been changed</string>
     <string name="logout">Logout</string>
+    <string name="deleteConfirmation">Delete message</string>
+    <string name="messageDelete">The message will be permanently deleted</string>
+    <string name="messageDeleted">The message has been deleted</string>
+    <string name="messageNotDeleted">The message could not be deleted</string>
 </resources>
