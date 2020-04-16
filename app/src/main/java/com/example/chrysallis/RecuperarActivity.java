@@ -1,8 +1,9 @@
 package com.example.chrysallis;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
@@ -13,6 +14,9 @@ import android.widget.Toast;
 import com.example.chrysallis.Api.Api;
 import com.example.chrysallis.Api.ApiService.SociosService;
 import com.example.chrysallis.classes.Socio;
+import com.example.chrysallis.components.Mail;
+import com.example.chrysallis.components.languageManager;
+
 import java.util.Random;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -134,6 +138,12 @@ public class RecuperarActivity extends AppCompatActivity {
         });
     }
 
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        languageManager.loadLocale(this);
+    }
 
 
 }

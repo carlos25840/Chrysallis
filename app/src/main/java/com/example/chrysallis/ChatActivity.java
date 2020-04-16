@@ -8,6 +8,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.classes.Mensaje;
 import com.example.chrysallis.classes.Socio;
 import com.example.chrysallis.components.ErrorMessage;
+import com.example.chrysallis.components.languageManager;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout;
@@ -198,5 +200,11 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        languageManager.loadLocale(this);
     }
 }

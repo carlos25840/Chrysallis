@@ -1,5 +1,6 @@
 package com.example.chrysallis;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.example.chrysallis.Api.Api;
 import com.example.chrysallis.Api.ApiService.SociosService;
 import com.example.chrysallis.classes.Socio;
+import com.example.chrysallis.components.languageManager;
 
 import org.w3c.dom.Text;
 
@@ -183,6 +185,12 @@ public class MainActivity extends AppCompatActivity {
                 Activity.MODE_PRIVATE);
         String language = prefs.getString(langPref, "");
         setLocale(language, true);
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        languageManager.loadLocale(this);
     }
 
 

@@ -1,35 +1,25 @@
 package com.example.chrysallis;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chrysallis.Api.Api;
-import com.example.chrysallis.Api.ApiService.AsistirService;
-import com.example.chrysallis.Api.ApiService.ComunidadesService;
 import com.example.chrysallis.Api.ApiService.EventosService;
 import com.example.chrysallis.adapters.EventoAdapter;
-import com.example.chrysallis.classes.Asistir;
-import com.example.chrysallis.classes.Comunidad;
 import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.classes.Socio;
 import com.example.chrysallis.components.ErrorMessage;
+import com.example.chrysallis.components.languageManager;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -119,6 +109,13 @@ public class ApuntadoActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        languageManager.loadLocale(this);
     }
 
 

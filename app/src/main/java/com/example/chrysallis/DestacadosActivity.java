@@ -1,7 +1,9 @@
 package com.example.chrysallis;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import com.example.chrysallis.adapters.EventoAdapter;
 import com.example.chrysallis.adapters.ViewPagerAdapter;
 import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.classes.Socio;
+import com.example.chrysallis.components.languageManager;
 import com.example.chrysallis.fragments.FragmentChat;
 import com.example.chrysallis.fragments.FragmentExplore;
 import com.example.chrysallis.fragments.FragmentHome;
@@ -165,8 +168,11 @@ public class DestacadosActivity extends AppCompatActivity {
 
     }
 
-
-
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        languageManager.loadLocale(this);
+    }
 }
 
 

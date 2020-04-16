@@ -1,11 +1,13 @@
 package com.example.chrysallis;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -37,6 +39,8 @@ import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.classes.Socio;
 import com.example.chrysallis.components.ErrorMessage;
 import com.example.chrysallis.components.GeocodingLocation;
+import com.example.chrysallis.components.Mail;
+import com.example.chrysallis.components.languageManager;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -493,5 +497,12 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         setResult(RESULT_OK, resultIntent);
         finish();
         super.onBackPressed();
+    }
+
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        languageManager.loadLocale(this);
     }
 }

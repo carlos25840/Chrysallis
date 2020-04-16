@@ -49,6 +49,7 @@ import com.example.chrysallis.R;
 import com.example.chrysallis.adapters.ComunidadesSpinnerAdapter;
 import com.example.chrysallis.classes.Comunidad;
 import com.example.chrysallis.classes.Socio;
+import com.example.chrysallis.components.languageManager;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.w3c.dom.Text;
@@ -85,7 +86,6 @@ public class FragmentProfile extends Fragment {
     //Cuando se crea la activity
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         imagenPerfil = getView().findViewById(R.id.ImgPerfil);
         mostrarPerfil();
     }

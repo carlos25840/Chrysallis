@@ -1,14 +1,17 @@
 package com.example.chrysallis;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.example.chrysallis.components.languageManager;
 import com.github.barteksc.pdfviewer.PDFView;
 
 import java.io.File;
@@ -34,5 +37,12 @@ public class PdfViewActivity extends AppCompatActivity {
             pdfView.setVisibility(GONE);
         }
 
+    }
+
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        languageManager.loadLocale(this);
     }
 }

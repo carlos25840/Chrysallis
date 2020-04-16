@@ -20,14 +20,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PdfViewActivity"></activity>
+        <activity android:name=".PdfViewActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
         <activity
             android:name=".ChatActivity"
-            android:theme="@style/ActivityConBarra" />
+            android:theme="@style/ActivityConBarra"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
         <activity
             android:name=".EventoActivity"
             android:label=""
-            android:theme="@style/ActivityConBarra" />
+            android:theme="@style/ActivityConBarra"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -40,14 +43,18 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".RecuperarActivity" />
+        <activity android:name=".RecuperarActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
         <activity android:name=".ApuntadoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label=""
             android:theme="@style/ActivityConBarra"/>
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".DestacadosActivity"
             android:label="@string/destacados"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
