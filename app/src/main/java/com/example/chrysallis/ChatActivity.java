@@ -36,6 +36,8 @@ import com.google.gson.Gson;
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.omadahealth.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -77,8 +79,10 @@ public class ChatActivity extends AppCompatActivity {
                 Date currentTime = Calendar.getInstance().getTime();
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                 String formattedDate = df.format(currentTime);
+                String mensajeString = txtMensaje.getText().toString();
+                String mensajeEmoji = StringEscapeUtils.escapeJava(mensajeString);
 
-                Mensaje mensaje = new Mensaje(socio.getId(),evento.getId(), socio.getNombre() + ":" + txtMensaje.getText().toString(), formattedDate);
+                Mensaje mensaje = new Mensaje(socio.getId(),evento.getId(), socio.getNombre() + ":" + mensajeEmoji, formattedDate);
                 txtMensaje.setText("");
                 MensajesService mensajesService = Api.getApi().create(MensajesService.class);
                 Call<Mensaje> mensajeCall = mensajesService.insertMensaje(mensaje);

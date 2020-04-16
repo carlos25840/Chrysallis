@@ -60,4 +60,7 @@ dependencies {
     //refreshLayoutBottom
 
     implementation 'com.github.omadahealth:swipy:1.2.3@aar'
+
+    //parseEmojis
+    implementation 'org.apache.commons:commons-lang3:3.4'
 }

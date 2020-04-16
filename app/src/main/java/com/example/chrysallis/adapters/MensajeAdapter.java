@@ -19,6 +19,8 @@ import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.classes.Mensaje;
 import com.example.chrysallis.classes.Socio;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import java.util.ArrayList;
 
 
@@ -104,7 +106,9 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.Mensajes
 
             String[] mensajeSplitted = mensaje.getMensaje().split(":");
             nom.setText(mensajeSplitted[0]);
-            textoMensaje.setText(mensaje.getMensaje().replace(mensajeSplitted[0] + ":", ""));
+            String mensajeString = mensaje.getMensaje().replace(mensajeSplitted[0] + ":", "");
+            String mensajeEmojis = StringEscapeUtils.unescapeJava(mensajeString);
+            textoMensaje.setText(mensajeEmojis);
             if(mensaje.getId_socio() == socio.getId()){
                 cardView.setGravity(Gravity.RIGHT);
             }

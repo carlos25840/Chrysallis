@@ -12,6 +12,8 @@ import com.example.chrysallis.R;
 import com.example.chrysallis.classes.Evento;
 import com.example.chrysallis.classes.Mensaje;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -80,7 +82,8 @@ public class EventoChatAdapter extends RecyclerView.Adapter<EventoChatAdapter.Ev
             nom.setText(evento.getNombre());
             if(!mensajesArray.isEmpty()){
                 Mensaje ultimoMsg = mensajesArray.get(mensajesArray.size()-1);
-                ultimoMensaje.setText(ultimoMsg.getMensaje());
+                String mensajeEmojis = StringEscapeUtils.unescapeJava(ultimoMsg.getMensaje());
+                ultimoMensaje.setText(mensajeEmojis);
                 String soloHora = ultimoMsg.getFecha().substring(11,16);
                 hora.setText(soloHora);
             }
