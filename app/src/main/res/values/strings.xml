@@ -88,4 +88,5 @@
     <string name="messageDelete">The message will be permanently deleted</string>
     <string name="messageDeleted">The message has been deleted</string>
     <string name="messageNotDeleted">The message could not be deleted</string>
+    <string name="writeAMessage">Write a message...</string>
 </resources>

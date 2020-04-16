@@ -7,7 +7,7 @@
     tools:context=".EventoActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -125,7 +125,6 @@
             android:layout_margin="@dimen/borde_fragments">
             <fragment
                 xmlns:map="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
@@ -147,13 +146,14 @@
             android:textSize="@dimen/txtComEvent"
             android:textStyle="bold"
             android:textColor="@color/colorAccent"
-            android:layout_margin="@dimen/mrgEvent"/>
-        <GridView
+            android:layout_marginStart="@dimen/mrgEvent"/>
+
+        <com.example.chrysallis.components.WrapGrid
             android:layout_width="match_parent"
-            android:layout_height="@dimen/sizeGrid"
+            android:layout_height="wrap_content"
             android:numColumns="1"
             android:id="@+id/gridDocs"
-            android:layout_margin="@dimen/mrgEvent">
-        </GridView>
+            android:layout_marginStart="@dimen/mrgEvent"/>
+
     </LinearLayout>
 </ScrollView>

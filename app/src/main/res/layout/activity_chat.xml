@@ -33,7 +33,7 @@
             android:maxLines="5"
             android:background="@drawable/rounded_white"
             android:layout_margin="@dimen/borde_fragments"
-            android:hint="Escribe un mensaje..."
+            android:hint="@string/writeAMessage"
             android:maxLength="400"/>
 
         <ImageButton

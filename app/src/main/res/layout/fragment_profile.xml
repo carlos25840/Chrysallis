@@ -125,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/medio"
                 android:text="@string/logout"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="@color/colorPrimaryDark"/>
             <ImageButton
                 android:id="@+id/powerOff"
                 android:layout_width="wrap_content"

@@ -82,6 +82,7 @@
     <string name="messageDelete">Mezua betiko ezabatuko da</string>
     <string name="messageDeleted">Mezua ezabatu egin da</string>
     <string name="messageNotDeleted">Ezin izan da mezua ezabatu</string>
+    <string name="writeAMessage">Idatzi mezu bat...</string>
     <string-array name="languages">
         <item>Ingelesez</item>
         <item>Gaztelania</item>

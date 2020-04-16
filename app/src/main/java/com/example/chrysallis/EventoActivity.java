@@ -505,4 +505,5 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         super.onConfigurationChanged(newConfig);
         languageManager.loadLocale(this);
     }
+
 }

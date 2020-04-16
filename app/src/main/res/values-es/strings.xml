@@ -82,6 +82,7 @@
     <string name="messageDelete">El mensaje será eliminado permanentemente</string>
     <string name="messageDeleted">El mensaje ha sido eliminado</string>
     <string name="messageNotDeleted">El mensaje no pudo ser eliminado</string>
+    <string name="writeAMessage">Escribe un mensaje...</string>
     <string-array name="languages">
         <item>Inglés</item>
         <item>Español</item>
