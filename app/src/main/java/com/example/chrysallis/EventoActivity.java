@@ -80,6 +80,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         //Views
+        TextView txtNoDocs = findViewById(R.id.msgNoDocuments);
         TextView txtEvent = findViewById(R.id.txtEvent);
         TextView txtCom = findViewById(R.id.txtComunEvent);
         TextView txtDate = findViewById(R.id.txtDateEvent);
@@ -121,9 +122,13 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                     case 200:
                         documentos = response.body();
                         if(!documentos.isEmpty()){
+                            txtNoDocs.setVisibility(View.GONE);
                             //Se crea el adapter y se asigna a la grid
                             DocumentoAdapter documentoAdapter = new DocumentoAdapter(getApplicationContext(),documentos);
                             gridDocs.setAdapter(documentoAdapter);
+                        }
+                        else{
+                            txtNoDocs.setVisibility(View.VISIBLE);
                         }
                         break;
                     default:

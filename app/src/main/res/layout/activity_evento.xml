@@ -148,6 +148,16 @@
             android:textColor="@color/colorAccent"
             android:layout_marginStart="@dimen/mrgEvent"/>
 
+        <TextView
+            android:id="@+id/msgNoDocuments"
+            android:layout_margin="@dimen/small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/msgNotEvents"
+            android:text="@string/msgNoDocuments"
+            android:layout_marginStart="@dimen/mrgEvent"
+            android:textColor="@color/gris"/>
+
         <com.example.chrysallis.components.WrapGrid
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

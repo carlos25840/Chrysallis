@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,7 +35,15 @@ public class DocumentoAdapter extends ArrayAdapter<Documento> {
         View item = inflater.inflate(R.layout.document_item, null);
 
         TextView nombre = item.findViewById(R.id.txtDocument);
+        ImageView icon = item.findViewById(R.id.iconoDocument);
         nombre.setText(documentos.get(position).getNombre());
+        if(documentos.get(position).getNombre().contains("pdf")){
+            icon.setImageResource(R.drawable.pdf);
+        }
+        else{
+            icon.setImageResource(R.drawable.png);
+        }
+
         return item;
     }
 }
