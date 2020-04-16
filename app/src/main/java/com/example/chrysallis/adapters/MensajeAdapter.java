@@ -105,7 +105,8 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.Mensajes
         public void bindMensaje(Mensaje mensaje, Socio socio) {
 
             String[] mensajeSplitted = mensaje.getMensaje().split(":");
-            nom.setText(mensajeSplitted[0]);
+
+            nom.setText(StringEscapeUtils.unescapeJava(mensajeSplitted[0]));
             String mensajeString = mensaje.getMensaje().replace(mensajeSplitted[0] + ":", "");
             String mensajeEmojis = StringEscapeUtils.unescapeJava(mensajeString);
             textoMensaje.setText(mensajeEmojis);

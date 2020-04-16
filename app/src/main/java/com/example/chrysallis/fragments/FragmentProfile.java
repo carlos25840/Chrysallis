@@ -52,6 +52,7 @@ import com.example.chrysallis.classes.Socio;
 import com.example.chrysallis.components.languageManager;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
@@ -109,7 +110,8 @@ public class FragmentProfile extends Fragment {
         ImageButton btnEditLanguage =  getView().findViewById(R.id.buttonEditLanguage);
         ImageButton btnEditCommunity = getView().findViewById(R.id.buttonEditComunidad);
         ImageButton btnPowerOff = getView().findViewById(R.id.powerOff);
-        nombrePerfil.setText(socio.getNombre());
+        String nombreEmoji = StringEscapeUtils.unescapeJava(socio.getNombre());
+        nombrePerfil.setText(nombreEmoji);
 
         getComunidad();
 
