@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,13 +48,27 @@ public class FragmentChat extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
         eventos = new ArrayList<>();
         recyclerView = view.findViewById(R.id.RecyclerChats);
+        SwipeRefreshLayout refreshLayout = view.findViewById(R.id.refreshLayoutChats);
+        cargarEventos(view);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                cargarEventos(view);
+                refreshLayout.setRefreshing(false);
+            }
+        });
+        return view;
+
+    }
+
+    public void cargarEventos(View view){
 
         TextView msgNoEvents = view.findViewById(R.id.msgNotEventsChat);
         Date currentTime = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = df.format(currentTime);
         EventosService eventosService = Api.getApi().create(EventosService.class);
-        Call<ArrayList<Evento>> eventosCall = eventosService.busquedaEventosComunidad(socio.getId_comunidad(),formattedDate);
+        Call<ArrayList<Evento>> eventosCall = eventosService.getEventosApuntado(socio.getId());
         eventosCall.enqueue(new Callback<ArrayList<Evento>>() {
             @Override
             public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
@@ -94,11 +110,7 @@ public class FragmentChat extends Fragment {
                 Toast.makeText(getContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-
-        return view;
-
     }
-
     public FragmentChat(Socio socio){
         this.socio= socio;
     }
