@@ -110,6 +110,8 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         //Se obtiene la fecha actual
         Date currentTime = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = sdf.format(currentTime);
         String formattedDate = df.format(currentTime);
 
         //Recupera los documentos
@@ -200,7 +202,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                     case 200:
                         Asistir asistir = response.body();
                         asistencia = true;
-                        if(date.compareTo(formattedDate) >= 0){
+                        if(evento.getFecha().compareTo(currentDate) >= 0){
                             btnJoin.setText(getString(R.string.joined));
                         }else{
                             btnJoin.setText(getString(R.string.rate));
@@ -222,9 +224,9 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
             @Override
             public void onClick(View v) {
 
-                if(date.compareTo(formattedDate) >= 0){
+                if(evento.getFecha().compareTo(currentDate) >= 0){
                     if(!asistencia){
-                        if(limitDate.compareTo(formattedDate) >= 0){
+                        if(evento.getFechaLimite().compareTo(currentDate) >= 0){
                             showDialogAttendance();
                         }else{
                             Toast.makeText(getApplicationContext(),getString(R.string.fechaLimite), Toast.LENGTH_LONG).show();
@@ -234,7 +236,9 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                         showDialogNotAttendance();
                     }
                 }else{
-                    showDialogAssessment();
+                    if(asistencia){
+                        showDialogAssessment();
+                    }
                 }
             }
         });

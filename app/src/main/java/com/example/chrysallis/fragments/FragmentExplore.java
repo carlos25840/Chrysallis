@@ -266,7 +266,7 @@ public class FragmentExplore extends Fragment {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 because January is zero
-                String d, m , y;
+                String d, m;
                 if(day < 10){
                     d = "0" + day;
                 }else{
@@ -277,12 +277,12 @@ public class FragmentExplore extends Fragment {
                 }else{
                     m = Integer.toString(month + 1);
                 }
-                String selected = d + "/" + m + "/" + year;
+                String selected = year + "/" + m + "/" + d;
                 final String selectedDate = day + "/" + (month + 1) + "/" + year;
 
                 Date currentTime = Calendar.getInstance().getTime();
-                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                String formattedDate = df.format(currentTime);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                String formattedDate = sdf.format(currentTime);
                 int com = selected.compareTo(formattedDate);
                 if(com < 0){
                     txtDate.setText("");
