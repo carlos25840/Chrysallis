@@ -57,7 +57,7 @@
     <string name="apuntado">Us heu inscrit a l’esdeveniment</string>
     <string name="time">Hora</string>
     <string name="description">Descripció</string>
-    <string name="noResponder">\n\nDo not reply, this is an automatic email</string>
+    <string name="noResponder">No respongueu es tracta d’un correu electrònic automàtic</string>
     <string name="joined">Participant</string>
     <string name="fechaLimite">No és possible participar-hi. Data límit d\'inscripció assolida.</string>
     <string name="wrongDate">Data incorrecta, necessites seleccionar una data que sigui l\'actual o superior</string>

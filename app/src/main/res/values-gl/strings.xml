@@ -57,7 +57,7 @@
     <string name="apuntado">Rexistrarte para o evento</string>
     <string name="time">O tempo</string>
     <string name="description">Descrición</string>
-    <string name="noResponder">\n\nDo not reply, this is an automatic email</string>
+    <string name="noResponder">Non respondas este é un correo electrónico automático</string>
     <string name="joined">Uniuse</string>
     <string name="fechaLimite">Non é posible participar. Chegado o prazo de inscrición.</string>
     <string name="wrongDate">Data incorrecta, ten que seleccionar unha data actual ou superior</string>
