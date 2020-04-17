@@ -57,7 +57,7 @@
     <string name="apuntado">Ekitaldirako izena eman duzu</string>
     <string name="time">Denbora</string>
     <string name="description">Azalpena</string>
-    <string name="noResponder">\n\nDo not reply, this is an automatic email</string>
+    <string name="noResponder">Ez erantzun hau mezu elektronikoa da</string>
     <string name="joined">Alta</string>
     <string name="fechaLimite">Ezin da parte hartu. Izena emateko azken eguna.</string>
     <string name="wrongDate">Data okerra, uneko edo handiagoa den data aukeratu behar duzu</string>
