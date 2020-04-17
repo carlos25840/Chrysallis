@@ -43,6 +43,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
     // JSON Parsing
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
+
     //Recycler y cardView
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
@@ -52,7 +53,6 @@ dependencies {
     implementation files('src/main/java/com/example/chrysallis/libs/activation.jar')
     implementation files('src/main/java/com/example/chrysallis/libs/additionnal.jar')
     implementation files('src/main/java/com/example/chrysallis/libs/mail.jar')
-
     //PDF
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
     implementation 'com.mindorks.android:prdownloader:0.6.0'
@@ -62,4 +62,7 @@ dependencies {
 
     //parseEmojis
     implementation 'org.apache.commons:commons-lang3:3.4'
+
+    //Detect Language
+    implementation 'com.detectlanguage:detectlanguage:1.1.0'
 }

@@ -40,6 +40,7 @@ import com.example.chrysallis.classes.Socio;
 import com.example.chrysallis.components.ErrorMessage;
 import com.example.chrysallis.components.GeocodingLocation;
 import com.example.chrysallis.components.Mail;
+import com.example.chrysallis.components.Traductor;
 import com.example.chrysallis.components.languageManager;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -70,6 +71,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
     private Socio socio;
     private Boolean asistencia = false;
     private ArrayList<Documento> documentos;
+    private Boolean traducido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         //Views
+        TextView txtTraducido = findViewById(R.id.txtTraducido);
         TextView txtNoDocs = findViewById(R.id.msgNoDocuments);
         TextView txtEvent = findViewById(R.id.txtEvent);
         TextView txtCom = findViewById(R.id.txtComunEvent);
@@ -96,6 +99,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         evento = (Evento) intent.getSerializableExtra("evento");
         socio = (Socio)intent.getSerializableExtra("socio");
         //Asignación de valores a las views
+
         txtEvent.setText(evento.getNombre());
         txtCom.setText(evento.getComunidades().getNombre());
         String date = convertDate(evento.getFecha());
@@ -104,8 +108,19 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         txtLimitDate.setText(limitDate);
         String time = evento.getHora().substring(0,8);
         txtTime.setText(time);
-        txtDescription.setText(evento.getDescripcion());
         txtLocation.setText(evento.getUbicacion());
+
+        String descripcionTraducida = Traductor.traducir(evento.getDescripcion(), this);
+        txtDescription.setText(descripcionTraducida);
+        if(evento.getDescripcion().equals(descripcionTraducida)){
+            txtTraducido.setVisibility(View.GONE);
+            traducido = false;
+        }
+        else{
+            txtTraducido.setVisibility(View.VISIBLE);
+            traducido = true;
+        }
+
 
         //Se obtiene la fecha actual
         Date currentTime = Calendar.getInstance().getTime();
@@ -152,6 +167,22 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
                 startActivity(mapIntent);
+            }
+        });
+
+        txtTraducido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(traducido){
+                    txtDescription.setText(evento.getDescripcion());
+                    traducido = false;
+                    txtTraducido.setText(getString(R.string.noTraducido));
+                }
+                else{
+                    txtDescription.setText(descripcionTraducida);
+                    traducido = true;
+                    txtTraducido.setText(getString(R.string.traducido));
+                }
             }
         });
 

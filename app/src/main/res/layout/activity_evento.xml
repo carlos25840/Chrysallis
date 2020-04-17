@@ -13,10 +13,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="@dimen/mrgEvent">
+            android:layout_marginHorizontal="@dimen/mrgEvent">
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:id="@+id/imgEvent"
                 android:layout_gravity="center"/>
@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:padding="@dimen/mrgEvent">
+                android:paddingHorizontal="@dimen/mrgEvent">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
                 </LinearLayout>
                 <Button
                     android:id="@+id/buttonJoin"
-                    android:layout_margin="@dimen/marginButton"
+                    android:layout_marginHorizontal="@dimen/marginButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/join"
@@ -103,6 +103,15 @@
             android:id="@+id/txtDesEvent"
             android:textSize="@dimen/medio"
             android:layout_margin="@dimen/mrgEvent"/>
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtTraducido"
+            android:text="@string/traducido"
+            android:textSize="@dimen/small"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginHorizontal="@dimen/mrgEvent"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

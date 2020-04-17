@@ -91,4 +91,6 @@
         <item>Gallego</item>
     </string-array>
     <string name="noResponder">No responder, este es un correo electrónico automático</string>
+    <string name="traducido">(Traducido) Ver texto original</string>
+    <string name="noTraducido">(Original) Ver texto traducido</string>
 </resources>

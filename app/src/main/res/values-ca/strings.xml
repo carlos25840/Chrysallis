@@ -84,6 +84,8 @@
     <string name="messageNotDeleted">El missatge no s\'ha pogut suprimir</string>
     <string name="writeAMessage">Escriu un missatge...</string>
     <string name="msgNoDocuments">No hi ha documents per a aquest esdeveniment</string>
+    <string name="traducido">(Traduït) Vegeu el text original</string>
+    <string name="noTraducido">(Original) Vegeu el text traduït</string>
     <string-array name="languages">
         <item>Anglès</item>
         <item>Castellà</item>

@@ -90,4 +90,6 @@
     <string name="messageNotDeleted">The message could not be deleted</string>
     <string name="writeAMessage">Write a message...</string>
     <string name="msgNoDocuments">There are no documents for this event</string>
+    <string name="traducido">(Translated) See original text</string>
+    <string name="noTraducido">(Original) See translated text</string>
 </resources>
