@@ -17,6 +17,6 @@ public interface MensajesService {
     @POST("api/Mensajes")
     Call<Mensaje> insertMensaje(@Body Mensaje mensaje);
 
-    @DELETE("api/Mensajes/{id}")
+    @POST("api/Mensajes/eliminar/{id}")
     Call<Mensaje> borrarMensaje(@Path("id") int id);
 }

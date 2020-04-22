@@ -15,8 +15,9 @@ public interface AsistirService {
     Call<Asistir> getAsistir(@Path("id_socio") int id_socio, @Path("id_evento") int id_evento);
     @POST("api/Asistir")
     Call<Asistir> insertAsistir(@Body Asistir asistir);
-    @DELETE("api/Asistir/{id_socio}/{id_evento}")
+
+    @POST("api/Asistir/eliminar/{id_socio}/{id_evento}")
     Call<Asistir> deleteAsistir(@Path("id_socio") int id_socio, @Path("id_evento") int id_evento);
-    @PUT("api/Asistir/{id_socio}/{id_evento}")
+    @POST("api/Asistir/modificar/{id_socio}/{id_evento}")
     Call<Asistir> putAsistir(@Path("id_socio") int id_socio, @Path("id_evento") int id_evento,@Body Asistir asistir);
 }
