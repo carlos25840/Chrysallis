@@ -60,6 +60,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,6 +71,7 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class FragmentProfile extends Fragment {
+    private static final String REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1 ;
     private Socio socio;
     private ImageView imagenPerfil;
@@ -441,10 +443,14 @@ public class FragmentProfile extends Fragment {
                     @Override
                     public void onClick(View v) {
                         if(editTextPassword.getText().toString().equals(editTextConfirmation.getText().toString())){
-                            String password = MainActivity.encryptThisString(editTextPassword.getText().toString());
-                            socio.setPassword(password);
-                            saveUser(getString(R.string.passwordChanged),getString(R.string.passwordNotChanged));
-                            dialog.dismiss();
+                            if(Pattern.matches(REGEX, editTextPassword.getText().toString()) && Pattern.matches(REGEX,editTextConfirmation.getText().toString())){
+                                String password = MainActivity.encryptThisString(editTextPassword.getText().toString());
+                                socio.setPassword(password);
+                                saveUser(getString(R.string.passwordChanged),getString(R.string.passwordNotChanged));
+                                dialog.dismiss();
+                            }else{
+
+                            }
                         }else{
                             Toast.makeText(getActivity(),R.string.passwordsNotMatch, Toast.LENGTH_LONG).show();
                         }
