@@ -93,4 +93,5 @@
     <string name="noResponder">No responder, este es un correo electrónico automático</string>
     <string name="traducido">(Traducido) Ver texto original</string>
     <string name="noTraducido">(Original) Ver texto traducido</string>
+    <string name="security">La contraseña debe tener una minúscula, una mayúscula, un carácter especial(@$!%*?&amp;.) y una longitud mínima de 8 caracteres.</string>
 </resources>

@@ -92,4 +92,5 @@
     <string name="msgNoDocuments">There are no documents for this event</string>
     <string name="traducido">(Translated) See original text</string>
     <string name="noTraducido">(Original) See translated text</string>
+    <string name="security">The password must be lowercase, uppercase, special character(@$!%*?&amp;.) and have a minimum length of 8 characters.</string>
 </resources>

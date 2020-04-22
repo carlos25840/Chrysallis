@@ -71,7 +71,7 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class FragmentProfile extends Fragment {
-    private static final String REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+    private static final String REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.])[A-Za-z\\d@$!%*?&.]{8,}$";
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1 ;
     private Socio socio;
     private ImageView imagenPerfil;
@@ -449,10 +449,10 @@ public class FragmentProfile extends Fragment {
                                 saveUser(getString(R.string.passwordChanged),getString(R.string.passwordNotChanged));
                                 dialog.dismiss();
                             }else{
-
+                                Toast.makeText(getActivity(),getString(R.string.security), Toast.LENGTH_LONG).show();
                             }
                         }else{
-                            Toast.makeText(getActivity(),R.string.passwordsNotMatch, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(),getString(R.string.passwordsNotMatch), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
