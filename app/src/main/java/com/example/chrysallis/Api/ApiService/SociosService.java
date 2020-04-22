@@ -23,4 +23,7 @@ public interface SociosService {
 
     @GET("api/Socios/busquedaRecuperar/{mail}/{telefono}")
     Call<Socio> SocioRecuperar(@Path("mail") String mail, @Path("telefono")String telefono);
+
+    @GET("api/Socios/{id}")
+    Call<Socio> SocioLoginId(@Path("id") int id);
 }
