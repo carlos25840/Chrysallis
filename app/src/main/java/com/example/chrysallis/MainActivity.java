@@ -2,6 +2,7 @@ package com.example.chrysallis;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadLocale();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main);
         Button buttonLogin = findViewById(R.id.buttonLogin);
         EditText editTextPhone = findViewById(R.id.editTextPhone);
