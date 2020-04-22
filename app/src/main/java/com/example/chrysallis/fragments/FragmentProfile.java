@@ -576,10 +576,22 @@ public class FragmentProfile extends Fragment {
         /*Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
         getActivity().finish();*/
+        saveLogin(-1);
         //android.os.Process.killProcess(android.os.Process.myPid());
+
         System.exit(2);
+
     }
 
+
+    public void saveLogin(int id){
+        String usuario = "user";
+        SharedPreferences settings = getActivity().getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor;
+        editor = settings.edit();
+        editor.putInt(usuario, id);
+        editor.commit();
+    }
 
     private void showDialogComunidad() {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity(), R.style.ThemeOverlay_MaterialComponents_Dialog_Alert);
