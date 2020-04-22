@@ -106,19 +106,6 @@ public class RecuperarActivity extends AppCompatActivity {
 
     }
 
-    /*public String getPassword(int length){
-        char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?".toCharArray();
-        StringBuilder stringBuilder = new StringBuilder();
-
-        Random rand = new Random();
-
-        for(int i = 0; i < length; i++){
-            char c = chars[rand.nextInt(chars.length)];
-            stringBuilder.append(c);
-        }
-
-        return stringBuilder.toString();
-    }*/
 
     public void saveUser(String success, String fail){
         SociosService sociosService = Api.getApi().create(SociosService.class);
