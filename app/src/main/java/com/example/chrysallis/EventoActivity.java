@@ -342,10 +342,10 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
              @Override
              public void onClick(DialogInterface dialog, int which) {
                  AsistirService asistirService = Api.getApi().create(AsistirService.class);
-                 Call<Asistir> asistirCall = asistirService.deleteAsistir(socio.getId(),evento.getId());
-                 asistirCall.enqueue(new Callback<Asistir>() {
+                 Call<String> asistirCall = asistirService.deleteAsistir(socio.getId(),evento.getId());
+                 asistirCall.enqueue(new Callback<String>() {
                      @Override
-                     public void onResponse(Call<Asistir> call, Response<Asistir> response) {
+                     public void onResponse(Call<String> call, Response<String> response) {
                          if(response.isSuccessful()){
                              Toast.makeText(getApplicationContext(),getString(R.string.notAttendanceConfirmed), Toast.LENGTH_LONG).show();
                              Button btnJoin = findViewById(R.id.buttonJoin);
@@ -361,7 +361,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                      }
 
                      @Override
-                     public void onFailure(Call<Asistir> call, Throwable t) {
+                     public void onFailure(Call<String> call, Throwable t) {
                          Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
                      }
                  });
@@ -486,6 +486,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
 
         StrictMode.setThreadPolicy(policy);
         Mail m=new Mail("eventschrysallis@gmail.com","chrysallis2005");
+        String linkBaja = "http://abp-politecnics.com/2020/dm0201/api/Asistir/eliminar/" + socio.getId() + "/" + evento.getId();
 
         String[] toArr = {socio.getMail()};
         m.setTo(toArr);
@@ -496,6 +497,10 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                 getString(R.string.description) + ": " + evento.getDescripcion() + "\n" +
                 getString(R.string.date) + ": " + evento.getFecha().substring(0,10) + "\n" +
                 getString(R.string.time) + ": " + evento.getHora().substring(0,8) + "\n" +
+
+                //Enlace de baja en desarrollo
+                //linkBaja + "\n" +
+
                 getString(R.string.noResponder));
 
         try {
