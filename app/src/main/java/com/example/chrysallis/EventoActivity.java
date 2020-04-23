@@ -382,43 +382,77 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         builder.setView(v);
 
         final EditText editTextNumAttendants = v.findViewById(R.id.editTextNumAttendants);
+        builder.setPositiveButton(getString(R.string.accept), null);
+        builder.setNegativeButton(getString(R.string.cancel), null);
 
-        builder.setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
+        AlertDialog dialog = builder.create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(!editTextNumAttendants.getText().toString().equals("")){
-                    int numAsist = Integer.parseInt(editTextNumAttendants.getText().toString());
-                    AsistirService asistirService = Api.getApi().create(AsistirService.class);
+            public void onShow(DialogInterface dialog) {
+                Button btnAccept = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                btnAccept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(!editTextNumAttendants.getText().toString().equals("")){
+                            int numAsist = Integer.parseInt(editTextNumAttendants.getText().toString());
+                            AsistirService asistirService = Api.getApi().create(AsistirService.class);
+                            Call<Integer> asistentesCall = asistirService.getAsistirTotal(evento.getId());
+                            asistentesCall.enqueue(new Callback<Integer>() {
+                                @Override
+                                public void onResponse(Call<Integer> call, Response<Integer> response) {
+                                    switch (response.code()){
+                                        case 200:
+                                            asistentes = response.body();
+                                            if(evento.getNumAsistentes() > 0){
+                                                if((evento.getNumAsistentes() - asistentes) >= numAsist){
+                                                    Asistir asistir = new Asistir(socio.getId(),evento.getId(),numAsist);
+                                                    Call<Asistir> asistirCall = asistirService.insertAsistir(asistir);
+                                                    asistirCall.enqueue(new Callback<Asistir>() {
+                                                        @Override
+                                                        public void onResponse(Call<Asistir> call, Response<Asistir> response) {
+                                                            if(response.isSuccessful()){
+                                                                Toast.makeText(getApplicationContext(),getString(R.string.attendanceConfirmed), Toast.LENGTH_LONG).show();
+                                                                enviarMail();
+                                                                Button btnJoin = findViewById(R.id.buttonJoin);
+                                                                btnJoin.setText(getString(R.string.joined));
+                                                                asistencia = true;
+                                                                socio.getAsistir().add(asistir);
+                                                            }else{
+                                                                Gson gson = new Gson();
+                                                                ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
+                                                                Toast.makeText(getApplicationContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
+                                                            }
+                                                        }
 
-                    Call<Integer> asistentesCall = asistirService.getAsistirTotal(evento.getId());
-                    asistentesCall.enqueue(new Callback<Integer>() {
-                        @Override
-                        public void onResponse(Call<Integer> call, Response<Integer> response) {
-                            switch (response.code()){
-                                case 200:
-                                    asistentes = response.body();
-                                    if(evento.getNumAsistentes() > 0){
-                                        if((evento.getNumAsistentes() - asistentes) >= numAsist){
-                                            Asistir asistir = new Asistir(socio.getId(),evento.getId(),numAsist);
-                                            Call<Asistir> asistirCall = asistirService.insertAsistir(asistir);
-
-                                        }
+                                                        @Override
+                                                        public void onFailure(Call<Asistir> call, Throwable t) {
+                                                            Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+                                                        }
+                                                    });
+                                                    dialog.dismiss();
+                                                }else{
+                                                    Toast.makeText(getApplicationContext(), getString(R.string.notSpots) + " " + String.valueOf(evento.getNumAsistentes()-asistentes), Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+                                            break;
+                                        case 404:
+                                            break;
                                     }
-                            }
-                        }
+                                }
 
-                        @Override
-                        public void onFailure(Call<Integer> call, Throwable t) {
-
+                                @Override
+                                public void onFailure(Call<Integer> call, Throwable t) {
+                                    Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }else{
+                            Toast.makeText(getApplicationContext(),getString(R.string.notNumber), Toast.LENGTH_LONG).show();
                         }
-                    });
-                }else{
-                    Toast.makeText(getApplicationContext(),getString(R.string.notNumber), Toast.LENGTH_LONG).show();
-                }
+                    }
+                });
             }
         });
-        builder.setNegativeButton(getString(R.string.cancel), null);
-        builder.show();
+        dialog.show();
     }
 
 

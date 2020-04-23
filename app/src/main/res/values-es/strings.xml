@@ -94,4 +94,5 @@
     <string name="traducido">(Traducido) Ver texto original</string>
     <string name="noTraducido">(Original) Ver texto traducido</string>
     <string name="security">La contraseña debe tener una minúscula, una mayúscula, un carácter especial(@$!%*?&amp;.) y una longitud mínima de 8 caracteres.</string>
+    <string name="notSpots">No hay suficientes plazas disponibles. Disponibles:</string>
 </resources>
