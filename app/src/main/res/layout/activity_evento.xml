@@ -12,8 +12,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:id="@+id/txtEvent"
+                android:textStyle="bold"
+                android:textSize="@dimen/txtNameEvent"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginHorizontal="@dimen/mrgEvent">
+
+
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -24,14 +38,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginLeft="15dp"
                 android:orientation="vertical"
                 android:paddingHorizontal="@dimen/mrgEvent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtEvent"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/txtNameEvent"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -67,11 +77,7 @@
                         android:id="@+id/txtLimitDateEvent"
                         android:textSize="@dimen/txtEvent"/>
                 </LinearLayout>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/txtEvent"
-                    android:text="Hora:"/>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

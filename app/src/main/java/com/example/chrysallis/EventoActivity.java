@@ -109,7 +109,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         String limitDate = convertDate(evento.getFechaLimite());
         txtDate.setText(date);
         txtLimitDate.setText(limitDate);
-        String time = evento.getHora().substring(0,8);
+        String time = evento.getHora().substring(0,5);
         txtTime.setText(time);
         txtLocation.setText(evento.getUbicacion());
 
