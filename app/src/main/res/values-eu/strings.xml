@@ -51,7 +51,7 @@
     <string name="join">Eman izena</string>
     <string name="notActive">Bazkidea ez dago aktiboa</string>
     <string name="numAttendants">Bertaratutako kopurua</string>
-    <string name="notNumber">Ez da zenbakia sartu</string>
+    <string name="notNumber">Ez da baliozko zenbakirik sartu</string>
     <string name="attendanceConfirmation">Asistentziaren berrespena</string>
     <string name="attendanceConfirmed">Bertaratzea berretsi zen</string>
     <string name="apuntado">Ekitaldirako izena eman duzu</string>

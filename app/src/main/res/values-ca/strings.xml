@@ -51,7 +51,7 @@
     <string name="join">Apuntar-me</string>
     <string name="notActive">Soci no actiu</string>
     <string name="numAttendants">Nombre d’assistents</string>
-    <string name="notNumber">No s\'ha introduït el número</string>
+    <string name="notNumber">No s\'ha introduït un número vàlid</string>
     <string name="attendanceConfirmation">Confirmació d\'assistència</string>
     <string name="attendanceConfirmed">Assistència confirmada</string>
     <string name="apuntado">Us heu inscrit a l’esdeveniment</string>

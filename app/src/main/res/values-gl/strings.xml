@@ -51,7 +51,7 @@
     <string name="join">Rexístrate</string>
     <string name="notActive">Socio non activo</string>
     <string name="numAttendants">Número de asistentes</string>
-    <string name="notNumber">Non se introduciu o número</string>
+    <string name="notNumber">Non se introduciu un número válido</string>
     <string name="attendanceConfirmation">Confirmación de asistencia</string>
     <string name="attendanceConfirmed">Confirmouse a asistencia</string>
     <string name="apuntado">Rexistrarte para o evento</string>

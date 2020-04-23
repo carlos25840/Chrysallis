@@ -366,7 +366,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                 btnAccept.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(!editTextNumAttendants.getText().toString().equals("")){
+                        if(!editTextNumAttendants.getText().toString().equals("") && Integer.parseInt(editTextNumAttendants.getText().toString()) != 0){
                             int numAsist = Integer.parseInt(editTextNumAttendants.getText().toString());
                             AsistirService asistirService = Api.getApi().create(AsistirService.class);
                             Call<Integer> asistentesCall = asistirService.getAsistirTotal(evento.getId());
