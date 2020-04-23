@@ -488,7 +488,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                 getString(R.string.time) + ": " + evento.getHora().substring(0,8) + "\n\n" +
 
                 //Enlace de baja en desarrollo
-                getString(R.string.notAttendanceConfirmationEmail) + ":" + linkBaja + "\n" +
+                getString(R.string.notAttendanceConfirmationEmail) + linkBaja + "\n" +
 
                 getString(R.string.noResponder));
 
