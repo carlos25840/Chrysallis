@@ -469,13 +469,13 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         dialog.show();
     }
 
-    public void enviarMail(){
+    public void enviarMail(String codigoAsistir){
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
         Mail m=new Mail("eventschrysallis@gmail.com","chrysallis2005");
-        String linkBaja = "http://abp-politecnics.com/2020/dm0201/api/Asistir/eliminar/" + socio.getId() + "/" + evento.getId();
+        String linkBaja = "http://abp-politecnics.com/2020/dm0201/api/Asistir/eliminar/" + codigoAsistir;
 
         String[] toArr = {socio.getMail()};
         m.setTo(toArr);
@@ -485,10 +485,10 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         m.setBody(getString(R.string.apuntado) + ": " + evento.getNombre() + "\n" +
                 getString(R.string.description) + ": " + evento.getDescripcion() + "\n" +
                 getString(R.string.date) + ": " + evento.getFecha().substring(0,10) + "\n" +
-                getString(R.string.time) + ": " + evento.getHora().substring(0,8) + "\n" +
+                getString(R.string.time) + ": " + evento.getHora().substring(0,6) + "\n\n" +
 
-                //Enlace de baja en desarrollo
-                //linkBaja + "\n" +
+                //Enlace de baja
+                getString(R.string.notAttendanceConfirmationEmail) + linkBaja + "\n" +
 
                 getString(R.string.noResponder));
 
@@ -582,7 +582,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
             public void onResponse(Call<Asistir> call, Response<Asistir> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(getApplicationContext(),getString(R.string.attendanceConfirmed), Toast.LENGTH_LONG).show();
-                    enviarMail();
+                    enviarMail(codigoAsistir);
                     Button btnJoin = findViewById(R.id.buttonJoin);
                     btnJoin.setText(getString(R.string.joined));
                     asistencia = true;
