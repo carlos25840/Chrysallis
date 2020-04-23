@@ -75,33 +75,11 @@ public class ChatActivity extends AppCompatActivity {
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Date currentTime = Calendar.getInstance().getTime();
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                String formattedDate = df.format(currentTime);
                 String mensajeString = txtMensaje.getText().toString();
-                String mensajeEmoji = StringEscapeUtils.escapeJava(mensajeString);
+                if(!mensajeString.equals("")){
+                    enviarMensaje();
+                }
 
-                Mensaje mensaje = new Mensaje(socio.getId(),evento.getId(), socio.getNombre() + ":" + mensajeEmoji, formattedDate);
-                txtMensaje.setText("");
-                MensajesService mensajesService = Api.getApi().create(MensajesService.class);
-                Call<Mensaje> mensajeCall = mensajesService.insertMensaje(mensaje);
-                mensajeCall.enqueue(new Callback<Mensaje>() {
-                    @Override
-                    public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
-                        if(response.isSuccessful()){
-
-                            cargarMensajes();
-                        }else{
-                            Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Mensaje> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
             }
         });
 
@@ -116,6 +94,36 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    public void enviarMensaje(){
+        EditText txtMensaje = findViewById(R.id.txtMensaje);
+        String mensajeString = txtMensaje.getText().toString();
+        Date currentTime = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        String formattedDate = df.format(currentTime);
+
+        String mensajeEmoji = StringEscapeUtils.escapeJava(mensajeString);
+
+        Mensaje mensaje = new Mensaje(socio.getId(),evento.getId(), socio.getNombre() + ":" + mensajeEmoji, formattedDate);
+        txtMensaje.setText("");
+        MensajesService mensajesService = Api.getApi().create(MensajesService.class);
+        Call<Mensaje> mensajeCall = mensajesService.insertMensaje(mensaje);
+        mensajeCall.enqueue(new Callback<Mensaje>() {
+            @Override
+            public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
+                if(response.isSuccessful()){
+
+                    cargarMensajes();
+                }else{
+                    Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Mensaje> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
