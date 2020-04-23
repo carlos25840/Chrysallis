@@ -1,5 +1,7 @@
 package com.example.chrysallis.components;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import java.security.SecureRandom;
 import java.util.Random;
 
@@ -42,5 +44,11 @@ public class PasswordUtils {
         for (int i = 0; i < 100; i++) {
             System.out.println(getPassword(8));
         }
+    }
+
+    public static String generateCode(){
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String codigo = RandomStringUtils.random( 20, characters);
+        return codigo;
     }
 }

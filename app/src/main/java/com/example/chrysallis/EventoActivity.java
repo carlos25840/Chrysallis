@@ -66,6 +66,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.chrysallis.components.PasswordUtils.generateCode;
+
 public class EventoActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private Evento evento;
@@ -405,7 +407,9 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                                             asistentes = response.body();
                                             if(evento.getNumAsistentes() > 0){
                                                 if((evento.getNumAsistentes() - asistentes) >= numAsist){
-                                                    Asistir asistir = new Asistir(socio.getId(),evento.getId(),numAsist);
+                                                    String codigoAsistir = generateCode();
+
+                                                    Asistir asistir = new Asistir(socio.getId(),evento.getId(),numAsist, codigoAsistir);
                                                     Call<Asistir> asistirCall = asistirService.insertAsistir(asistir);
                                                     asistirCall.enqueue(new Callback<Asistir>() {
                                                         @Override

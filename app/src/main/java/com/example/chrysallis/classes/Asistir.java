@@ -9,11 +9,13 @@ public class Asistir implements Serializable {
     private int valoracion;
     private String comentario;
     private int cuantos;
+    private String codigo_asistir;
 
-    public Asistir(int id_socio, int id_evento, int cuantos) {
+    public Asistir(int id_socio, int id_evento, int cuantos, String codigo_asistir) {
         this.id_socio = id_socio;
         this.id_evento = id_evento;
         this.cuantos = cuantos;
+        this.codigo_asistir = codigo_asistir;
     }
 
     public Asistir(int id_socio, int id_evento) {
@@ -40,6 +42,10 @@ public class Asistir implements Serializable {
 
     public int getCuantos() {
         return cuantos;
+    }
+
+    public String getCodigo_asistir() {
+        return codigo_asistir;
     }
 
     @Override
