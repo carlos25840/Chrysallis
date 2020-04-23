@@ -69,7 +69,7 @@ public class FragmentChat extends Fragment {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = df.format(currentTime);
         EventosService eventosService = Api.getApi().create(EventosService.class);
-        Call<ArrayList<Evento>> eventosCall = eventosService.getEventosApuntado(socio.getId());
+        Call<ArrayList<Evento>> eventosCall = eventosService.getEventosApuntadoSocio(socio.getId());
         eventosCall.enqueue(new Callback<ArrayList<Evento>>() {
             @Override
             public void onResponse(Call<ArrayList<Evento>> call, Response<ArrayList<Evento>> response) {
