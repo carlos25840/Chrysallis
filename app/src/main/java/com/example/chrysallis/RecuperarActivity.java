@@ -22,6 +22,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.chrysallis.components.PasswordUtils.getPassword;
+
 public class RecuperarActivity extends AppCompatActivity {
     private Socio socio;
 
@@ -104,19 +106,6 @@ public class RecuperarActivity extends AppCompatActivity {
 
     }
 
-    public String getPassword(int length){
-        char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
-        StringBuilder stringBuilder = new StringBuilder();
-
-        Random rand = new Random();
-
-        for(int i = 0; i < length; i++){
-            char c = chars[rand.nextInt(chars.length)];
-            stringBuilder.append(c);
-        }
-
-        return stringBuilder.toString();
-    }
 
     public void saveUser(String success, String fail){
         SociosService sociosService = Api.getApi().create(SociosService.class);

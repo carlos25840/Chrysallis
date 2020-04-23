@@ -2,6 +2,7 @@ package com.example.chrysallis;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -39,11 +40,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadLocale();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main);
+
         Button buttonLogin = findViewById(R.id.buttonLogin);
         EditText editTextPhone = findViewById(R.id.editTextPhone);
         EditText editTextPassword = findViewById(R.id.editTextPassword);
         TextView recuperar = findViewById(R.id.recuperarClave);
+
+        //comprobar que está logueado
+        int userId = loadLogin();
+        if(userId != -1){
+            doLogin(userId);
+            //finish();
+        }
 
         buttonLogin.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -60,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                                 Socio socio = response.body();
                                 if(socio != null){
                                     if(socio.isActivo()){
+                                        saveLogin(socio.getId());
                                         idiomaSocio(socio);
                                         Intent intent = new Intent(MainActivity.this, DestacadosActivity.class);
                                         intent.putExtra("socio", socio);
@@ -181,8 +192,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void loadLocale() {
         String langPref = "Language";
-        SharedPreferences prefs = getSharedPreferences("CommonPrefs",
-                Activity.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
         String language = prefs.getString(langPref, "");
         setLocale(language, true);
     }
@@ -193,5 +203,57 @@ public class MainActivity extends AppCompatActivity {
         languageManager.loadLocale(this);
     }
 
+    public int loadLogin() {
+        String usuario = "user";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        int usuarioConectado = prefs.getInt(usuario, -1);
+        return usuarioConectado;
+    }
 
+    public void doLogin(int id){
+        SociosService sociosService = Api.getApi().create(SociosService.class);
+        Call<Socio> callSocioLogin = sociosService.SocioLoginId(id);
+        callSocioLogin.enqueue(new Callback<Socio>() {
+            @Override
+            public void onResponse(Call<Socio> call, Response<Socio> response) {
+                switch (response.code()){
+                    case 200:
+                        Socio socio = response.body();
+                        if(socio != null){
+                            if(socio.isActivo()){
+                                idiomaSocio(socio);
+                                Intent intent = new Intent(MainActivity.this, DestacadosActivity.class);
+                                intent.putExtra("socio", socio);
+                                startActivity(intent);
+                            }else{
+                                Toast.makeText(getApplicationContext(),getResources().getString(R.string.notActive), Toast.LENGTH_LONG).show();
+                            }
+                        }else{
+                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.loginIncorrect), Toast.LENGTH_LONG).show();
+                        }
+
+                        break;
+                    case 404:
+                        Toast.makeText(getApplicationContext(),getResources().getString(R.string.loginIncorrect), Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Socio> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void saveLogin(int id){
+        String usuario = "user";
+        SharedPreferences settings = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor;
+        editor = settings.edit();
+        editor.putInt(usuario, id);
+        editor.commit();
+    }
 }
