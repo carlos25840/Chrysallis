@@ -88,6 +88,7 @@
     <string name="noTraducido">(Orixinal) Ver texto traducido</string>
     <string name="security">O contrasinal debe ser en minúscula, maiúscula, carácter especial(@$!%*?&amp;.) e ter unha lonxitude mínima de 8 caracteres.</string>
     <string name="notSpots">Non hai prazas dispoñibles. Dispoñible:</string>
+    <string name="notAttendanceConfirmationEmail">Se queres darte de baixa deste evento, fai clic na seguinte ligazón:</string>
     <string-array name="languages">
         <item>Inglés</item>
         <item>Español</item>
