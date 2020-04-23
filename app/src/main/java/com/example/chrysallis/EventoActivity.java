@@ -73,6 +73,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
     private Boolean asistencia = false;
     private ArrayList<Documento> documentos;
     private Boolean traducido;
+    private int asistentes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -387,29 +388,28 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(!editTextNumAttendants.getText().toString().equals("")){
                     int numAsist = Integer.parseInt(editTextNumAttendants.getText().toString());
-                    Asistir asistir = new Asistir(socio.getId(),evento.getId(),numAsist);
                     AsistirService asistirService = Api.getApi().create(AsistirService.class);
-                    Call<Asistir> asistirCall = asistirService.insertAsistir(asistir);
-                    asistirCall.enqueue(new Callback<Asistir>() {
+
+                    Call<Integer> asistentesCall = asistirService.getAsistirTotal(evento.getId());
+                    asistentesCall.enqueue(new Callback<Integer>() {
                         @Override
-                        public void onResponse(Call<Asistir> call, Response<Asistir> response) {
-                            if(response.isSuccessful()){
-                                Toast.makeText(getApplicationContext(),getString(R.string.attendanceConfirmed), Toast.LENGTH_LONG).show();
-                                enviarMail();
-                                Button btnJoin = findViewById(R.id.buttonJoin);
-                                btnJoin.setText(getString(R.string.joined));
-                                asistencia = true;
-                                socio.getAsistir().add(asistir);
-                            }else{
-                                Gson gson = new Gson();
-                                ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
-                                Toast.makeText(getApplicationContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            switch (response.code()){
+                                case 200:
+                                    asistentes = response.body();
+                                    if(evento.getNumAsistentes() > 0){
+                                        if((evento.getNumAsistentes() - asistentes) >= numAsist){
+                                            Asistir asistir = new Asistir(socio.getId(),evento.getId(),numAsist);
+                                            Call<Asistir> asistirCall = asistirService.insertAsistir(asistir);
+
+                                        }
+                                    }
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<Asistir> call, Throwable t) {
-                            Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+                        public void onFailure(Call<Integer> call, Throwable t) {
+
                         }
                     });
                 }else{
