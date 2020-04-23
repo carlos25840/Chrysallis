@@ -378,36 +378,14 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
                                             asistentes = response.body();
                                             if(evento.getNumAsistentes() > 0){
                                                 if((evento.getNumAsistentes() - asistentes) >= numAsist){
-                                                    String codigoAsistir = generateCode();
-
-                                                    Asistir asistir = new Asistir(socio.getId(),evento.getId(),numAsist, codigoAsistir);
-                                                    Call<Asistir> asistirCall = asistirService.insertAsistir(asistir);
-                                                    asistirCall.enqueue(new Callback<Asistir>() {
-                                                        @Override
-                                                        public void onResponse(Call<Asistir> call, Response<Asistir> response) {
-                                                            if(response.isSuccessful()){
-                                                                Toast.makeText(getApplicationContext(),getString(R.string.attendanceConfirmed), Toast.LENGTH_LONG).show();
-                                                                enviarMail();
-                                                                Button btnJoin = findViewById(R.id.buttonJoin);
-                                                                btnJoin.setText(getString(R.string.joined));
-                                                                asistencia = true;
-                                                                socio.getAsistir().add(asistir);
-                                                            }else{
-                                                                Gson gson = new Gson();
-                                                                ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
-                                                                Toast.makeText(getApplicationContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
-                                                            }
-                                                        }
-
-                                                        @Override
-                                                        public void onFailure(Call<Asistir> call, Throwable t) {
-                                                            Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
-                                                        }
-                                                    });
+                                                    apuntarseEvento(numAsist,asistirService);
                                                     dialog.dismiss();
                                                 }else{
                                                     Toast.makeText(getApplicationContext(), getString(R.string.notSpots) + " " + String.valueOf(evento.getNumAsistentes()-asistentes), Toast.LENGTH_LONG).show();
                                                 }
+                                            }else{
+                                                apuntarseEvento(numAsist,asistirService);
+                                                dialog.dismiss();
                                             }
                                             break;
                                         case 404:
@@ -590,6 +568,34 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
 
             @Override
             public void onFailure(Call<ArrayList<Documento>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void apuntarseEvento(int numAsist, AsistirService asistirService){
+        String codigoAsistir = generateCode();
+        Asistir asistir = new Asistir(socio.getId(),evento.getId(),numAsist, codigoAsistir);
+        Call<Asistir> asistirCall = asistirService.insertAsistir(asistir);
+        asistirCall.enqueue(new Callback<Asistir>() {
+            @Override
+            public void onResponse(Call<Asistir> call, Response<Asistir> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(getApplicationContext(),getString(R.string.attendanceConfirmed), Toast.LENGTH_LONG).show();
+                    enviarMail();
+                    Button btnJoin = findViewById(R.id.buttonJoin);
+                    btnJoin.setText(getString(R.string.joined));
+                    asistencia = true;
+                    socio.getAsistir().add(asistir);
+                }else{
+                    Gson gson = new Gson();
+                    ErrorMessage mensajeError = gson.fromJson(response.errorBody().charStream(), ErrorMessage.class);
+                    Toast.makeText(getApplicationContext(), mensajeError.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Asistir> call, Throwable t) {
                 Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
