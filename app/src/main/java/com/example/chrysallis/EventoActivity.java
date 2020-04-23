@@ -485,9 +485,9 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         m.setBody(getString(R.string.apuntado) + ": " + evento.getNombre() + "\n" +
                 getString(R.string.description) + ": " + evento.getDescripcion() + "\n" +
                 getString(R.string.date) + ": " + evento.getFecha().substring(0,10) + "\n" +
-                getString(R.string.time) + ": " + evento.getHora().substring(0,8) + "\n\n" +
+                getString(R.string.time) + ": " + evento.getHora().substring(0,6) + "\n\n" +
 
-                //Enlace de baja en desarrollo
+                //Enlace de baja
                 getString(R.string.notAttendanceConfirmationEmail) + linkBaja + "\n" +
 
                 getString(R.string.noResponder));
