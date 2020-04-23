@@ -95,5 +95,5 @@
     <string name="noTraducido">(Original) Ver texto traducido</string>
     <string name="security">La contraseña debe tener una minúscula, una mayúscula, un carácter especial(@$!%*?&amp;.) y una longitud mínima de 8 caracteres.</string>
     <string name="notSpots">No hay suficientes plazas disponibles. Disponibles:</string>
-    <string name="notAttendanceConfirmationEmail">" Si desea darse de baja de este evento, haga clic en el siguiente enlace:"</string>
+    <string name="notAttendanceConfirmationEmail">Si desea darse de baja de este evento, haga clic en el siguiente enlace:</string>
 </resources>
