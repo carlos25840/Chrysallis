@@ -88,7 +88,6 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         mapFragment.getMapAsync(this);
         //Views
         TextView txtTraducido = findViewById(R.id.txtTraducido);
-        TextView txtNoDocs = findViewById(R.id.msgNoDocuments);
         TextView txtEvent = findViewById(R.id.txtEvent);
         TextView txtCom = findViewById(R.id.txtComunEvent);
         TextView txtDate = findViewById(R.id.txtDateEvent);
@@ -104,7 +103,6 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         evento = (Evento) intent.getSerializableExtra("evento");
         socio = (Socio)intent.getSerializableExtra("socio");
         //Asignación de valores a las views
-
         txtEvent.setText(evento.getNombre());
         txtCom.setText(evento.getComunidades().getNombre());
         String date = convertDate(evento.getFecha());
@@ -135,34 +133,7 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         String formattedDate = df.format(currentTime);
 
         //Recupera los documentos
-        DocumentosService documentosService = Api.getApi().create(DocumentosService.class);
-        Call<ArrayList<Documento>> listCall = documentosService.busquedaDocumentosEvento(evento.getId());
-        listCall.enqueue(new Callback<ArrayList<Documento>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Documento>> call, Response<ArrayList<Documento>> response) {
-                switch (response.code()){
-                    case 200:
-                        documentos = response.body();
-                        if(!documentos.isEmpty()){
-                            txtNoDocs.setVisibility(View.GONE);
-                            //Se crea el adapter y se asigna a la grid
-                            DocumentoAdapter documentoAdapter = new DocumentoAdapter(getApplicationContext(),documentos);
-                            gridDocs.setAdapter(documentoAdapter);
-                        }
-                        else{
-                            txtNoDocs.setVisibility(View.VISIBLE);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Documento>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+        cargarDocumentos();
         //On Click del textView de la dirección que abre Google Maps
         txtLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -591,4 +562,36 @@ public class EventoActivity extends AppCompatActivity implements OnMapReadyCallb
         languageManager.loadLocale(this);
     }
 
+    public void cargarDocumentos(){
+        GridView gridDocs = findViewById(R.id.gridDocs);
+        TextView txtNoDocs = findViewById(R.id.msgNoDocuments);
+        DocumentosService documentosService = Api.getApi().create(DocumentosService.class);
+        Call<ArrayList<Documento>> listCall = documentosService.busquedaDocumentosEvento(evento.getId());
+        listCall.enqueue(new Callback<ArrayList<Documento>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Documento>> call, Response<ArrayList<Documento>> response) {
+                switch (response.code()){
+                    case 200:
+                        documentos = response.body();
+                        if(!documentos.isEmpty()){
+                            txtNoDocs.setVisibility(View.GONE);
+                            //Se crea el adapter y se asigna a la grid
+                            DocumentoAdapter documentoAdapter = new DocumentoAdapter(getApplicationContext(),documentos);
+                            gridDocs.setAdapter(documentoAdapter);
+                        }
+                        else{
+                            txtNoDocs.setVisibility(View.VISIBLE);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Documento>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),t.getCause() + "-" + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }
