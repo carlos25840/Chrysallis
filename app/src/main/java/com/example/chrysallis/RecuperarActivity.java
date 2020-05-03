@@ -54,6 +54,9 @@ public class RecuperarActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(),R.string.loginIncorrect, Toast.LENGTH_LONG).show();
                                 }
                                 break;
+                            case 404:
+                                Toast.makeText(getApplicationContext(),R.string.loginIncorrect, Toast.LENGTH_LONG).show();
+                                break;
                             default:
                                 break;
                         }
