@@ -26,6 +26,10 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventosVie
         this.eventos = eventos;
     }
 
+    public EventoAdapter() {
+        this.eventos = new ArrayList<>();
+    }
+
     //crea el viewHolder basado en el layout evento_item
     @NonNull
     @Override

@@ -21,6 +21,11 @@ public class ComunidadesSpinnerAdapter extends ArrayAdapter<Comunidad> {
         this.context = context;
         this.comunidades = comunidades;
     }
+    public ComunidadesSpinnerAdapter(Context context) {
+        super(context, R.layout.spinner_selected_item);
+        this.context = context;
+        this.comunidades = new ArrayList<>();
+    }
 
     //este método establece el elemento seleccionado sobre el botón del spinner
     @Override

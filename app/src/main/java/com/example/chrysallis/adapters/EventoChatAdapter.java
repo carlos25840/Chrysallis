@@ -25,6 +25,9 @@ public class EventoChatAdapter extends RecyclerView.Adapter<EventoChatAdapter.Ev
     public EventoChatAdapter(ArrayList<Evento> eventos) {
         this.eventos = eventos;
     }
+    public EventoChatAdapter() {
+        this.eventos = new ArrayList<>();
+    }
 
     //crea el viewHolder basado en el layout evento_item
     @NonNull

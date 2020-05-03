@@ -54,6 +54,11 @@ public class FragmentHome extends Fragment {
         recyclerView = view.findViewById(R.id.RecyclerDestacados);
         msgNotEvents = view.findViewById(R.id.msgNotEvents);
 
+
+        EventoAdapter adaptador = new EventoAdapter();
+        recyclerView.setAdapter(adaptador);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         Date currentTime = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = df.format(currentTime);
@@ -69,7 +74,6 @@ public class FragmentHome extends Fragment {
                             msgNotEvents.setVisibility(View.GONE);
                             EventoAdapter adaptador = new EventoAdapter(eventos);
                             recyclerView.setAdapter(adaptador);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             //Listener para abrir el seleccionado
                             adaptador.setOnClickListener(new View.OnClickListener() {
                                 @Override

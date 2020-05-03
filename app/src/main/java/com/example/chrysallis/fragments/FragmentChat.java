@@ -63,6 +63,10 @@ public class FragmentChat extends Fragment {
     }
 
     public void cargarEventos(View view){
+        //Inicializar el recycler con el adapter para que no de error de no adapter attached: skipping layout
+        EventoChatAdapter adaptador = new EventoChatAdapter();
+        recyclerView.setAdapter(adaptador);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         TextView msgNoEvents = view.findViewById(R.id.msgNotEventsChat);
         Date currentTime = Calendar.getInstance().getTime();
@@ -79,7 +83,6 @@ public class FragmentChat extends Fragment {
                         if(!eventos.isEmpty()){
                             EventoChatAdapter adaptador = new EventoChatAdapter(eventos);
                             recyclerView.setAdapter(adaptador);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerView.setVisibility(View.VISIBLE);
                             msgNoEvents.setVisibility(View.GONE);
                             //Listener para abrir el seleccionado

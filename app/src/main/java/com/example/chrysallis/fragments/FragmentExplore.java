@@ -71,6 +71,10 @@ public class FragmentExplore extends Fragment {
         //Oculta el mensaje de que no hay eventos
         msgNotEvents.setVisibility(getView().GONE);
 
+        adaptador = new EventoAdapter();
+        recyclerView.setAdapter(adaptador);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         //Rellena el spinner de comunidades llamando a la Api
         ComunidadesService comunidadesService = Api.getApi().create(ComunidadesService.class);
         Call<ArrayList<Comunidad>> comunidadesCall = comunidadesService.getComunidades();
@@ -241,7 +245,6 @@ public class FragmentExplore extends Fragment {
             msgNotEvents.setVisibility(getView().GONE);
             adaptador = new EventoAdapter(eventos);
             recyclerView.setAdapter(adaptador);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             //Listener para abrir el seleccionado
             adaptador.setOnClickListener(new View.OnClickListener() {
                 @Override

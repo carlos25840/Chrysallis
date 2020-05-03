@@ -572,14 +572,18 @@ public class FragmentProfile extends Fragment {
     }
 
     public void powerOffButton(){
-
-        /*Intent intent = new Intent(getActivity(), MainActivity.class);
-        startActivity(intent);
-        getActivity().finish();*/
         saveLogin(-1);
-        //android.os.Process.killProcess(android.os.Process.myPid());
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK );
+        startActivity(intent);
+        getActivity().finish();
 
-        System.exit(2);
+
+        android.os.Process.killProcess(android.os.Process.myPid());
+        //Process.killProcess(Process.myPid());
+        //System.exit(0);
+
+        //System.exit(2);
 
     }
 

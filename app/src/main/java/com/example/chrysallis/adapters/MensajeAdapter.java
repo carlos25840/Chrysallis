@@ -35,6 +35,11 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.Mensajes
         this.socio = socio;
     }
 
+    public MensajeAdapter() {
+        this.mensajes = new ArrayList<>();
+        this.socio = null;
+    }
+
     //crea el viewHolder basado en el layout evento_item
     @NonNull
     @Override

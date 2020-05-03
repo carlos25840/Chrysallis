@@ -96,7 +96,6 @@ public class DestacadosActivity extends AppCompatActivity {
 
             }
         });
-        refrescar(getSupportFragmentManager());
         setupViewPager(viewPager);
     }
 
@@ -140,15 +139,12 @@ public class DestacadosActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_chat:
                     pageAnterior = viewPager.getCurrentItem();
-                    fm.beginTransaction().detach(chatFragment).attach(chatFragment).addToBackStack(null).commit();
+                    fm.beginTransaction().detach(chatFragment).attach(chatFragment).addToBackStack(null).commitAllowingStateLoss();
                     viewPager.setCurrentItem(3);
                     return true;
             }
-
             return false;
         }
-
-
     };
 
     @Override
@@ -156,17 +152,14 @@ public class DestacadosActivity extends AppCompatActivity {
         viewPager.setCurrentItem(pageAnterior);
     }
 
-
     public static void refrescar(FragmentManager fm){
         for(Fragment f : fragments){
-            fm.beginTransaction().detach(f).attach(f).addToBackStack(null).commit();
+            fm.beginTransaction().detach(f).attach(f).addToBackStack(null).commitAllowingStateLoss();
         }
-
         navView.getMenu().findItem(R.id.navigation_profile).setTitle(R.string.title_perfil);
         navView.getMenu().findItem(R.id.navigation_home).setTitle(R.string.home);
         navView.getMenu().findItem(R.id.navigation_explore).setTitle(R.string.title_explorar);
         navView.getMenu().findItem(R.id.navigation_chat).setTitle(R.string.title_chat);
-
     }
 
     @Override
