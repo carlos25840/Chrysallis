@@ -96,6 +96,7 @@ public class DestacadosActivity extends AppCompatActivity {
 
             }
         });
+        refrescar(getSupportFragmentManager());
         setupViewPager(viewPager);
     }
 
@@ -122,6 +123,7 @@ public class DestacadosActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            FragmentManager fm = getSupportFragmentManager();
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
@@ -138,7 +140,6 @@ public class DestacadosActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_chat:
                     pageAnterior = viewPager.getCurrentItem();
-                    FragmentManager fm = getSupportFragmentManager();
                     fm.beginTransaction().detach(chatFragment).attach(chatFragment).addToBackStack(null).commit();
                     viewPager.setCurrentItem(3);
                     return true;
