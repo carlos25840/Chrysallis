@@ -51,11 +51,11 @@ public class RecuperarActivity extends AppCompatActivity {
                                 if(socio != null){
                                     enviarMail();
                                 }else{
-                                    Toast.makeText(getApplicationContext(),R.string.loginIncorrect, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(),getString(R.string.loginIncorrect), Toast.LENGTH_LONG).show();
                                 }
                                 break;
                             case 404:
-                                Toast.makeText(getApplicationContext(),R.string.loginIncorrect, Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(),getString(R.string.loginIncorrect), Toast.LENGTH_LONG).show();
                                 break;
                             default:
                                 break;

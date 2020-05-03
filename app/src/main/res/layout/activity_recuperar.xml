@@ -64,11 +64,13 @@
             android:padding="2dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:maxLines="1"
+                android:inputType="textEmailAddress"
                 android:textSize="@dimen/medio"
                 android:textAlignment="center"
                 android:id="@+id/editTextEmail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:nextFocusDown="@id/buttonRecuperar"/>
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
